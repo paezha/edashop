@@ -1,0 +1,63 @@
+---
+title: "Data Preprocessing Geospatial Dataset Economic Divergence"
+output: html_notebook
+---
+
+A dataset describing regional divergence in Europe. Data source:
+
+Mikhaylov, Andrey S., Anna A. Mikhaylova, and Tatyana Yu Kuznetsova. "Geospatial dataset for analyzing socio-economic regional divergence of European regions." Data in brief 19 (2018): 2374-2383. https://doi.org/10.1016/j.dib.2018.07.027
+
+Paper saved as: 1-s2.0-S235234091830800X-main.pdf
+
+In this notebook, the data are pre-processed for packaging in `R`.
+
+Load libraries:
+```{r}
+library(haven)
+library(labelled)
+library(lubridate)
+library(tidyverse)
+```
+
+Data files in 1-s2.0-S235234091830800X-mmc0.zip
+
+<!--
+Read data file (original is in Stata format):
+```{r}
+phd_italy <- read_dta("1-s2.0-S2352340918303299-mmc2.zip")
+```
+
+Get the column names and labels; these will be used in the documentation:
+```{r}
+data_names <- purrr::map_df(phd_italy, ~attributes(.x)) %>%
+  bind_cols(names = names(phd_italy), .)
+```
+
+Remove attributes of columns, which will change after converting data to factors:
+```{r}
+phd_italy <- remove_attributes(phd_italy, c("label", "format.stata"))
+```
+
+Preprocess data:
+```{r}
+junk <- phd_italy %>%
+  transmute(id = factor(id),
+            q01_annodinascita,
+            q02_sesso = factor(q02_sesso, 
+                               levels = c(0, 1),
+                               labels = c("female", "male")),
+            q03_cittadinanzaest = factor(q03_cittadinanzaest,
+                                         levels = c(0, 1),
+                                         labels = c("Italian", "Foreign")),
+            q04_provvive = factor(q04_provvive),
+            q05_genitorelaureato = factor(q05_genitorelaureato,
+                                          levels = c(0, 1),
+                                          labels = c("No", "Yes")),
+            q06_genitoreaccad  = factor(q06_genitoreaccad,
+                                          levels = c(0, 1),
+                                          labels = c("No", "Yes")),
+            q07_genitoreimpr  = factor(q07_genitoreimpr,
+                                          levels = c(0, 1),
+                                          labels = c("No", "Yes")))
+```
+
