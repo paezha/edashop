@@ -6,6 +6,8 @@
 \alias{edashop-package}
 \title{edashop: A Package for a Workshop on Exploratory Data Analysis}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 A package with templates and data useful to teach a workshop on Exploratory Data Analysis using `R`.
 }
 \references{

@@ -1499,6 +1499,8 @@ window.initializeCodeFolding = function(show) {
   // select all R code blocks
   var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
   rCodeBlocks.each(function() {
+    // skip if the block has fold-none class
+    if ($(this).hasClass('fold-none')) return;
 
     // create a collapsable div to wrap the code in
     var div = $('<div class="collapse r-code-collapse"></div>');
@@ -1794,24 +1796,24 @@ The following objects are masked from ‘package:base’:
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
 <pre class="r"><code>library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuLS0gQXR0YWNoaW5nIHBhY2thZ2VzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHRpZHl2ZXJzZSAxLjMuMSAtLVxuw6LLhsWhIGdncGxvdDIgMy4zLjUgICAgIMOiy4bFoSBwdXJyciAgIDAuMy40XG7DosuGxaEgdGliYmxlICAzLjEuNiAgICAgw6LLhsWhIGRwbHlyICAgMS4wLjhcbsOiy4bFoSB0aWR5ciAgIDEuMi4wICAgICDDosuGxaEgc3RyaW5nciAxLjQuMFxuw6LLhsWhIHJlYWRyICAgMi4xLjIgICAgIMOiy4bFoSBmb3JjYXRzIDAuNS4xXG4tLSBDb25mbGljdHMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gdGlkeXZlcnNlX2NvbmZsaWN0cygpIC0tXG54IGx1YnJpZGF0ZTo6YXMuZGlmZnRpbWUoKSBtYXNrcyBiYXNlOjphcy5kaWZmdGltZSgpXG54IGx1YnJpZGF0ZTo6ZGF0ZSgpICAgICAgICBtYXNrcyBiYXNlOjpkYXRlKClcbnggZHBseXI6OmZpbHRlcigpICAgICAgICAgIG1hc2tzIHN0YXRzOjpmaWx0ZXIoKVxueCBsdWJyaWRhdGU6OmludGVyc2VjdCgpICAgbWFza3MgYmFzZTo6aW50ZXJzZWN0KClcbnggZHBseXI6OmxhZygpICAgICAgICAgICAgIG1hc2tzIHN0YXRzOjpsYWcoKVxueCBsdWJyaWRhdGU6OnNldGRpZmYoKSAgICAgbWFza3MgYmFzZTo6c2V0ZGlmZigpXG54IGx1YnJpZGF0ZTo6dW5pb24oKSAgICAgICBtYXNrcyBiYXNlOjp1bmlvbigpXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxu4pSA4pSAIEF0dGFjaGluZyBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMy4xIOKUgOKUgFxu4pyUIHRpYmJsZSAgMy4xLjcgICAgIOKclCBkcGx5ciAgIDEuMC45XG7inJQgdGlkeXIgICAxLjIuMCAgICAg4pyUIHN0cmluZ3IgMS40LjBcbuKclCByZWFkciAgIDIuMS4yICAgICDinJQgZm9yY2F0cyAwLjUuMVxu4pyUIHB1cnJyICAgMC4zLjQgICAgIFxu4pSA4pSAIENvbmZsaWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxu4pyWIGx1YnJpZGF0ZTo6YXMuZGlmZnRpbWUoKSBtYXNrcyBiYXNlOjphcy5kaWZmdGltZSgpXG7inJYgbHVicmlkYXRlOjpkYXRlKCkgICAgICAgIG1hc2tzIGJhc2U6OmRhdGUoKVxu4pyWIGRwbHlyOjpmaWx0ZXIoKSAgICAgICAgICBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbuKcliBsdWJyaWRhdGU6OmludGVyc2VjdCgpICAgbWFza3MgYmFzZTo6aW50ZXJzZWN0KClcbuKcliBkcGx5cjo6bGFnKCkgICAgICAgICAgICAgbWFza3Mgc3RhdHM6OmxhZygpXG7inJYgbHVicmlkYXRlOjpzZXRkaWZmKCkgICAgIG1hc2tzIGJhc2U6OnNldGRpZmYoKVxu4pyWIGx1YnJpZGF0ZTo6dW5pb24oKSAgICAgICBtYXNrcyBiYXNlOjp1bmlvbigpXG4ifQ== -->
 <pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
   method         from
   print.tbl_lazy     
   print.tbl_sql      
--- Attaching packages -------------------------------------------------------------------------------- tidyverse 1.3.1 --
-âˆš ggplot2 3.3.5     âˆš purrr   0.3.4
-âˆš tibble  3.1.6     âˆš dplyr   1.0.8
-âˆš tidyr   1.2.0     âˆš stringr 1.4.0
-âˆš readr   2.1.2     âˆš forcats 0.5.1
--- Conflicts ----------------------------------------------------------------------------------- tidyverse_conflicts() --
-x lubridate::as.difftime() masks base::as.difftime()
-x lubridate::date()        masks base::date()
-x dplyr::filter()          masks stats::filter()
-x lubridate::intersect()   masks base::intersect()
-x dplyr::lag()             masks stats::lag()
-x lubridate::setdiff()     masks base::setdiff()
-x lubridate::union()       masks base::union()</code></pre>
+── Attaching packages ─────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.1 ──
+✔ tibble  3.1.7     ✔ dplyr   1.0.9
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1
+✔ purrr   0.3.4     
+── Conflicts ────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::as.difftime() masks base::as.difftime()
+✖ lubridate::date()        masks base::date()
+✖ dplyr::filter()          masks stats::filter()
+✖ lubridate::intersect()   masks base::intersect()
+✖ dplyr::lag()             masks stats::lag()
+✖ lubridate::setdiff()     masks base::setdiff()
+✖ lubridate::union()       masks base::union()</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->

@@ -25,10 +25,10 @@ A data frame with 906 rows and 64 variables:
 \item{nome_regione}{Name of the region where the home university is located}
 \item{q13a_phdgiudizio}{PhD programme opinion (1~6=highest): Competence of the supervisor}
 \item{q13b_phdgiudizio}{PhD programme opinion (1~6=highest): Time dedicated to research activity}
-\item{q13c_phdgiudizio}{PhD programme opinion (1~6=highest): Availability of equipment and res. infrastr}
+\item{q13c_phdgiudizio}{PhD programme opinion (1~6=highest): Availability of equipment and research infrastructure}
 \item{q13d_phdgiudizio}{PhD programme opinion (1~6=highest): Availability of financial resources}
-\item{q13e_phdgiudizio}{PhD programme opinion (1~6=highest): Degree of independence/autonomy of res. sub}
-\item{q13f_phdgiudizio}{PhD programme opinion (1~6=highest): Extension/quality of the international res.}
+\item{q13e_phdgiudizio}{PhD programme opinion (1~6=highest): Degree of independence/autonomy of research topic}
+\item{q13f_phdgiudizio}{PhD programme opinion (1~6=highest): Extension/quality of the international research network}
 \item{q13g_phdgiudizio}{PhD programme opinion (1~6=highest): Degree of international experience}
 \item{q13h_phdgiudizio}{PhD programme opinion (1~6=highest): Quality of the research team}
 \item{q13i_phdgiudizio}{PhD programme opinion (1~6=highest): Access to labour market}
@@ -49,15 +49,15 @@ A data frame with 906 rows and 64 variables:
 \item{q3713_impcorso}{Entrepreneurship course frequency during the PhD programme (No, Yes)}
 \item{q3715_impaddetti}{Number of persons employed in the startup created by the student}
 \item{q379_impanni}{Age of the enterprise (years)}
-\item{q53a_uniimp}{The student agrees that in the home uni. (1~6=highest): there is a favourable en}
-\item{q53b_uniimp}{The student agrees that in the home uni. (1~6=highest): there is a favourable en}
-\item{q53c_uniimp}{The student agrees that in the home uni. (1~6=highest): entrepreneurship is a ce}
-\item{q53d_uniimp}{The student agrees that in the home uni. (1~6=highest): there is support to pate}
-\item{q53e_uniimp}{The student agrees that in the home uni. (1~6=highest): there is dedicated strat}
-\item{q53f_uniimp}{The student agrees that in the home uni. (1~6=highest): U-I collaboration is imp}
-\item{q53g_uniimp}{The student agrees that in the home uni. (1~6=highest): teaching is well connect}
-\item{q53h_uniimp}{The student agrees that in the home uni. (1~6=highest): there are training cours}
-\item{q53i_uniimp}{The student agrees that in the home uni. (1~6=highest): there is professional su}
+\item{q53a_uniimp}{The student agrees that in the home uni. (1~6=highest): there is a favourable environment to startup creation}
+\item{q53b_uniimp}{The student agrees that in the home uni. (1~6=highest): there is a favourable environment to U-I interaction}
+\item{q53c_uniimp}{The student agrees that in the home uni. (1~6=highest): entrepreneurship is a central mission}
+\item{q53d_uniimp}{The student agrees that in the home uni. (1~6=highest): there is support to patenting and innovation}
+\item{q53e_uniimp}{The student agrees that in the home uni. (1~6=highest): there is dedicated strategy for technology transfer}
+\item{q53f_uniimp}{The student agrees that in the home uni. (1~6=highest): U-I collaboration is important}
+\item{q53g_uniimp}{The student agrees that in the home uni. (1~6=highest): teaching is well connected to research}
+\item{q53h_uniimp}{The student agrees that in the home uni. (1~6=highest): there are training courses for entrepreneurs}
+\item{q53i_uniimp}{The student agrees that in the home uni. (1~6=highest): there is professional support to potential entrepreneurs}
 \item{dimensione}{University size by number of students (1~4=largest)}
 \item{med_school}{Presence of a medical school at the home university (No, Yes)}
 \item{polytech}{The home university is a Polytechnic (yes=1)}
@@ -84,7 +84,7 @@ Data from a survey on Ph.D. (Doctor of Philosophy) entrepreneurship in Italy.
 The data includes (i) information on Ph.D. students; (ii) background information on Italian academic institutions attended by students.
 The database includes the responses of 906 students. Students provided information on their employment condition, on their family
 background and opinions on the Ph.D. course and the institution they attended. Information on regional characteristics and on university
-policies are also included. The original data set by Muscio and Ramaciotti () was modified to convert some variables to factors.
+policies are also included. The original data set by Muscio and Ramaciotti (2018) was modified to convert some variables to factors.
 }
 \examples{
  data(phd_italy)
