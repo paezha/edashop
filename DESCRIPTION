@@ -1,14 +1,17 @@
 Package: edashop
-Title: What the Package Does (One Line, Title Case)
+Title: A Package for a Workshop on Exploratory Data Analysis
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Antonio", "Paez", , "paezha@mcmaster.ca", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: A package with templates and data useful to teach a workshop on Exploratory Data Analysis using `R`.
+License: CC BY 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
-URL: https://github.com/paezha/edashop
+RoxygenNote: 7.2.0
+URL: https://github.com/paezha/edashop,
+    https://paezha.github.io/edashop/
 BugReports: https://github.com/paezha/edashop/issues
+Depends: 
+    R (>= 2.10)
+LazyData: true
