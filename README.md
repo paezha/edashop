@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# edashop
+# edashop <a href="https://paezha.github.io/edashop/"><img src="man/figures/logo.png" align="right" height="200" /></a>
 
 <!-- badges: start -->
 
@@ -9,30 +9,32 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/envsocty3LT3)](https://CRAN.R-project.org/package=envsocty3LT3)
-<!-- Institutional logo: save in folder `images` -->
-<img src="man/figures/mcm-col_jpg.jpg" align="right" width=260 />
 <!-- badges: end -->
 
-Package {edashop} is an open educational resource that aims to combine
-various advantages of working with the [`R` statistical computing
-project](https://www.r-project.org/):
+Package {edashop} is an open educational resource to teach a workshop on
+exploratory data analysis (EDA).
+
+The package aims to combine various advantages of working with the [`R`
+statistical computing project](https://www.r-project.org/):
 
 -   Ease of distribution
 -   Reproducibility
 -   Availability of templates for computational notebooks
 -   Rigor in documentation of data sets and computational products
 
-The package is designed for use in a 5 session workshop to teach the
-principles of exploratory data analysis using `R`. The package includes
-the following components:
+The package is designed for use in a 5-session workshop (approximately
+10 hours) that teaches the principles of exploratory data analysis using
+`R`. The package includes the following components:
 
 -   Document templates with *Sessions*.
--   Data sets used in the Readings and Exercises.
+-   Data sets used in the Sessions
 
-*Sessions* are designed as content for the workshop. They resemble
-course notes, but What makes them different from conventional notes is
-that they are interactive and editable, which means that you can work
-with them in ways not possible with conventional printed notes.
+The *Sessions* are [R markdown](https://rmarkdown.rstudio.com/)
+documents with the main contents of the workshop. These documents
+resemble course notes, but with a difference: they are [literate
+programming](https://en.wikipedia.org/wiki/Literate_programming)
+documents that are are interactive and editable, which means that you
+can work with them in ways not possible with conventional printed notes.
 
 ## Seminar outline
 
@@ -47,7 +49,7 @@ with them in ways not possible with conventional printed notes.
 -   Creating a project
 -   Directory structure
 -   Creating new files: types of files
--   Literate computing
+-   Literate programming
 
 ### Session 2. Data (2 h)
 
@@ -61,6 +63,7 @@ with them in ways not possible with conventional printed notes.
 
 ### Session 3. Exploratory data analysis I: Descriptive statistics (2 h)
 
+-   What is EDA?
 -   Properties of data: central tendency and dispersion
 -   Quick data summaries
 -   Appropriate summary statistics by scale of measurement
