@@ -17,7 +17,7 @@ A data frame with 906 rows and 64 variables:
 \item{q07_genitoreimpr}{At least one parent is an entrepreneur (No, Yes)}
 \item{concludott_cert}{PhD completion (No, Yes) (source: Ministry of Education)}
 \item{q08_phd_clean}{PhD completion (No, Yes) (source: survey response)}
-\item{q08a_adj1}{PhD completion, no}
+\item{q08a_adj1}{PhD completion (No, Yes)}
 \item{q08a_concl_anno}{PhD completion, year}
 \item{struttura}{Name of home university}
 \item{code_un}{University code (Ministry of Education)}
@@ -42,7 +42,7 @@ A data frame with 906 rows and 64 variables:
 \item{q371_lavora}{The student is currently employed (No, Yes)}
 \item{q372_impresa}{The student established a business start-up (No, Yes)}
 \item{q372a_impattiva}{The student established a still active business start-up (No, Yes)}
-\item{q373_impabbandono}{The student abandoned the idea of establishing a business start-up (yes=1)}
+\item{q373_impabbandono}{The student abandoned the idea of establishing a business start-up (No, Yes)}
 \item{q375_posizuni}{The student is currently employed in academia/PRC (No, Yes)}
 \item{q377_posizauto}{The student is currently employed as an autonomous worker (No, Yes)}
 \item{q3711_impprov}{Code of the province where the startup was established}
@@ -60,12 +60,12 @@ A data frame with 906 rows and 64 variables:
 \item{q53i_uniimp}{The student agrees that in the home uni. (1~6=highest): there is professional support to potential entrepreneurs}
 \item{dimensione}{University size by number of students (1~4=largest)}
 \item{med_school}{Presence of a medical school at the home university (No, Yes)}
-\item{polytech}{The home university is a Polytechnic (yes=1)}
+\item{polytech}{The home university is a Polytechnic (No, Yes)}
 \item{geo}{Location of home university (Northern Italy, Central Italy, Southern Italy)}
-\item{public_uni}{The home university is a public institution (yes=1)}
+\item{public_uni}{The home university is a public institution (No, Yes)}
 \item{vqr_average}{Research performance index (source: Ministry of Education)}
 \item{utt_sn2006}{Availability of a TTO at the home university in 2006 (No, Yes)}
-\item{utt_mission_d2006}{The mission of the TTO is to support entrepreneurship (yes=1)}
+\item{utt_mission_d2006}{The mission of the TTO is to support entrepreneurship (No, Yes)}
 \item{disocc2006}{Unemployment rate in 2006 in the province where the university is located}
 \item{area}{PhD subject}
 \item{q378_imptipo_clean}{Type of startup established by the student}
@@ -81,10 +81,14 @@ data(phd_italy)
 }
 \description{
 Data from a survey on Ph.D. (Doctor of Philosophy) entrepreneurship in Italy.
-The data includes (i) information on Ph.D. students; (ii) background information on Italian academic institutions attended by students.
-The database includes the responses of 906 students. Students provided information on their employment condition, on their family
-background and opinions on the Ph.D. course and the institution they attended. Information on regional characteristics and on university
-policies are also included. The original data set by Muscio and Ramaciotti (2018) was modified to convert some variables to factors.
+The data includes (i) information on Ph.D. students who could graduate between 2008 and 2014; (ii) background information on Italian academic
+institutions attended by students. The database includes the responses of 906 students. Students provided information on their employment
+condition, on their family background and opinions on the Ph.D. course and the institution they attended. Information on regional characteristics
+and on university policies are also included.
+}
+\details{
+The original data set by Muscio and Ramaciotti (2018) was modified to convert some variables to factors. In addition, missing values that could
+were imputed when it was clear what their values were (e.g., name of region was missing, but Rome:Lazio)
 }
 \examples{
  data(phd_italy)

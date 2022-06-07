@@ -1,0 +1,116 @@
+---
+title: "Session 1: Basics of working with `R`"
+author:
+  # Enter your name here:
+- name: My Name
+  student_number: 123456789
+subject: "Workshop: Exploratory Data Analysis in `R`"
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+highlights: |
+    This is my mini-reflection. Paragraphs must be indented.
+    
+    It can contain multiple paragraphs.
+    
+# Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+threshold_concepts: 
+- threshold concept 1
+- threshold concept 2 
+- threshold concept 3
+- threshold concept 4
+
+# Do not edit below this line unless you know what you are doing
+# --------------------------------------------------------------
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document:
+    # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
+    # http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/
+    # https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-latex-ms.tex
+    template: exercise-template-default.tex
+always_allow_html: true
+---
+
+# Introduction
+
+Transport is fraught with many issues including growth in demand for energy use, greenhouse gases, urban air pollution and noise, negative health impacts and road traffic accidents and fatalities. It is well argued that these problems are not typical to one region but are becoming global in nature. Similar trends have been observed in many places around the world, albeit there are still individual differences among various countries. The observed data suggest an emerging transport crisis that could potentially compromise our quality of life.
+
+In this exercise, you will analyze trends pertaining to energy use and emissions in several countries. In so doing, you will gain a better understanding of emerging transportation trends and their impacts on quality of life.
+
+* Before working on this exercise, it is strongly recommended that you have completed two readings.
+    + Reading-0 ('Basic Data Operations and Visualization', available as a template in your course package)
+    + Reading-1 ('Linear regression in R', available as a template in your course package)
+* Due date:	See course outline for due date.
+* Materials: the following data object is used in this exercise (available in your course package)
+    + `energy_and_emissions`
+
+# Instructions
+
+Change the name of the file to `exercise-1-studentnumber.Rmd`. 
+
+Provide your answers by typing them in this R Markdown document. Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*. Remember to write the highlights of this exercise and the threshold concepts in the header section where you entered your personal information!
+
+When you are done working on this exercise, _knit_ the file to create the pdf file for submission.
+
+# Preliminaries
+
+At the beginning it is good practice to clear the working space. In this way you make sure that there are not extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Begin by loading the packages that you will need for this exercise. Make sure that the packages are installed before trying to load them with `library()`. 
+```{r}
+library(envsocty3LT3) # Course package
+library(tidyverse) # Package for data carpentry and data analysis
+```
+
+Load the data frame for this exercise:
+```{r}
+data("energy_and_emissions")
+```
+
+The variables in the data file are:
+
+Variable | Definition
+-- | --
+Country	| Country name
+Area | Surface land area of country in sq.km
+Population | Population
+PYear | Year of estimated population
+GDPPC | GDP per capita (nominal) in US dollars
+bblpd | barrels of oil per day
+EYear | Year of estimated usage of barrels of oil per day
+CO2_1995 | CO2 emissions in kilotonnes per year (1995)
+CO2_2005 | CO2 emissions in kilotonnes per year (2005)
+CO2_2015 | CO2 emissions in kilotonnes per year (2015)
+
+You can also check the documentation of this data object by running `??energy_and_emissions`.
+
+# Context
+
+One of the most talked about concerns in the world today, without the shadow of a doubt, is climate change and its negative consequences on the natural environment, human life, and the economy. The [scientific consensus](https://www.ipcc.ch/report/sixth-assessment-report-cycle/) regarding climate change is that it has been fueled by our intensive use of carbon-based energy sources for more than a century. Transportation, in particular, is a sector that depends heavily on [carbon-based fuels](https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=tran&juris=ca&rn=1&page=0). Whereas a few decades ago it was predicted that the effects of climate change might be considerable ["in a few centuries"](https://paperspast.natlib.govt.nz/newspapers/ROTWKG19120814.2.56.5), the pace of change has been dramatic, and starkly illustrated by extreme weather events that have become [increasingly common](https://www.c2es.org/content/extreme-weather-and-climate-change/). 
+
+In this respect, the relationship between economic growth, energy consumption, and environmental damage due to CO2 emission needs to be studied. Countries that are dependent on fossil fuels such as oil and those with large populations will probably have higher energy consumption levels, and likely higher CO2 emission. Although some countries have been more or less successful in decoupling their economic growth from the use of fossil fuels, for many countries extraction and consumption of fossil fuels still remains an important component of their economies. Further, at the national level, the focus of many countries has been more on economic growth than environmental impact. 
+
+Depending on their policy focus, some countries with higher economic growth emit more CO2 than the rest of the world. Although in recent years, many countries have adopted clean energy policies at the national level, it is yet not clear how successful they have been in reducing emissions. Therefore, it would be very interesting to understand how economic output, oil consumption, and CO2 emissions in different countries have evolved over the last few decades and how these variables may correlate with each other. In addition, we can also explore which countries have been more successful in reducing their emission and whether that has affected their economic output.
+
+This exercise is designed to allow you to explore some of these questions.
+
+# Questions
+
+## Energy Use and Emission Trends (85 marks)
+
+1.	What was the approximate population of Earth circa 2016? How many barrels of oil per day did this population consume? (5)
+
+2.	What proportion of the world's oil is consumed by Canada and the US? Do these two countries have the same per capita levels of demand for energy use? Why do you think this is so? (10)
+
+3.	Calculate the consumption of oil in barrels per day per 1,000 people for the countries listed in the data frame. What type of pattern do you observe? Please explain the pattern. Hint: rank countries according to their oil consumption per 1,000 people. You can use the `order()` function to do this. (15)
+
+4. Use simple regression analysis to assess the relationship in the dataset between a country's per-capita CO2 emissions (for 2015) and per-capita oil consumption. Start by creating a scatterplot of these two variables; then add labels to your plot (try changing the `size` of the text for clarity). What does a linear regression say is the relationship between per-capita CO2 emissions and per-capita oil consumption? How significant is the relationship, according to the regression model? Which countries are cleaner and which countries are less clean in their use of energy? (25)
+
+5. How much CO2 would be produced, if every person in the world produced CO2 equal to that produced typically by one Canadian? What if every person in the world produced CO2 equal to that produced by a Chinese citizen in 2015? Compare both results to the actual CO2 production of the world in 2015. Hint: refer to your linear regression model to discuss this. (15)
+
+6.	Using the data in the data frame, find the six largest CO2 emitters in 1995, and then calculate the increase or decrease in the amount of generated CO2 emissions for each of them in the time period 1995 to 2015. Compare the size of the numbers. Which of these countries saw the largest increase in emissions since 1995? What could explain the changes? (10)
+
+7.	Which country in the world had the highest CO2 emissions per square kilometer of land area in 2015? Which country has the lowest? (5) 

@@ -1,0 +1,111 @@
+NUTS_3,N3_Code,NUTS_2,N2_Code,NUTS_1,N1_Code
+Torino,ITC11,Piemonte,ITC1,Northwest Italy,ITC
+Vercelli,ITC12,Piemonte,ITC1,Northwest Italy,ITC
+Biella,ITC13,Piemonte,ITC1,Northwest Italy,ITC
+Verbano-Cusio-Ossola,ITC14,Piemonte,ITC1,Northwest Italy,ITC
+Novara,ITC15,Piemonte,ITC1,Northwest Italy,ITC
+Cuneo,ITC16,Piemonte,ITC1,Northwest Italy,ITC
+Asti,ITC17,Piemonte,ITC1,Northwest Italy,ITC
+Alessandria,ITC18,Piemonte,ITC1,Northwest Italy,ITC
+Aosta,ITC20,Valle d'Aosta,ITC2,Northwest Italy,ITC
+Imperia,ITC31,Liguria,ITC3,Northwest Italy,ITC
+Savona,ITC32,Liguria,ITC3,Northwest Italy,ITC
+Genova,ITC33,Liguria,ITC3,Northwest Italy,ITC
+La Spezia,ITC34,Liguria,ITC3,Northwest Italy,ITC
+Varese,ITC41,Lombardia,ITC4,Northwest Italy,ITC
+Como,ITC42,Lombardia,ITC4,Northwest Italy,ITC
+Lecco,ITC43,Lombardia,ITC4,Northwest Italy,ITC
+Sondrio,ITC44,Lombardia,ITC4,Northwest Italy,ITC
+Bergamo,ITC46,Lombardia,ITC4,Northwest Italy,ITC
+Brescia,ITC47,Lombardia,ITC4,Northwest Italy,ITC
+Pavia,ITC48,Lombardia,ITC4,Northwest Italy,ITC
+Lodi,ITC49,Lombardia,ITC4,Northwest Italy,ITC
+Cremona,ITC4A,Lombardia,ITC4,Northwest Italy,ITC
+Mantova,ITC4B,Lombardia,ITC4,Northwest Italy,ITC
+Milano,ITC4C,Lombardia,ITC4,Northwest Italy,ITC
+Monza and Brianza,ITC4D,Lombardia,ITC4,Northwest Italy,ITC
+L'Aquila,ITF11,Abruzzo,ITF1,South Italy,ITF
+Teramo,ITF12,Abruzzo,ITF1,South Italy,ITF
+Pescara,ITF13,Abruzzo,ITF1,South Italy,ITF
+Chieti,ITF14,Abruzzo,ITF1,South Italy,ITF
+Isernia,ITF21,Molise,ITF2,South Italy,ITF
+Campobasso,ITF22,Molise,ITF2,South Italy,ITF
+Caserta,ITF31,Campania,ITF3,South Italy,ITF
+Benevento,ITF32,Campania,ITF3,South Italy,ITF
+Napoli,ITF33,Campania,ITF3,South Italy,ITF
+Avellino,ITF34,Campania,ITF3,South Italy,ITF
+Salerno,ITF35,Campania,ITF3,South Italy,ITF
+Taranto,ITF43,Puglia,ITF4,South Italy,ITF
+Brindisi,ITF44,Puglia,ITF4,South Italy,ITF
+Lecce,ITF45,Puglia,ITF4,South Italy,ITF
+Foggia,ITF46,Puglia,ITF4,South Italy,ITF
+Bari,ITF47,Puglia,ITF4,South Italy,ITF
+Barletta-Andria-Trani,ITF48,Puglia,ITF4,South Italy,ITF
+Potenza,ITF51,Basilicata,ITF5,South Italy,ITF
+Matera,ITF52,Basilicata,ITF5,South Italy,ITF
+Cosenza,ITF61,Calabria,ITF6,South Italy,ITF
+Crotone,ITF62,Calabria,ITF6,South Italy,ITF
+Catanzaro,ITF63,Calabria,ITF6,South Italy,ITF
+Vibo Valentia,ITF64,Calabria,ITF6,South Italy,ITF
+Reggio Calabria,ITF65,Calabria,ITF6,South Italy,ITF
+Trapani,ITG11,Sicilia,ITG1,Insular Italy,ITG
+Palermo,ITG12,Sicilia,ITG1,Insular Italy,ITG
+Messina,ITG13,Sicilia,ITG1,Insular Italy,ITG
+Agrigento,ITG14,Sicilia,ITG1,Insular Italy,ITG
+Caltanissetta,ITG15,Sicilia,ITG1,Insular Italy,ITG
+Enna,ITG16,Sicilia,ITG1,Insular Italy,ITG
+Catania,ITG17,Sicilia,ITG1,Insular Italy,ITG
+Ragusa,ITG18,Sicilia,ITG1,Insular Italy,ITG
+Siracusa,ITG19,Sicilia,ITG1,Insular Italy,ITG
+Sassari,ITG25,Sardegna,ITG2,Insular Italy,ITG
+Nuoro,ITG26,Sardegna,ITG2,Insular Italy,ITG
+Cagliari,ITG27,Sardegna,ITG2,Insular Italy,ITG
+Oristano,ITG28,Sardegna,ITG2,Insular Italy,ITG
+Olbia-Tempio,ITG29,Sardegna,ITG2,Insular Italy,ITG
+Ogliastra,ITG2A,Sardegna,ITG2,Insular Italy,ITG
+Medio Campidano,ITG2B,Sardegna,ITG2,Insular Italy,ITG
+Carbonia-Iglesias,ITG2C,Sardegna,ITG2,Insular Italy,ITG
+South Tyrol,ITH10,Trentino-Alto Adige,ITH1,Northeast Italy,ITH
+Trento,ITH20,Trentino-Alto Adige,ITH2,Northeast Italy,ITH
+Verona,ITH31,Veneto,ITH3,Northeast Italy,ITH
+Vicenza,ITH32,Veneto,ITH3,Northeast Italy,ITH
+Belluno,ITH33,Veneto,ITH3,Northeast Italy,ITH
+Treviso,ITH34,Veneto,ITH3,Northeast Italy,ITH
+Venezia,ITH35,Veneto,ITH3,Northeast Italy,ITH
+Padova,ITH36,Veneto,ITH3,Northeast Italy,ITH
+Rovigo,ITH37,Veneto,ITH3,Northeast Italy,ITH
+Pordenone,ITH41,Friuli-Venezia Giulia,ITH4,Northeast Italy,ITH
+Udine,ITH42,Friuli-Venezia Giulia,ITH4,Northeast Italy,ITH
+Gorizia,ITH43,Friuli-Venezia Giulia,ITH4,Northeast Italy,ITH
+Trieste,ITH44,Friuli-Venezia Giulia,ITH4,Northeast Italy,ITH
+Piacenza,ITDH51,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Parma,ITDH52,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Reggio Emilia,ITDH53,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Modena,ITDH54,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Bologna,ITDH55,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Ferrara,ITDH56,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Ravenna,ITDH57,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Forlì-Cesena,ITDH58,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Rimini,ITDH59,Emilia-Romagna,ITH5,Northeast Italy,ITH
+Massa-Carrara,ITI11,Toscana,ITI1,Central Italy,ITI
+Lucca,ITI12,Toscana,ITI1,Central Italy,ITI
+Pistoia,ITI13,Toscana,ITI1,Central Italy,ITI
+Firenze,ITI14,Toscana,ITI1,Central Italy,ITI
+Prato,ITI15,Toscana,ITI1,Central Italy,ITI
+Livorno,ITI16,Toscana,ITI1,Central Italy,ITI
+Pisa,ITI17,Toscana,ITI1,Central Italy,ITI
+Arezzo,ITI18,Toscana,ITI1,Central Italy,ITI
+Siena,ITI19,Toscana,ITI1,Central Italy,ITI
+Grosseto,ITI1A,Toscana,ITI1,Central Italy,ITI
+Perugia,ITI21,Umbria,ITI2,Central Italy,ITI
+Terni,ITI22,Umbria,ITI2,Central Italy,ITI
+Pesaro-Urbino,ITI31,Marche,ITI3,Central Italy,ITI
+Ancona,ITI32,Marche,ITI3,Central Italy,ITI
+Macerata,ITI33,Marche,ITI3,Central Italy,ITI
+Ascoli Piceno,ITI34,Marche,ITI3,Central Italy,ITI
+Fermo,ITI35,Marche,ITI3,Central Italy,ITI
+Viterbo,ITI41,Lazio,ITI4,Central Italy,ITI
+Rieti,ITI42,Lazio,ITI4,Central Italy,ITI
+Roma,ITI43,Lazio,ITI4,Central Italy,ITI
+Latina,ITI44,Lazio,ITI4,Central Italy,ITI
+Frosinone,ITI45,Lazio,ITI4,Central Italy,ITI

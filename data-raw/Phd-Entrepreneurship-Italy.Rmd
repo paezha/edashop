@@ -13,11 +13,15 @@ In this notebook, the data are pre-processed for packaging in `R`.
 
 Load libraries:
 ```{r}
+library(eurostat)
 library(haven)
 library(labelled)
 library(lubridate)
+library(readr)
 library(tidyverse)
 ```
+
+## Original data
 
 Read data file (original is in Stata format):
 ```{r}
@@ -80,7 +84,7 @@ phd_italy <- phd_italy %>%
             struttura = factor(struttura),
             code_un = factor(code_un),
             nome_provincia = factor(nome_provincia),
-            nome_regione = factor(nome_regione),
+            nome_regione,
             q13a_phdgiudizio,
             q13b_phdgiudizio,
             q13c_phdgiudizio,
@@ -146,7 +150,7 @@ phd_italy <- phd_italy %>%
             geo = case_when(geo_n == 1 ~ "Northern Italy",
                             geo_c == 1 ~ "Central Italy",
                             geo_s == 1 ~ "Southern Italy"),
-            geo = factor(geo),
+            #geo = factor(geo),
             public_uni = factor(public_uni,
                                           levels = c(0, 1),
                                           labels = c("No", "Yes")),
@@ -178,13 +182,121 @@ phd_italy <- phd_italy %>%
             so_reg2006 = factor(so_reg2006,
                                           levels = c(0, 1),
                                           labels = c("No", "Yes")),
-            spinoff0506)
-
+            spinoff0506) %>%
+  # Complete missing observations
+  mutate(nome_regione = ifelse(nome_provincia == "Milano" & nome_regione == "", "Lombardia", nome_regione),
+         nome_regione = ifelse(nome_provincia == "Roma" & nome_regione == "", "Lazio", nome_regione),
+         nome_regione = ifelse(nome_provincia == "Siena" & nome_regione == "", "Toscana", nome_regione),
+         nome_regione = factor(nome_regione),
+         geo = ifelse(nome_regione == "Lazio" & is.na(geo), "Central Italy", geo),
+         geo = ifelse(nome_regione == "Lombardia" & is.na(geo), "Northern Italy", geo),
+         geo = ifelse(nome_regione == "Toscana" & is.na(geo), "Central Italy", geo),
+         geo = factor(geo))
 ```
 
 Save data:
 ```{r}
 usethis::use_data(phd_italy,
+                  overwrite = TRUE)
+```
+
+## Regional summary of selected variables
+
+Create a summary of selected variables by region:
+```{r}
+phd_regional <- phd_italy %>%
+  group_by(geo, nome_regione) %>%
+  summarize(phd_students = n(),
+            active_spinoff = sum(q372a_impattiva == "Yes", 
+                                 na.rm = TRUE),
+            employees = sum(q3715_impaddetti, 
+                            na.rm = TRUE),
+            spinoff0506 = sum(spinoff0506,
+                              na.rm = TRUE),
+            .groups = "drop")
+```
+
+Use package {eurostat} to retrieve regional population statistics. Download table and summarize by region for 2005:
+```{r}
+pop_regional <- get_eurostat(id = "demo_r_d2jan") %>% 
+  rename(N2_Code = geo,
+         population05 = values) %>%
+  filter(time == "2005-01-01", 
+         # All ages
+         age == "TOTAL",
+         # All sexes
+         sex == "T",
+         # Select Italy
+         str_detect(N2_Code, "IT"),
+         # Select NUTS-2 regions (with strings of lenght 4)
+         str_length(N2_Code) == 4)
+```
+
+Read table with NUTS codes:
+```{r}
+italy_nuts_codes <- read_csv("italy-nuts-codes.csv")
+```
+
+Filter NUTS-2 Codes:
+```{r}
+italy_nuts2_codes <- italy_nuts_codes %>%
+  select(NUTS_2, N2_Code) %>%
+  distinct(NUTS_2, 
+           .keep_all = TRUE)
+```
+
+Join to table:
+```{r}
+pop_regional <- pop_regional %>%
+  left_join(italy_nuts2_codes,
+            by = "N2_Code") %>%
+  transmute(nome_regione = NUTS_2,
+            NUTS_ID = N2_Code,
+            population05)
+```
+
+Join population data to data frame `phd_regional`:
+```{r}
+phd_italy_regions <- phd_regional %>%
+  left_join(pop_regional,
+            by = "nome_regione") %>%
+  mutate(nome_regione = factor(nome_regione),
+         NUTS_ID = factor(NUTS_ID)) %>%
+  select(geo,
+         nome_regione,
+         NUTS_ID,
+         phd_students,
+         active_spinoff,
+         employees,
+         spinoff0506,
+         population05)
+```
+
+Save data:
+```{r}
+usethis::use_data(phd_italy_regions,
+                  overwrite = TRUE)
+```
+
+## Geometry
+
+Get geospatial file:
+```{r}
+italy_nuts2 <- get_eurostat_geospatial(nuts_level = 2, 
+                                       year = "2006") %>%
+  filter(str_detect(NUTS_ID, "IT")) %>%
+  select(-c(id, geo))
+```
+
+Plot geometry:
+```{r}
+ggplot() +
+  geom_sf(data = italy_nuts2)
+```
+
+Save to file:
+```{r}
+usethis::use_data(italy_nuts2,
                   overwrite = TRUE)
 ```
 

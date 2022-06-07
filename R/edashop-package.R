@@ -13,13 +13,41 @@ NULL
 #' @references \url{https://github.com/paezha/edashop}
 NULL
 
+#' NUTS-2 regions in Italy.
+#'
+#' Simple features object with geometry of NUTS-2 regions in  Italy (unprojected).
+#'
+#' @format A data frame with 21 rows and 9 variables:
+#' \describe{
+#'   \item{NUTS_ID}{NUTS-2 identifier of region}
+#'   \item{LEVL_CODE}{Level of NUTS (2)}
+#'   \item{CNTR_CODE}{Code of country (IT)}
+#'   \item{NUTS_NAME}{Name of region}
+#'   \item{NAME_LATN}{Name of region in Latin script}
+#'   \item{FID}{NUTS-2 identifier of region}
+#'   \item{geometry}{Geometry of regions}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name italy_nuts2
+#' @usage data(italy_nuts2)
+#' @source Eurostat, retrieved with \code{\link[eurostat]{get_eurostat_geospatial}}
+#' @examples
+#'  data(italy_nuts2)
+#'  NAME_LATN <- italy_nuts2$NAME_LATN
+"italy_nuts2"
+
 #' A qualitative survey on Ph.D. entrepreneurship in Italy.
 #'
 #' Data from a survey on Ph.D. (Doctor of Philosophy) entrepreneurship in Italy.
-#' The data includes (i) information on Ph.D. students; (ii) background information on Italian academic institutions attended by students.
-#' The database includes the responses of 906 students. Students provided information on their employment condition, on their family
-#' background and opinions on the Ph.D. course and the institution they attended. Information on regional characteristics and on university
-#' policies are also included. The original data set by Muscio and Ramaciotti (2018) was modified to convert some variables to factors.
+#' The data includes (i) information on Ph.D. students who could graduate between 2008 and 2014; (ii) background information on Italian academic
+#' institutions attended by students. The database includes the responses of 906 students. Students provided information on their employment
+#' condition, on their family background and opinions on the Ph.D. course and the institution they attended. Information on regional characteristics
+#' and on university policies are also included.
+#'
+#' The original data set by Muscio and Ramaciotti (2018) was modified to convert some variables to factors. In addition, missing values that could
+#' were imputed when it was clear what their values were (e.g., name of region was missing, but Rome:Lazio)
 #'
 #' @format A data frame with 906 rows and 64 variables:
 #' \describe{
@@ -33,7 +61,7 @@ NULL
 #'   \item{q07_genitoreimpr}{At least one parent is an entrepreneur (No, Yes)}
 #'   \item{concludott_cert}{PhD completion (No, Yes) (source: Ministry of Education)}
 #'   \item{q08_phd_clean}{PhD completion (No, Yes) (source: survey response)}
-#'   \item{q08a_adj1}{PhD completion, no}
+#'   \item{q08a_adj1}{PhD completion (No, Yes)}
 #'   \item{q08a_concl_anno}{PhD completion, year}
 #'   \item{struttura}{Name of home university}
 #'   \item{code_un}{University code (Ministry of Education)}
@@ -58,7 +86,7 @@ NULL
 #'   \item{q371_lavora}{The student is currently employed (No, Yes)}
 #'   \item{q372_impresa}{The student established a business start-up (No, Yes)}
 #'   \item{q372a_impattiva}{The student established a still active business start-up (No, Yes)}
-#'   \item{q373_impabbandono}{The student abandoned the idea of establishing a business start-up (yes=1)}
+#'   \item{q373_impabbandono}{The student abandoned the idea of establishing a business start-up (No, Yes)}
 #'   \item{q375_posizuni}{The student is currently employed in academia/PRC (No, Yes)}
 #'   \item{q377_posizauto}{The student is currently employed as an autonomous worker (No, Yes)}
 #'   \item{q3711_impprov}{Code of the province where the startup was established}
@@ -76,12 +104,12 @@ NULL
 #'   \item{q53i_uniimp}{The student agrees that in the home uni. (1~6=highest): there is professional support to potential entrepreneurs}
 #'   \item{dimensione}{University size by number of students (1~4=largest)}
 #'   \item{med_school}{Presence of a medical school at the home university (No, Yes)}
-#'   \item{polytech}{The home university is a Polytechnic (yes=1)}
+#'   \item{polytech}{The home university is a Polytechnic (No, Yes)}
 #'   \item{geo}{Location of home university (Northern Italy, Central Italy, Southern Italy)}
-#'   \item{public_uni}{The home university is a public institution (yes=1)}
+#'   \item{public_uni}{The home university is a public institution (No, Yes)}
 #'   \item{vqr_average}{Research performance index (source: Ministry of Education)}
 #'   \item{utt_sn2006}{Availability of a TTO at the home university in 2006 (No, Yes)}
-#'   \item{utt_mission_d2006}{The mission of the TTO is to support entrepreneurship (yes=1)}
+#'   \item{utt_mission_d2006}{The mission of the TTO is to support entrepreneurship (No, Yes)}
 #'   \item{disocc2006}{Unemployment rate in 2006 in the province where the university is located}
 #'   \item{area}{PhD subject}
 #'   \item{q378_imptipo_clean}{Type of startup established by the student}
@@ -98,3 +126,30 @@ NULL
 #'  data(phd_italy)
 #'  annodinascita <- phd_italy$q01_annodinascita
 "phd_italy"
+
+#' Regional summary of survey on Ph.D. entrepreneurship in Italy.
+#'
+#' Regional summary of selected variables drawn from Muscio and Ramaciotti (2018). The original data are from a survey on Ph.D. (Doctor of Philosophy)
+#' entrepreneurship in Italy. For further detail on this data set, see \code{\link{phd_italy}}
+#'
+#' @format A data frame with 19 rows and 7 variables:
+#' \describe{
+#'   \item{geo}{Geographical location (Northern Italy, Central Italy, Southern Italy)}
+#'   \item{nome_regione}{Name of region}
+#'   \item{NUTS_ID}{NUTS-2 identifier of region}
+#'   \item{phd_students}{Number of respondents to survey}
+#'   \item{active_spinoff}{Number of active spinoffs founded by respondents to survey}
+#'   \item{employees}{Number of people employed in spinoffs founded by respondents to survey}
+#'   \item{spinoff0506}{Spinoffs in 2005-06 in the region where the startup was established}
+#'   \item{population05}{Total population of region in 2005}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name phd_italy_regions
+#' @usage data(phd_italy_regions)
+#' @source Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in brief 18 (2018): 1272-1276. \url{https://doi.org/10.1016/j.dib.2018.03.116}
+#' @examples
+#'  data(phd_italy_regions)
+#'  geo <- phd_italy_regions$geo
+"phd_italy_regions"
