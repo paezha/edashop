@@ -13,7 +13,7 @@ In this notebook, the data are pre-processed for packaging in `R`.
 
 Load libraries:
 ```{r}
-library(haven)
+#library(haven)
 library(labelled)
 library(lubridate)
 library(tidyverse)

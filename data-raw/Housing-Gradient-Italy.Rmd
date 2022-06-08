@@ -13,51 +13,68 @@ In this notebook, the data are pre-processed for packaging in `R`.
 
 Load libraries:
 ```{r}
-library(haven)
 library(labelled)
 library(lubridate)
+library(readxl)
 library(tidyverse)
 ```
 
 Data saved as: 1-s2.0-S2352340917307138-mmc2.xlsx
 
-<!--
 Read data file (original is in Stata format):
 ```{r}
-phd_italy <- read_dta("1-s2.0-S2352340918303299-mmc2.zip")
+price_gradient <- read_xlsx("1-s2.0-S2352340917307138-mmc2.xlsx")
 ```
 
 Get the column names and labels; these will be used in the documentation:
 ```{r}
-data_names <- purrr::map_df(phd_italy, ~attributes(.x)) %>%
-  bind_cols(names = names(phd_italy), .)
+data_names <- data.frame(names = c("capital_name",
+                                   "grad_existing",
+                                   "grad_new",
+                                   "population",
+                                   "log_population",
+                                   "immigrants",
+                                   "log_immigrants",
+                                   "emp_retail_tourism",
+                                   "emp_service",
+                                   "female_emp_rate",
+                                   "emp_rate",
+                                   "income_per_capita",
+                                   "log_income_per_capita",
+                                   "density",
+                                   "log_density",
+                                   "transit_per_capita",
+                                   "distance",
+                                   "housing_surface",
+                                   "mean_alt",
+                                   "housing_units",
+                                   "building_density"),
+                         label = colnames(price_gradient))
 ```
 
-Remove attributes of columns, which will change after converting data to factors:
+Write description of variables in roxygen-style:
 ```{r}
-phd_italy <- remove_attributes(phd_italy, c("label", "format.stata"))
+data_names <- data_names %>% mutate(description = glue::glue("#'   \\item{{{names}}}{{{label}}}"))
+```
+
+Rename columns, which will change after converting data to factors:
+```{r}
+colnames(price_gradient) <- data_names$names
 ```
 
 Preprocess data:
 ```{r}
-junk <- phd_italy %>%
-  transmute(id = factor(id),
-            q01_annodinascita,
-            q02_sesso = factor(q02_sesso, 
-                               levels = c(0, 1),
-                               labels = c("female", "male")),
-            q03_cittadinanzaest = factor(q03_cittadinanzaest,
-                                         levels = c(0, 1),
-                                         labels = c("Italian", "Foreign")),
-            q04_provvive = factor(q04_provvive),
-            q05_genitorelaureato = factor(q05_genitorelaureato,
-                                          levels = c(0, 1),
-                                          labels = c("No", "Yes")),
-            q06_genitoreaccad  = factor(q06_genitoreaccad,
-                                          levels = c(0, 1),
-                                          labels = c("No", "Yes")),
-            q07_genitoreimpr  = factor(q07_genitoreimpr,
-                                          levels = c(0, 1),
-                                          labels = c("No", "Yes")))
+price_gradient <- price_gradient %>%
+  mutate(capital_name = factor(capital_name))
 ```
 
+Delete unzipped excel file:
+```{r}
+unlink("1-s2.0-S2352340917307138-mmc2.xlsx")
+```
+
+Save to file:
+```{r}
+usethis::use_data(price_gradient,
+                  overwrite = TRUE)
+```

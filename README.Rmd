@@ -217,6 +217,6 @@ Figure 9 shows the result of knitting your R Markdown file.
 ```{r echo=FALSE}
 knitr::include_graphics("man/figures/09-Knitted-Session.gif")
 ```
-__Figure 9.__ _The result of knitting is a pdf file with your reading_
+__Figure 9.__ _The result of knitting is a pdf file with your workshop notes_
 
 Since you can edit and annotate the text, you can essentially _customize_ the document so that it is a unique reflection of your learning. As you progress with the workshop and complete all the sessions, you will have a collection of _unique_ documents that track your very personal learning experience.

@@ -1,0 +1,69 @@
+---
+title: "Industrial Readiness Index"
+output: html_notebook
+---
+
+A dataset with information suitable to measure regional Industry 4.0 (I4.0+) readiness. Data source:
+
+Honti, Gergely, Tímea Czvetkó, and János Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. https://doi.org/10.1016/j.dib.2020.106464
+
+Paper saved as: 1-s2.0-S2352340920313469-main.pdf
+
+In this notebook, the data are pre-processed for packaging in `R`.
+
+Load libraries:
+```{r}
+library(labelled)
+library(lubridate)
+library(readr)
+library(tidyverse)
+```
+
+Data saved as: 1-s2.0-S2352340917307138-mmc2.xlsx
+
+Read data file:
+```{r}
+i40_index_db <- read_delim("I40_indicator_db.csv", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+```
+
+Adjust some names that use problematic syntax:
+```{r}
+i40_index_varnames <- data.frame(varname = colnames(i40_index_db)) %>%
+  mutate(varname = str_replace_all(varname, 
+                               "_-_", 
+                               "-"),
+         varname = str_replace_all(varname,
+                               "__",
+                               "_"))
+```
+
+Replace the names with the clean version:
+```{r}
+colnames(i40_index_db) <- i40_index_varnames$varname
+```
+
+
+Get the column names and labels; these will be used in the documentation:
+```{r}
+data_names <- read_delim("I40_indicator_db_column_description.csv", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
+```
+
+Copy the column names to data_names:
+```{r}
+data_names$ColumnName <- i40_index_varnames$varname
+```
+
+Write description of variables in roxygen-style:
+```{r}
+data_names <- data_names %>% mutate(description = glue::glue("#'   \\item{{{ColumnName}}}{{{Description}}}"))
+```
+
+Save to file:
+```{r}
+usethis::use_data(i40_index_db,
+                  overwrite = TRUE)
+```

@@ -11,7 +11,7 @@
 
 
 
-<title>Data Preprocessing Housing Gradient Italy</title>
+<title>Industrial Readiness Index</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1762,19 +1762,18 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Data Preprocessing Housing Gradient
-Italy</h1>
+<h1 class="title toc-ignore">Industrial Readiness Index</h1>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<p>A dataset with information about housing price gradients and
-immigrant population in regional capitals in Italy. Data source:</p>
-<p>Antoniucci, Valentina, and Giuliano Marella. “Housing price gradient
-and immigrant population: Data from the Italian real estate market.”
-Data in brief 16 (2018): 794-798. <a href="https://doi.org/10.1016/j.dib.2017.12.018" class="uri">https://doi.org/10.1016/j.dib.2017.12.018</a></p>
-<p>Paper saved as: 1-s2.0-S2352340917307138-main.pdf</p>
+<p>A dataset with information suitable to measure regional Industry 4.0
+(I4.0+) readiness. Data source:</p>
+<p>Honti, Gergely, Tímea Czvetkó, and János Abonyi. “Data describing the
+regional Industry 4.0 readiness index.” Data in Brief 33 (2020): 106464.
+<a href="https://doi.org/10.1016/j.dib.2020.106464" class="uri">https://doi.org/10.1016/j.dib.2020.106464</a></p>
+<p>Paper saved as: 1-s2.0-S2352340920313469-main.pdf</p>
 <p>In this notebook, the data are pre-processed for packaging in
 <code>R</code>.</p>
 <p>Load libraries:</p>
@@ -1792,8 +1791,8 @@ The following objects are masked from ‘package:base’:
 
     date, intersect, setdiff, union</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkeGwpXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmBgYCJ9 -->
-<pre class="r"><code>library(readxl)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkodGlkeXZlcnNlKVxuYGBgIn0= -->
+<pre class="r"><code>library(readr)
 library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxu4pSA4pSAIEF0dGFjaGluZyBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMy4xIOKUgOKUgFxu4pyUIGdncGxvdDIgMy4zLjYgICAgIOKclCBkcGx5ciAgIDEuMC45XG7inJQgdGliYmxlICAzLjEuNyAgICAg4pyUIHN0cmluZ3IgMS40LjBcbuKclCB0aWR5ciAgIDEuMi4wICAgICDinJQgZm9yY2F0cyAwLjUuMVxu4pyUIHB1cnJyICAgMC4zLjQgICAgIFxu4pSA4pSAIENvbmZsaWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxu4pyWIGx1YnJpZGF0ZTo6YXMuZGlmZnRpbWUoKSBtYXNrcyBiYXNlOjphcy5kaWZmdGltZSgpXG7inJYgbHVicmlkYXRlOjpkYXRlKCkgICAgICAgIG1hc2tzIGJhc2U6OmRhdGUoKVxu4pyWIGRwbHlyOjpmaWx0ZXIoKSAgICAgICAgICBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbuKcliBsdWJyaWRhdGU6OmludGVyc2VjdCgpICAgbWFza3MgYmFzZTo6aW50ZXJzZWN0KClcbuKcliBkcGx5cjo6bGFnKCkgICAgICAgICAgICAgbWFza3Mgc3RhdHM6OmxhZygpXG7inJYgbHVicmlkYXRlOjpzZXRkaWZmKCkgICAgIG1hc2tzIGJhc2U6OnNldGRpZmYoKVxu4pyWIGx1YnJpZGF0ZTo6dW5pb24oKSAgICAgICBtYXNrcyBiYXNlOjp1bmlvbigpXG4ifQ== -->
@@ -1818,11 +1817,45 @@ library(tidyverse)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Data saved as: 1-s2.0-S2352340917307138-mmc2.xlsx</p>
-<p>Read data file (original is in Stata format):</p>
+<p>Read data file:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpY2VfZ3JhZGllbnQgPC0gcmVhZF94bHN4KFwiMS1zMi4wLVMyMzUyMzQwOTE3MzA3MTM4LW1tYzIueGxzeFwiKVxuYGBgIn0= -->
-<pre class="r"><code>price_gradient &lt;- read_xlsx(&quot;1-s2.0-S2352340917307138-mmc2.xlsx&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaTQwX2luZGV4X2RiIDwtIHJlYWRfZGVsaW0oXCJJNDBfaW5kaWNhdG9yX2RiLmNzdlwiLCBcbiAgICBkZWxpbSA9IFwiXFx0XCIsIGVzY2FwZV9kb3VibGUgPSBGQUxTRSwgXG4gICAgdHJpbV93cyA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>i40_index_db &lt;- read_delim(&quot;I40_indicator_db.csv&quot;, 
+    delim = &quot;\t&quot;, escape_double = FALSE, 
+    trim_ws = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNDQ1NCBDb2x1bW5zOiAxMDNcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCJcXHRcIlxuY2hyICAgKDEpOiBOVVRTMlxuZGJsICgxMDIpOiBZRUFSLCBkZW1vX3JfZDJqYW5fVU5JVF9OUl9fU0VYX1RfX0FHRV9UT1RBTCwgZWRhdF9sZnNlXzA0X1NFWF9UX19JU0NFRDExX0VEMC0yX19BR0VfWTI1LTY0X19VTklUX1BDLCBlZGF0Li4uXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 4454 Columns: 103
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: &quot;\t&quot;
+chr   (1): NUTS2
+dbl (102): YEAR, demo_r_d2jan_UNIT_NR__SEX_T__AGE_TOTAL, edat_lfse_04_SEX_T__ISCED11_ED0-2__AGE_Y25-64__UNIT_PC, edat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Adjust some names that use problematic syntax:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaTQwX2luZGV4X3Zhcm5hbWVzIDwtIGRhdGEuZnJhbWUodmFybmFtZSA9IGNvbG5hbWVzKGk0MF9pbmRleF9kYikpICU+JVxuICBtdXRhdGUodmFybmFtZSA9IHN0cl9yZXBsYWNlX2FsbCh2YXJuYW1lLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIl8tX1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIi1cIiksXG4gICAgICAgICB2YXJuYW1lID0gc3RyX3JlcGxhY2VfYWxsKHZhcm5hbWUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJfX1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiX1wiKSlcbmBgYCJ9 -->
+<pre class="r"><code>i40_index_varnames &lt;- data.frame(varname = colnames(i40_index_db)) %&gt;%
+  mutate(varname = str_replace_all(varname, 
+                               &quot;_-_&quot;, 
+                               &quot;-&quot;),
+         varname = str_replace_all(varname,
+                               &quot;__&quot;,
+                               &quot;_&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Replace the names with the clean version:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoaTQwX2luZGV4X2RiKSA8LSBpNDBfaW5kZXhfdmFybmFtZXMkdmFybmFtZVxuYGBgIn0= -->
+<pre class="r"><code>colnames(i40_index_db) &lt;- i40_index_varnames$varname</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1830,76 +1863,56 @@ library(tidyverse)</code></pre>
 documentation:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9uYW1lcyA8LSBkYXRhLmZyYW1lKG5hbWVzID0gYyhcImNhcGl0YWxfbmFtZVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImdyYWRfZXhpc3RpbmdcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJncmFkX25ld1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcInBvcHVsYXRpb25cIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJsb2dfcG9wdWxhdGlvblwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImltbWlncmFudHNcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJsb2dfaW1taWdyYW50c1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImVtcF9yZXRhaWxfdG91cmlzbVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImVtcF9zZXJ2aWNlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiZmVtYWxlX2VtcF9yYXRlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiZW1wX3JhdGVcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJpbmNvbWVfcGVyX2NhcGl0YVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImxvZ19pbmNvbWVfcGVyX2NhcGl0YVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImRlbnNpdHlcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJsb2dfZGVuc2l0eVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcInRyYW5zaXRfcGVyX2NhcGl0YVwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImRpc3RhbmNlXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwibWVhbl9hbHRcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJob3VzaW5nX3VuaXRzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYnVpbGRpbmdfZGVuc2l0eVwiKSxcbiAgICAgICAgICAgICAgICAgICAgICAgICBsYWJlbCA9IGNvbG5hbWVzKHByaWNlX2dyYWRpZW50KSlcbmBgYCJ9 -->
-<pre class="r"><code>data_names &lt;- data.frame(names = c(&quot;capital_name&quot;,
-                                   &quot;grad_existing&quot;,
-                                   &quot;grad_new&quot;,
-                                   &quot;population&quot;,
-                                   &quot;log_population&quot;,
-                                   &quot;immigrants&quot;,
-                                   &quot;log_immigrants&quot;,
-                                   &quot;emp_retail_tourism&quot;,
-                                   &quot;emp_service&quot;,
-                                   &quot;female_emp_rate&quot;,
-                                   &quot;emp_rate&quot;,
-                                   &quot;income_per_capita&quot;,
-                                   &quot;log_income_per_capita&quot;,
-                                   &quot;density&quot;,
-                                   &quot;log_density&quot;,
-                                   &quot;transit_per_capita&quot;,
-                                   &quot;distance&quot;,
-                                   &quot;mean_alt&quot;,
-                                   &quot;housing_units&quot;,
-                                   &quot;building_density&quot;),
-                         label = colnames(price_gradient))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9uYW1lcyA8LSByZWFkX2RlbGltKFwiSTQwX2luZGljYXRvcl9kYl9jb2x1bW5fZGVzY3JpcHRpb24uY3N2XCIsIFxuICAgIGRlbGltID0gXCJcXHRcIiwgZXNjYXBlX2RvdWJsZSA9IEZBTFNFLCBcbiAgICB0cmltX3dzID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code>data_names &lt;- read_delim(&quot;I40_indicator_db_column_description.csv&quot;, 
+    delim = &quot;\t&quot;, escape_double = FALSE, 
+    trim_ws = TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gZGF0YS5mcmFtZShuYW1lcyA9IGMoXCJjYXBpdGFsX25hbWVcIiwgXCJncmFkX2V4aXN0aW5nXCIsIFwiZ3JhZF9uZXdcIiwgIDogXG4gIGFyZ3VtZW50cyBpbXBseSBkaWZmZXJpbmcgbnVtYmVyIG9mIHJvd3M6IDIwLCAyMVxuIn0= -->
-<pre><code>Error in data.frame(names = c(&quot;capital_name&quot;, &quot;grad_existing&quot;, &quot;grad_new&quot;,  : 
-  arguments imply differing number of rows: 20, 21</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogT25lIG9yIG1vcmUgcGFyc2luZyBpc3N1ZXMsIHNlZSBgcHJvYmxlbXMoKWAgZm9yIGRldGFpbHNcbiJ9 -->
+<pre><code>Warning: One or more parsing issues, see `problems()` for details</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMTAzIENvbHVtbnM6IDNcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCJcXHRcIlxuY2hyICgzKTogQ29sdW1uTmFtZSwgRGF0YVR5cGUsIERlc2NyaXB0aW9uXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 103 Columns: 3
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: &quot;\t&quot;
+chr (3): ColumnName, DataType, Description
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Copy the column names to data_names:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9uYW1lcyRDb2x1bW5OYW1lIDwtIGk0MF9pbmRleF92YXJuYW1lcyR2YXJuYW1lXG5gYGAifQ== -->
+<pre class="r"><code>data_names$ColumnName &lt;- i40_index_varnames$varname</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Write description of variables in roxygen-style:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9uYW1lcyA8LSBkYXRhX25hbWVzICU+JSBtdXRhdGUoZGVzY3JpcHRpb24gPSBnbHVlOjpnbHVlKFwiIycgICBcXFxcaXRlbXt7e25hbWVzfX19e3t7bGFiZWx9fX1cIikpXG5gYGAifQ== -->
-<pre class="r"><code>data_names &lt;- data_names %&gt;% mutate(description = glue::glue(&quot;#&#39;   \\item{{{names}}}{{{label}}}&quot;))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Rename columns, which will change after converting data to
-factors:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Preprocess data:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpY2VfZ3JhZGllbnQgPC0gcHJpY2VfZ3JhZGllbnQgJT4lXG4gIG11dGF0ZShjYXBpdGFsX25hbWUgPSBmYWN0b3IoY2FwaXRhbF9uYW1lKSlcbmBgYCJ9 -->
-<pre class="r"><code>price_gradient &lt;- price_gradient %&gt;%
-  mutate(capital_name = factor(capital_name))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Delete unzipped excel file:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5saW5rKFwiMS1zMi4wLVMyMzUyMzQwOTE3MzA3MTM4LW1tYzIueGxzeFwiKVxuYGBgIn0= -->
-<pre class="r"><code>unlink(&quot;1-s2.0-S2352340917307138-mmc2.xlsx&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9uYW1lcyA8LSBkYXRhX25hbWVzICU+JSBtdXRhdGUoZGVzY3JpcHRpb24gPSBnbHVlOjpnbHVlKFwiIycgICBcXFxcaXRlbXt7e0NvbHVtbk5hbWV9fX17e3tEZXNjcmlwdGlvbn19fVwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>data_names &lt;- data_names %&gt;% mutate(description = glue::glue(&quot;#&#39;   \\item{{{ColumnName}}}{{{Description}}}&quot;))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Save to file:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXNldGhpczo6dXNlX2RhdGEocHJpY2VfZ3JhZGllbnQsXG4gICAgICAgICAgICAgICAgICBvdmVyd3JpdGUgPSBUUlVFKVxuYGBgIn0= -->
-<pre class="r"><code>usethis::use_data(price_gradient,
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXNldGhpczo6dXNlX2RhdGEoaTQwX2luZGV4X2RiLFxuICAgICAgICAgICAgICAgICAgb3ZlcndyaXRlID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code>usethis::use_data(i40_index_db,
                   overwrite = TRUE)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoi4pyUIFNldHRpbmcgYWN0aXZlIHByb2plY3QgdG8gJ0M6L0FudG9uaW8vcGFja2FnZXMvZWRhc2hvcCdcbuKclCBTYXZpbmcgJ2k0MF9pbmRleF9kYicgdG8gJ2RhdGEvaTQwX2luZGV4X2RiLnJkYSdcbuKAoiBEb2N1bWVudCB5b3VyIGRhdGEgKHNlZSAnaHR0cHM6Ly9yLXBrZ3Mub3JnL2RhdGEuaHRtbCcpXG4ifQ== -->
+<pre><code>✔ Setting active project to &#39;C:/Antonio/packages/edashop&#39;
+✔ Saving &#39;i40_index_db&#39; to &#39;data/i40_index_db.rda&#39;
+• Document your data (see &#39;https://r-pkgs.org/data.html&#39;)</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBQcmVwcm9jZXNzaW5nIEhvdXNpbmcgR3JhZGllbnQgSXRhbHkiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCkEgZGF0YXNldCB3aXRoIGluZm9ybWF0aW9uIGFib3V0IGhvdXNpbmcgcHJpY2UgZ3JhZGllbnRzIGFuZCBpbW1pZ3JhbnQgcG9wdWxhdGlvbiBpbiByZWdpb25hbCBjYXBpdGFscyBpbiBJdGFseS4gRGF0YSBzb3VyY2U6CgpBbnRvbml1Y2NpLCBWYWxlbnRpbmEsIGFuZCBHaXVsaWFubyBNYXJlbGxhLiAiSG91c2luZyBwcmljZSBncmFkaWVudCBhbmQgaW1taWdyYW50IHBvcHVsYXRpb246IERhdGEgZnJvbSB0aGUgSXRhbGlhbiByZWFsIGVzdGF0ZSBtYXJrZXQuIiBEYXRhIGluIGJyaWVmIDE2ICgyMDE4KTogNzk0LTc5OC4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwMTYvai5kaWIuMjAxNy4xMi4wMTgKClBhcGVyIHNhdmVkIGFzOiAxLXMyLjAtUzIzNTIzNDA5MTczMDcxMzgtbWFpbi5wZGYKCkluIHRoaXMgbm90ZWJvb2ssIHRoZSBkYXRhIGFyZSBwcmUtcHJvY2Vzc2VkIGZvciBwYWNrYWdpbmcgaW4gYFJgLgoKTG9hZCBsaWJyYXJpZXM6CmBgYHtyfQpsaWJyYXJ5KGxhYmVsbGVkKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKbGlicmFyeShyZWFkeGwpCmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCkRhdGEgc2F2ZWQgYXM6IDEtczIuMC1TMjM1MjM0MDkxNzMwNzEzOC1tbWMyLnhsc3gKClJlYWQgZGF0YSBmaWxlIChvcmlnaW5hbCBpcyBpbiBTdGF0YSBmb3JtYXQpOgpgYGB7cn0KcHJpY2VfZ3JhZGllbnQgPC0gcmVhZF94bHN4KCIxLXMyLjAtUzIzNTIzNDA5MTczMDcxMzgtbW1jMi54bHN4IikKYGBgCgpHZXQgdGhlIGNvbHVtbiBuYW1lcyBhbmQgbGFiZWxzOyB0aGVzZSB3aWxsIGJlIHVzZWQgaW4gdGhlIGRvY3VtZW50YXRpb246CmBgYHtyfQpkYXRhX25hbWVzIDwtIGRhdGEuZnJhbWUobmFtZXMgPSBjKCJjYXBpdGFsX25hbWUiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJncmFkX2V4aXN0aW5nIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZ3JhZF9uZXciLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJwb3B1bGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibG9nX3BvcHVsYXRpb24iLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJpbW1pZ3JhbnRzIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibG9nX2ltbWlncmFudHMiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJlbXBfcmV0YWlsX3RvdXJpc20iLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJlbXBfc2VydmljZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImZlbWFsZV9lbXBfcmF0ZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImVtcF9yYXRlIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaW5jb21lX3Blcl9jYXBpdGEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJsb2dfaW5jb21lX3Blcl9jYXBpdGEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkZW5zaXR5IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibG9nX2RlbnNpdHkiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFuc2l0X3Blcl9jYXBpdGEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJkaXN0YW5jZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImhvdXNpbmdfc3VyZmFjZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIm1lYW5fYWx0IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaG91c2luZ191bml0cyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImJ1aWxkaW5nX2RlbnNpdHkiKSwKICAgICAgICAgICAgICAgICAgICAgICAgIGxhYmVsID0gY29sbmFtZXMocHJpY2VfZ3JhZGllbnQpKQpgYGAKCldyaXRlIGRlc2NyaXB0aW9uIG9mIHZhcmlhYmxlcyBpbiByb3h5Z2VuLXN0eWxlOgpgYGB7cn0KZGF0YV9uYW1lcyA8LSBkYXRhX25hbWVzICU+JSBtdXRhdGUoZGVzY3JpcHRpb24gPSBnbHVlOjpnbHVlKCIjJyAgIFxcaXRlbXt7e25hbWVzfX19e3t7bGFiZWx9fX0iKSkKYGBgCgpSZW5hbWUgY29sdW1ucywgd2hpY2ggd2lsbCBjaGFuZ2UgYWZ0ZXIgY29udmVydGluZyBkYXRhIHRvIGZhY3RvcnM6CmBgYHtyfQpjb2xuYW1lcyhwcmljZV9ncmFkaWVudCkgPC0gZGF0YV9uYW1lcyRuYW1lcwpgYGAKClByZXByb2Nlc3MgZGF0YToKYGBge3J9CnByaWNlX2dyYWRpZW50IDwtIHByaWNlX2dyYWRpZW50ICU+JQogIG11dGF0ZShjYXBpdGFsX25hbWUgPSBmYWN0b3IoY2FwaXRhbF9uYW1lKSkKYGBgCgpEZWxldGUgdW56aXBwZWQgZXhjZWwgZmlsZToKYGBge3J9CnVubGluaygiMS1zMi4wLVMyMzUyMzQwOTE3MzA3MTM4LW1tYzIueGxzeCIpCmBgYAoKU2F2ZSB0byBmaWxlOgpgYGB7cn0KdXNldGhpczo6dXNlX2RhdGEocHJpY2VfZ3JhZGllbnQsCiAgICAgICAgICAgICAgICAgIG92ZXJ3cml0ZSA9IFRSVUUpCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW5kdXN0cmlhbCBSZWFkaW5lc3MgSW5kZXgiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCkEgZGF0YXNldCB3aXRoIGluZm9ybWF0aW9uIHN1aXRhYmxlIHRvIG1lYXN1cmUgcmVnaW9uYWwgSW5kdXN0cnkgNC4wIChJNC4wKykgcmVhZGluZXNzLiBEYXRhIHNvdXJjZToKCkhvbnRpLCBHZXJnZWx5LCBUw61tZWEgQ3p2ZXRrw7MsIGFuZCBKw6Fub3MgQWJvbnlpLiAiRGF0YSBkZXNjcmliaW5nIHRoZSByZWdpb25hbCBJbmR1c3RyeSA0LjAgcmVhZGluZXNzIGluZGV4LiIgRGF0YSBpbiBCcmllZiAzMyAoMjAyMCk6IDEwNjQ2NC4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwMTYvai5kaWIuMjAyMC4xMDY0NjQKClBhcGVyIHNhdmVkIGFzOiAxLXMyLjAtUzIzNTIzNDA5MjAzMTM0NjktbWFpbi5wZGYKCkluIHRoaXMgbm90ZWJvb2ssIHRoZSBkYXRhIGFyZSBwcmUtcHJvY2Vzc2VkIGZvciBwYWNrYWdpbmcgaW4gYFJgLgoKTG9hZCBsaWJyYXJpZXM6CmBgYHtyfQpsaWJyYXJ5KGxhYmVsbGVkKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKbGlicmFyeShyZWFkcikKbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKRGF0YSBzYXZlZCBhczogMS1zMi4wLVMyMzUyMzQwOTE3MzA3MTM4LW1tYzIueGxzeAoKUmVhZCBkYXRhIGZpbGU6CmBgYHtyfQppNDBfaW5kZXhfZGIgPC0gcmVhZF9kZWxpbSgiSTQwX2luZGljYXRvcl9kYi5jc3YiLCAKICAgIGRlbGltID0gIlx0IiwgZXNjYXBlX2RvdWJsZSA9IEZBTFNFLCAKICAgIHRyaW1fd3MgPSBUUlVFKQpgYGAKCkFkanVzdCBzb21lIG5hbWVzIHRoYXQgdXNlIHByb2JsZW1hdGljIHN5bnRheDoKYGBge3J9Cmk0MF9pbmRleF92YXJuYW1lcyA8LSBkYXRhLmZyYW1lKHZhcm5hbWUgPSBjb2xuYW1lcyhpNDBfaW5kZXhfZGIpKSAlPiUKICBtdXRhdGUodmFybmFtZSA9IHN0cl9yZXBsYWNlX2FsbCh2YXJuYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJfLV8iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICItIiksCiAgICAgICAgIHZhcm5hbWUgPSBzdHJfcmVwbGFjZV9hbGwodmFybmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJfXyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiXyIpKQpgYGAKClJlcGxhY2UgdGhlIG5hbWVzIHdpdGggdGhlIGNsZWFuIHZlcnNpb246CmBgYHtyfQpjb2xuYW1lcyhpNDBfaW5kZXhfZGIpIDwtIGk0MF9pbmRleF92YXJuYW1lcyR2YXJuYW1lCmBgYAoKCkdldCB0aGUgY29sdW1uIG5hbWVzIGFuZCBsYWJlbHM7IHRoZXNlIHdpbGwgYmUgdXNlZCBpbiB0aGUgZG9jdW1lbnRhdGlvbjoKYGBge3J9CmRhdGFfbmFtZXMgPC0gcmVhZF9kZWxpbSgiSTQwX2luZGljYXRvcl9kYl9jb2x1bW5fZGVzY3JpcHRpb24uY3N2IiwgCiAgICBkZWxpbSA9ICJcdCIsIGVzY2FwZV9kb3VibGUgPSBGQUxTRSwgCiAgICB0cmltX3dzID0gVFJVRSkKYGBgCgpDb3B5IHRoZSBjb2x1bW4gbmFtZXMgdG8gZGF0YV9uYW1lczoKYGBge3J9CmRhdGFfbmFtZXMkQ29sdW1uTmFtZSA8LSBpNDBfaW5kZXhfdmFybmFtZXMkdmFybmFtZQpgYGAKCldyaXRlIGRlc2NyaXB0aW9uIG9mIHZhcmlhYmxlcyBpbiByb3h5Z2VuLXN0eWxlOgpgYGB7cn0KZGF0YV9uYW1lcyA8LSBkYXRhX25hbWVzICU+JSBtdXRhdGUoZGVzY3JpcHRpb24gPSBnbHVlOjpnbHVlKCIjJyAgIFxcaXRlbXt7e0NvbHVtbk5hbWV9fX17e3tEZXNjcmlwdGlvbn19fSIpKQpgYGAKClNhdmUgdG8gZmlsZToKYGBge3J9CnVzZXRoaXM6OnVzZV9kYXRhKGk0MF9pbmRleF9kYiwKICAgICAgICAgICAgICAgICAgb3ZlcndyaXRlID0gVFJVRSkKYGBgCg==</div>
 
 
 
@@ -1946,7 +1959,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Housing-Gradient-Italy.Rmd");
+  window.initializeSourceEmbed("Industrial-Readiness-Index.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

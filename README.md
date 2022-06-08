@@ -301,7 +301,7 @@ an example of knitting.
 
 Figure 9 shows the result of knitting your R Markdown file.
 <img src="man/figures/09-Knitted-Session.gif" width="100%" /> **Figure
-9.** *The result of knitting is a pdf file with your reading*
+9.** *The result of knitting is a pdf file with your workshop notes*
 
 Since you can edit and annotate the text, you can essentially
 *customize* the document so that it is a unique reflection of your
