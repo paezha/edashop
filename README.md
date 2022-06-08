@@ -31,7 +31,7 @@ The package is designed for use in a 5-session workshop (approximately
 
 The *Sessions* are [R markdown](https://rmarkdown.rstudio.com/)
 documents with the main contents of the workshop. These documents
-resemble course notes, but with a difference: they are [literate
+resemble lecture notes, but with a difference: they are [literate
 programming](https://en.wikipedia.org/wiki/Literate_programming)
 documents that are are interactive and editable, which means that you
 can work with them in ways not possible with conventional printed notes.
@@ -161,6 +161,7 @@ several tabs. There are the usual drop-down menus for common operations.
 See Figure 1 below.
 
 <img src="man/figures/01-RStudio-Window-Anatomy.png" width="100%" />
+
 **Figure 1.** *RStudio IDE*
 
 The editor pane allows you to open and work with text and other files.
@@ -193,7 +194,7 @@ and it is in this pane where this kind of content can be previewed.
 ## Quick Start Guide
 
 Once you have installed `R` and RStudio you are ready to install the
-course package {edashop}. The package is available from
+package {edashop}. The package is available from
 [GitHub](https://github.com/paezha/envsocty3LT3), and to install it you
 need to run the following code in your `R` console:
 
@@ -229,7 +230,7 @@ it in the workshop.
 ### Create a project for all your work in this workshop
 
 Follow the steps below to create a new project. A project is the best
-way to keep your work in this course nicely organized.
+way to keep your work in this workshop nicely organized.
 
 You can create a new project using the buttons in the toolbar. Figure 2
 shows one way of doing this:
@@ -261,16 +262,19 @@ you can access the file templates for the *Sessions*.
 After restarting the application, you will find that the templates are
 available when you choose to create a new R Markdown file. To work with
 templates, you start by creating a new R Markdown file with the option
-of using a template. As an example, select template \`\` from the course
-package and give it a name. After you click ‘OK’, a new R Markdown file
-will open in your editor. Also, notice that a new folder appears in your
-project to keep this file. The process is illustrated in Figure 6.
-<img src="man/figures/06-New-File-Reading.gif" width="100%" /> **Figure
+of using a template. As an example, select template `eda-session-1-IT`
+from package {edashop} and give it a name. The instructor will indicate
+which specific files to use (the example is for the Italian Edition of
+the workshop). After you click ‘OK’, a new R Markdown file will open in
+your editor. Also, notice that a new folder appears in your project to
+keep this file. The process is illustrated in Figure 6.
+<img src="man/figures/06-New-File-Session.gif" width="100%" /> **Figure
 6.** *Creating a new file from a template*
 
 Your new file is an R Markdown document. This is a text file with
-*chunks* of code that can be executed. `EDA-0` will introduce you to the
-use of R Markdown. The document is editable, which means that you can
+*chunks* of code that can be executed. `eda-session-1-*` will introduce
+you to the use of R Markdown, literate programming, and the basics of
+working with `R`. The document is editable, which means that you can
 annotate it. To begin with, you can add your name to the list of authors
 of the document. You can execute code by clicking on the ‘play’ icon on
 the top-right corner of a chunk of code. The template also includes a
@@ -282,75 +286,25 @@ using this format:
     :::
 
 Figure 7 illustrates these steps.
-<img src="man/figures/07-Working-with-Reading.gif" width="100%" />
-**Figure 7.** *Working with your reading*
+<img src="man/figures/07-Working-with-Template.gif" width="100%" />
+**Figure 7.** *Working with a computational notebook*
 
 Once you are happy with your work using this file, you can create a pdf
-file to study by *knitting* the document. Knitting will convert the R
-Markdown to a pdf file. Click the Knit button in the top left corner to
-do this. You can knit your document at any time, and as many times as
-you want; remember, you can always start afresh by creating a new R
-Markdown file with the same template. See Figure 8 for an example of
-knitting. <img src="man/figures/08-Knitting.gif" width="100%" />
-**Figure 8.** *Click ‘Knit’ on the toolbar to convert your R Markdown
-into a pdf file*
+file (for archiving or to study) by *knitting* the document. Knitting
+will convert the R Markdown to a pdf file. Click the Knit button in the
+top left corner to do this. You can knit your document at any time, and
+as many times as you want; remember, you can always start afresh by
+creating a new R Markdown file with the same template. See Figure 8 for
+an example of knitting.
+<img src="man/figures/08-Knitting.gif" width="100%" /> **Figure 8.**
+*Click ‘Knit’ on the toolbar to convert your R Markdown into a pdf file*
 
 Figure 9 shows the result of knitting your R Markdown file.
-<img src="man/figures/09-Knitted-Reading.png" width="100%" /> **Figure
+<img src="man/figures/09-Knitted-Session.gif" width="100%" /> **Figure
 9.** *The result of knitting is a pdf file with your reading*
 
 Since you can edit and annotate the text, you can essentially
-*customize* the chapter so that it is a unique reflection of your
-learning. As you progress with the course and complete all the readings,
-you will have a collection of *unique* chapters that track your very
-personal learning experience in this course.
-
-### Working on your first exercise
-
-Working on your exercises (which you will submit for grading) is very
-similar to working with your readings. First, you need to create a new R
-Markdown file from a template. For the first exercise, you would select
-the template for `Exercise-1`. Figure 10 illustrates the steps. Use the
-following naming convention for your exercise files:
-`exercise-number-studentnumber`. Once you click ‘OK’ a new R Markdown
-file will appear in your editor, as well as a new folder where this file
-resides.
-<img src="man/figures/10-Start-New-Exercise.gif" width="100%" />
-**Figure 10.** *Creating a new file to work on an exercise*
-
-To begin, you can edit the header of the document with your personal
-information, like name and student number (see Figure 11).
-<img src="man/figures/11-Working-on-an-Exercise-YAML.gif" width="100%" />
-**Figure 11.** *Entering your personal information in the header of the
-R Markdown document*
-
-You can also run chunks of code (see Figure 12).
-<img src="man/figures/12-Working-on-an-Exercise-Chunks.gif" width="100%" />
-**Figure 12.** *Running chunks of code in your exercise*
-
-And importantly, to work on your exercise, you can enter your answers as
-text and create new chunks of code to do any calculations you need for
-your answers, as shown in Figure 13.
-<img src="man/figures/13-Working-on-an-Exercise-Answers.gif" width="100%" />
-**Figure 13.** *Working to answer the questions in your exercise*
-
-After you complete your exercise, you will need to return to the header
-and complete two sections: `highlights` and `threshold_concepts`. The
-highlights ask you to reflect on your learning experience working on the
-exercise. Try to write concisely in approximately 200 words. The
-threshold concepts are key ideas that once you grasp them they change
-your understanding of a topic, phenomenon, subject, method, etc. Write
-between three and five threshold concepts that apply to your learning
-experience working on this exercise. Figure 14 illustrates this step.
-<img src="man/figures/14-Working-on-an-Exercise-Highlights.gif" width="100%" />
-**Figure 14.** *Writing the highlights of the exercise*
-
-The highlights and threshold concepts are the last element of your
-exercise, and after writing them you can knit the document to generate
-the pdf file for submission. Click the Knit button in the top left
-corner to knit (see Figure 15).
-<img src="man/figures/15-Knitting-the-Exercise.gif" width="100%" />
-**Figure 15.** *Knitting the exercise*
-
-You are now ready to submit the exercise following the instructions in
-the course outline.
+*customize* the document so that it is a unique reflection of your
+learning. As you progress with the workshop and complete all the
+sessions, you will have a collection of *unique* documents that track
+your very personal learning experience.

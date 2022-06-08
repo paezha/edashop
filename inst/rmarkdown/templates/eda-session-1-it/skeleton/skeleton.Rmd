@@ -1,9 +1,9 @@
 ---
 title: "Session 1: Basics of working with `R`"
 author:
+- name: Antonio Paez
   # Enter your name here:
 - name: My Name
-  student_number: 123456789
 subject: "Workshop: Exploratory Data Analysis in `R`"
 
 # The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
