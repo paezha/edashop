@@ -3,7 +3,9 @@ template:
   bootstrap: 5
 
 reference:
-- title: Industry Readiness Index 4.0
+- title: Data Sets
+
+- subtitle: Industry Readiness Index 4.0
   desc: >
     Data related to the Industry Readiness Index 4.0 for NUTS-2 regions in
     Europe.
@@ -11,8 +13,6 @@ reference:
   - i40_index_db
   - i40_index_rank
   - nuts2
-
-- title: Layers
 
 - subtitle: Ph.D. Entrepreneurship in Italy
   desc: >
