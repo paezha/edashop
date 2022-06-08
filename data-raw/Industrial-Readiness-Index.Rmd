@@ -13,19 +13,21 @@ In this notebook, the data are pre-processed for packaging in `R`.
 
 Load libraries:
 ```{r}
+library(eurostat)
 library(labelled)
 library(lubridate)
 library(readr)
 library(tidyverse)
 ```
 
-Data saved as: 1-s2.0-S2352340917307138-mmc2.xlsx
+Data saved as: 1-s2.0-S2352340920313469-mmc2.zip
 
-Read data file:
+Read data file with the source data:
 ```{r}
 i40_index_db <- read_delim("I40_indicator_db.csv", 
     delim = "\t", escape_double = FALSE, 
-    trim_ws = TRUE)
+    trim_ws = TRUE) %>%
+  rename(NUTS_ID = NUTS2)
 ```
 
 Adjust some names that use problematic syntax:
@@ -43,7 +45,6 @@ Replace the names with the clean version:
 ```{r}
 colnames(i40_index_db) <- i40_index_varnames$varname
 ```
-
 
 Get the column names and labels; these will be used in the documentation:
 ```{r}
@@ -67,3 +68,40 @@ Save to file:
 usethis::use_data(i40_index_db,
                   overwrite = TRUE)
 ```
+
+Read data file with the source data:
+```{r}
+i40_index_rank <- read_delim("rankings.csv") %>%
+  rename(NUTS_ID = Regio,
+         gdp_rank = GDPrank,
+         promethee_rank = PrometheeRank,
+         regional_innovation_index = RII)
+```
+
+Save to file:
+```{r}
+usethis::use_data(i40_index_rank,
+                  overwrite = TRUE)
+```
+
+## Geometry
+
+Get geospatial file:
+```{r}
+nuts2 <- get_eurostat_geospatial(nuts_level = 2, 
+                                       year = "2013") %>%
+  select(-c(id, geo))
+```
+
+Plot geometry:
+```{r}
+ggplot() +
+  geom_sf(data = nuts2)
+```
+
+Save to file:
+```{r}
+usethis::use_data(nuts2,
+                  overwrite = TRUE)
+```
+
