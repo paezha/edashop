@@ -182,11 +182,11 @@ knitr::include_graphics("man/figures/05-New-Project.png")
 ```
 __Figure 5.__ _Your project keeps all your files nicely organized_
 
-### Working with your preliminary reading in the course package
+### Working with templates
 
-You need to restart R Studio once after installing the package before you can access the readings and exercises.
+You need to restart R Studio once after installing the package before you can access the file templates for the _Sessions_.
 
-After doing so, you will find that all your readings are included in the course package. Each reading is like a mini-chapter in a book (instead of asking you to buy a book, we will give you the contents). But readings can be much more than that. To begin working with your preliminary reading, you begin by creating a new file and choosing R Markdown from a template. Select template `Reading-0` from the course package and give it a name. After you click 'OK', a new R Markdown file will open in your editor. Also, notice that a new folder appears in your project to keep this file. The process is illustrated in Figure 6.
+After restarting the application, you will find that the templates are available when you choose to create a new R Markdown file. To work with templates, you start by creating a new R Markdown file with the option of using a template. As an example, select template `` from the course package and give it a name. After you click 'OK', a new R Markdown file will open in your editor. Also, notice that a new folder appears in your project to keep this file. The process is illustrated in Figure 6.
 ```{r echo=FALSE}
 knitr::include_graphics("man/figures/06-New-File-Reading.gif")
 ```

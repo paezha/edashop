@@ -253,17 +253,15 @@ new project. This will look like the image in Figure 5.
 <img src="man/figures/05-New-Project.png" width="100%" /> **Figure 5.**
 *Your project keeps all your files nicely organized*
 
-### Working with your preliminary reading in the course package
+### Working with templates
 
 You need to restart R Studio once after installing the package before
-you can access the readings and exercises.
+you can access the file templates for the *Sessions*.
 
-After doing so, you will find that all your readings are included in the
-course package. Each reading is like a mini-chapter in a book (instead
-of asking you to buy a book, we will give you the contents). But
-readings can be much more than that. To begin working with your
-preliminary reading, you begin by creating a new file and choosing R
-Markdown from a template. Select template `Reading-0` from the course
+After restarting the application, you will find that the templates are
+available when you choose to create a new R Markdown file. To work with
+templates, you start by creating a new R Markdown file with the option
+of using a template. As an example, select template \`\` from the course
 package and give it a name. After you click ‘OK’, a new R Markdown file
 will open in your editor. Also, notice that a new folder appears in your
 project to keep this file. The process is illustrated in Figure 6.
