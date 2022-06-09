@@ -361,13 +361,13 @@ data("phd_italy_regions",
      package = "edashop")
 ```
 
-3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)?
+3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)? (Hint: check `?str`)
 
 4. Which region in Italy had the largest number of respondents to the survey? Which had the least? Can we infer from the number of respondents the population of Ph.D. students in each region? Explain.
 
 5. Calculate the mean size of active spinoffs for every region.
 
-6. What is the maximum mean spinoff size by region? (Hint: use `?max` to see how to deal with the `NaN` value)
+6. What is the maximum mean spinoff size by region? (Hint: use `?max` to see how to deal with `NaN`s)
 
 7. Calculate the regional spinoff intensity started by Ph.D. students: this is number of currently active spinoffs founded by Ph.D. students in the sample.
 
