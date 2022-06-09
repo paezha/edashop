@@ -19,7 +19,10 @@ reference:
     A data set with information about auctions of foreclosed properties in Italy
     between 2000 and 2016.
   contents:
-  - italy_auctions
+  - auctions_amf
+  - auctions_pf
+  - auctions_phy
+  - auctions_sef
 
 - subtitle: Housing Price Gradients in Italian Capitals
   desc: >

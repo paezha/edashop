@@ -330,25 +330,18 @@ NULL
 
 ## AUCTIONS IN DISTRESSED REAL ESTATE MARKETS
 
-#' Auctions in a Distressed Real Estate Market in Italy.
+#' Auctions in a Distressed Real Estate Market in Italy: Auction Market Features.
 #'
 #' Data describing Real Estate (RE) distressed market, with a focus on property foreclosures in North-East Italy between 2000 and 2016. The data
 #' were collected by Canesi and Marella by means of a survey sent to financial institutions, courts of law and different associations of public
 #' notaries. The aim of the survey was to record real estate auctions, and their technical and socio-economic features. The data provide information
 #' about housing market trends and performance as well as demographic features.
 #'
+#' This table contains the auction market features of the data set.
+#'
 #' @format A data frame with 125 rows and 15 variables:
 #' \describe{
-#'   \item{type_class}{Type of auctioned property; factor with 7 levels (Factory, Residence, Retail, Mixed, Build-on Land, Office, Agricultural Building)}
-#'   \item{gross_building_area}{Gross Building Area (m2)}
-#'   \item{quality}{An ordinal factor that describes the quality of the property, including design work and materials employed (Poor, Adequate, Fair, Good, Excellent)}
-#'   \item{state_maintenance}{An ordinal factor that describes the state of maintenance of the property, if it is new, recently renovated or damaged over the years (Poor, Adequate, Fair, Good, Excellent)}
-#'   \item{occupancy}{The state of ccupancy of the auctioned property as an indicator of whether the property generates income; factor with 3 levels (Unoccupied, Tenant, Owner)}
-#'   \item{location}{Physical location based on distance from the city center of property, ordinal factor (Center, Semi-center, Suburban)}
-#'   \item{income}{Average per capita income for the city where the auction takes place (euros/year)}
-#'   \item{delta_ntn}{Variation in the number of local real estate transactions over the observed period, an index that describes the activity of the local real estate market (percentage)}
-#'   \item{re_activity_index}{Real Estate Activity Index (REAI) is an index that describes the activity and the performance of the local real estate market. This index is calculated as the ratio between delta_ntn and the total stock of real estate units in the area where the property is auctioned}
-#'   \item{population}{Population in the city where the property is auctioned}
+#'   \item{id}{Unique identifier of the property auctioned}
 #'   \item{days_on_market}{Number of days the property stayed on the auctioned market before being sold; the difference between the date of sale (closing date) and the first auction starting date (opening bid)}
 #'   \item{number_auctions}{The number of bidding proceedings before the selling}
 #'   \item{discount}{Percentage variation between the first listing value (which equals the market value assessed by the appraisal) and the selling price }
@@ -358,13 +351,93 @@ NULL
 #'
 #' @docType data
 #' @keywords datasets
-#' @name italy_auctions
-#' @usage data(italy_auctions)
+#' @name auctions_amf
+#' @usage data(auctions_amf)
 #' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
 #' @examples
-#'  data(italy_auctions)
-#'  gradient <- italy_auctions$grad_existing
-"italy_auctions"
+#'  data(auctions_amf)
+#'  discount <- auctions_amf$discount
+"auctions_amf"
+
+#' Auctions in a Distressed Real Estate Market in Italy: Profitability Features of Property.
+#'
+#' Data describing Real Estate (RE) distressed market, with a focus on property foreclosures in North-East Italy between 2000 and 2016. The data
+#' were collected by Canesi and Marella by means of a survey sent to financial institutions, courts of law and different associations of public
+#' notaries. The aim of the survey was to record real estate auctions, and their technical and socio-economic features. The data provide information
+#' about housing market trends and performance as well as demographic features.
+#'
+#' This table contains the profitability features of the data set.
+#'
+#' @format A data frame with 125 rows and 15 variables:
+#' \describe{
+#'   \item{id}{Unique identifier of the property auctioned}
+#'   \item{occupancy}{The state of ccupancy of the auctioned property as an indicator of whether the property generates income; factor with 3 levels (Unoccupied, Tenant, Owner)}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name auctions_pf
+#' @usage data(auctions_pf)
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @examples
+#'  data(auctions_pf)
+#'  occupancy <- auctions_pf$occupancy
+"auctions_pf"
+
+#' Auctions in a Distressed Real Estate Market in Italy: Physical Features of Property.
+#'
+#' Data describing Real Estate (RE) distressed market, with a focus on property foreclosures in North-East Italy between 2000 and 2016. The data
+#' were collected by Canesi and Marella by means of a survey sent to financial institutions, courts of law and different associations of public
+#' notaries. The aim of the survey was to record real estate auctions, and their technical and socio-economic features. The data provide information
+#' about housing market trends and performance as well as demographic features.
+#'
+#' This table contains the physical features of the properties auctioned.
+#'
+#' @format A data frame with 125 rows and 15 variables:
+#' \describe{
+#'   \item{id}{Unique identifier of the property auctioned}
+#'   \item{type_class}{Type of auctioned property; factor with 7 levels (Factory, Residence, Retail, Mixed, Build-on Land, Office, Agricultural Building)}
+#'   \item{gross_building_area}{Gross Building Area (m2)}
+#'   \item{quality}{An ordinal factor that describes the quality of the property, including design work and materials employed (Poor, Adequate, Fair, Good, Excellent)}
+#'   \item{state_maintenance}{An ordinal factor that describes the state of maintenance of the property, if it is new, recently renovated or damaged over the years (Poor, Adequate, Fair, Good, Excellent)}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name auctions_phy
+#' @usage data(auctions_phy)
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @examples
+#'  data(auctions_phy)
+#'  quality <- auctions_phy$quality
+"auctions_phy"
+
+#' Auctions in a Distressed Real Estate Market in Italy: Socio-Economic Features.
+#'
+#' Data describing Real Estate (RE) distressed market, with a focus on property foreclosures in North-East Italy between 2000 and 2016. The data
+#' were collected by Canesi and Marella by means of a survey sent to financial institutions, courts of law and different associations of public
+#' notaries. The aim of the survey was to record real estate auctions, and their technical and socio-economic features. The data provide information
+#' about housing market trends and performance as well as demographic features.
+#'
+#' @format A data frame with 125 rows and 15 variables:
+#' \describe{
+#'   \item{id}{Unique identifier of the property auctioned}
+#'   \item{location}{Physical location based on distance from the city center of property, ordinal factor (Center, Semi-center, Suburban)}
+#'   \item{income}{Average per capita income for the city where the auction takes place (euros/year)}
+#'   \item{delta_ntn}{Variation in the number of local real estate transactions over the observed period, an index that describes the activity of the local real estate market (percentage)}
+#'   \item{re_activity_index}{Real Estate Activity Index (REAI) is an index that describes the activity and the performance of the local real estate market. This index is calculated as the ratio between delta_ntn and the total stock of real estate units in the area where the property is auctioned}
+#'   \item{population}{Population in the city where the property is auctioned}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name auctions_sef
+#' @usage data(auctions_sef)
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @examples
+#'  data(auctions_sef)
+#'  income <- auctions_sef$income
+"auctions_sef"
 
 ## SAMPLE OF ITALIAN VINEYARDS
 
