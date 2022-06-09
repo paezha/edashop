@@ -27,14 +27,19 @@ reference:
   contents:
   - price_gradient
 
-  - subtitle: Industry Readiness Index 4.0
+- subtitle: Industry Readiness Index 4.0
   desc: >
     Data related to the Industry Readiness Index 4.0 for NUTS-2 regions in
     Europe.
   contents:
   - i40_index_db
   - i40_index_rank
-  - nuts2
+
+- subtitle: Italian Vineyards
+  desc: >
+    A sample of italian vineyards with landscape and management information.
+  contents:
+  - vineyards
 
 - subtitle: Ph.D. Entrepreneurship in Italy
   desc: >
@@ -43,4 +48,10 @@ reference:
   contents:
   - phd_italy
   - phd_italy_regions
+
+- subtitle: Geospatial Files
+  desc: >
+    Files with geospatial information to complement the data sets.
+  contents:
   - italy_nuts2
+  - nuts2
