@@ -12,6 +12,12 @@ reference:
   - eda_session_1_it
   - eda_session_2_it
 
+- subtitle: Session 5 of Workshop (All Editions)
+  desc: >
+    Templates for the Italian edition of the workshop.
+  contents:
+  - eda_session_5
+
 - title: Data Sets
 
 - subtitle: Auctions in a Distressed Real Estate Market in Italy

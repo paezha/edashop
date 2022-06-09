@@ -1,5 +1,5 @@
 ---
-title: "Session 2. Data"
+title: "Session 5. A date with EDA: Bring your own data"
 author:
 - name: Antonio Paez
   # Enter your name here:
@@ -31,21 +31,10 @@ output:
 always_allow_html: true
 ---
 
-> “Be willing to be a beginner every single morning.”
-> --― Meister Eckhart
-
 # Session Outline
 
-- Why measuring things?  
-- Scales of measurement  
-- Data objects revisited 
-- Quick data summaries
-- Data manipulation
-- {dplyr}: a grammar of data manipulation
-
-# Suggested Readings
-
-
+- Reading external data
+- Hands-on practice
 
 # Introduction
 
@@ -68,13 +57,46 @@ When packages are in CRAN, they can be installed using `install.packages()`. A v
 
 Once the package is part of your _library_, it becomes available for use in your computer; to use the package afterwards, you must load it into memory. For this, we use the command `library()`, which is used to load a package, that is, to activate it for use, for example:
 ```{r}
-library(tidyverse)
+library(readr)
 ```
 
-# Data Frames in `R`
+```{r}
+external_csv <- system.file("extdata", 
+                             "rankings.csv", 
+                             package = "edashop")
+```
 
+```{r}
+imported_csv <- read.csv(external_file)
+```
 
+```{r}
+library(haven)
+```
 
+```{r}
+external_dta <- system.file("extdata", 
+                             "phd_italy.dta", 
+                             package = "edashop")
+```
+
+```{r}
+imported_dta <- read_dta(external_dta)
+```
+
+```{r}
+library(readxl)
+```
+
+```{r}
+external_xlsx <- system.file("extdata", 
+                             "italy-nuts-codes.xlsx", 
+                             package = "edashop")
+```
+
+```{r}
+imported_xlsx <- read_xlsx(external_xlsx)
+```
 
 # Practice
 

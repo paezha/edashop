@@ -12,7 +12,7 @@ status](https://www.r-pkg.org/badges/version/envsocty3LT3)](https://CRAN.R-proje
 <!-- badges: end -->
 
 Package {edashop} is an open educational resource to teach a workshop on
-exploratory data analysis (EDA) using R and computational notebooks.
+exploratory data analysis (EDA) using `R` and computational notebooks.
 
 The package aims to combine various advantages of working with the [`R`
 statistical computing project](https://www.r-project.org/):
@@ -38,7 +38,7 @@ can work with them in ways not possible with conventional printed notes.
 
 ## Workshop outline
 
-### Session 1: Basics of working with `R` (2 h)
+### Session 1. Basics of working with `R` (2 h)
 
 -   Why `R`?
 -   Installing the software: `R` and R Studio
