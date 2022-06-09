@@ -13,6 +13,18 @@
     <loc>https://paezha.github.io/edashop/index.html</loc>
   </url>
   <url>
+    <loc>https://paezha.github.io/edashop/reference/auctions_amf.html</loc>
+  </url>
+  <url>
+    <loc>https://paezha.github.io/edashop/reference/auctions_pf.html</loc>
+  </url>
+  <url>
+    <loc>https://paezha.github.io/edashop/reference/auctions_phy.html</loc>
+  </url>
+  <url>
+    <loc>https://paezha.github.io/edashop/reference/auctions_sef.html</loc>
+  </url>
+  <url>
     <loc>https://paezha.github.io/edashop/reference/eda_session_1_it.html</loc>
   </url>
   <url>
@@ -29,9 +41,6 @@
   </url>
   <url>
     <loc>https://paezha.github.io/edashop/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/italy_auctions.html</loc>
   </url>
   <url>
     <loc>https://paezha.github.io/edashop/reference/italy_nuts2.html</loc>
