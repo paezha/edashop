@@ -50,22 +50,23 @@ can work with them in ways not possible with conventional printed notes.
 -   Directory structure
 -   Creating new files: types of files
 -   Literate programming
+-   Data objects/classes and basic operations
 
 ### Session 2. Data (2 h)
 
--   Why measuring things?
--   Scales of measurement
--   Data classes
--   Data structures: vectors, matrices, lists, data frames
+-   Why measuring things?  
+-   Scales of measurement  
+-   Data objects revisited
 -   (Break)
+-   Quick data summaries
 -   Data manipulation
 -   {dplyr}: a grammar of data manipulation
 
 ### Session 3. Exploratory data analysis I: Descriptive statistics (2 h)
 
 -   What is EDA?
+-   Data summaries revisited
 -   Properties of data: central tendency and dispersion
--   Quick data summaries
 -   Appropriate summary statistics by scale of measurement
 -   (Break)
 -   Univariate description
