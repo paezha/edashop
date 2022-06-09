@@ -3,6 +3,14 @@ template:
   bootstrap: 5
 
 reference:
+- title: Templates
+
+- subtitle: Italian Edition of Workshop
+  desc: >
+    Templates for the Italian edition of the workshop.
+  contents:
+  - eda_session_1_it
+
 - title: Data Sets
 
 - subtitle: Industry Readiness Index 4.0

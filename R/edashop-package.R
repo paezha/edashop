@@ -13,6 +13,12 @@ NULL
 #' @references \url{https://github.com/paezha/edashop}
 NULL
 
+##############################################
+##                DATA SETS                 ##
+##############################################
+
+## INDUSTRY READINESS
+
 #' Database for Industry Readiness Index 4.0.
 #'
 #' A database with 101 indicators aggregated to NUTS 2 statistical level. Data were collected from open sources by
@@ -160,55 +166,7 @@ NULL
 #'  NUTS_2 <- i40_index_rank$NUTS_ID
 "i40_index_rank"
 
-#' NUTS-2 regions in Italy.
-#'
-#' Simple features object with geometry of NUTS-2 regions in  Italy (unprojected).
-#'
-#' @format A simple features data frame with 21 rows and 7 variables:
-#' \describe{
-#'   \item{NUTS_ID}{NUTS-2 identifier of region}
-#'   \item{LEVL_CODE}{Level of NUTS (2)}
-#'   \item{CNTR_CODE}{Code of country (IT)}
-#'   \item{NUTS_NAME}{Name of region}
-#'   \item{NAME_LATN}{Name of region in Latin script}
-#'   \item{FID}{NUTS-2 identifier of region}
-#'   \item{geometry}{Geometry of regions}
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name italy_nuts2
-#' @usage data(italy_nuts2)
-#' @source Eurostat, retrieved with \code{\link[eurostat]{get_eurostat_geospatial}}
-#' @examples
-#'  data(italy_nuts2)
-#'  NAME_LATN <- italy_nuts2$NAME_LATN
-"italy_nuts2"
-
-#' NUTS-2 regions.
-#'
-#' Simple features object with geometry of NUTS-2 regions (unprojected).
-#'
-#' @format A simple features data frame with 320 rows and 7 variables:
-#' \describe{
-#'   \item{NUTS_ID}{NUTS-2 identifier of region}
-#'   \item{LEVL_CODE}{Level of NUTS (2)}
-#'   \item{CNTR_CODE}{Code of country (IT)}
-#'   \item{NUTS_NAME}{Name of region}
-#'   \item{NAME_LATN}{Name of region in Latin script}
-#'   \item{FID}{NUTS-2 identifier of region}
-#'   \item{geometry}{Geometry of regions}
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name nuts2
-#' @usage data(nuts2)
-#' @source Eurostat, retrieved with \code{\link[eurostat]{get_eurostat_geospatial}}
-#' @examples
-#'  data(nuts2)
-#'  NAME_LATN <- nuts2$NAME_LATN
-"nuts2"
+## PHD ENTREPRENEURSHIP IN ITALY
 
 #' A qualitative survey on Ph.D. entrepreneurship in Italy.
 #'
@@ -326,6 +284,8 @@ NULL
 #'  geo <- phd_italy_regions$geo
 "phd_italy_regions"
 
+## HOUSING PRICE GRADIENTS
+
 
 #' Housing Price Gradients in Capital Cities in Italy.
 #'
@@ -368,3 +328,73 @@ NULL
 #'  data(price_gradient)
 #'  gradient <- price_gradient$grad_existing
 "price_gradient"
+
+## GEOGRAPHICAL FILES
+
+#' NUTS-2 regions in Italy.
+#'
+#' Simple features object with geometry of NUTS-2 regions in  Italy (unprojected).
+#'
+#' @format A simple features data frame with 21 rows and 7 variables:
+#' \describe{
+#'   \item{NUTS_ID}{NUTS-2 identifier of region}
+#'   \item{LEVL_CODE}{Level of NUTS (2)}
+#'   \item{CNTR_CODE}{Code of country (IT)}
+#'   \item{NUTS_NAME}{Name of region}
+#'   \item{NAME_LATN}{Name of region in Latin script}
+#'   \item{FID}{NUTS-2 identifier of region}
+#'   \item{geometry}{Geometry of regions}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name italy_nuts2
+#' @usage data(italy_nuts2)
+#' @source Eurostat, retrieved with \code{\link[eurostat]{get_eurostat_geospatial}}
+#' @examples
+#'  data(italy_nuts2)
+#'  NAME_LATN <- italy_nuts2$NAME_LATN
+"italy_nuts2"
+
+#' NUTS-2 regions.
+#'
+#' Simple features object with geometry of NUTS-2 regions (unprojected).
+#'
+#' @format A simple features data frame with 320 rows and 7 variables:
+#' \describe{
+#'   \item{NUTS_ID}{NUTS-2 identifier of region}
+#'   \item{LEVL_CODE}{Level of NUTS (2)}
+#'   \item{CNTR_CODE}{Code of country (IT)}
+#'   \item{NUTS_NAME}{Name of region}
+#'   \item{NAME_LATN}{Name of region in Latin script}
+#'   \item{FID}{NUTS-2 identifier of region}
+#'   \item{geometry}{Geometry of regions}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name nuts2
+#' @usage data(nuts2)
+#' @source Eurostat, retrieved with \code{\link[eurostat]{get_eurostat_geospatial}}
+#' @examples
+#'  data(nuts2)
+#'  NAME_LATN <- nuts2$NAME_LATN
+"nuts2"
+
+##############################################
+##                TEMPLATES                 ##
+##############################################
+
+#' EDA Workshop Session 1 Template (Italian Edition).
+#'
+#' Template for creating a computational notebook for Session 1 of the Italian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_1_it
+#' @export
+eda_session_1_it <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda-session-1-it from the menu")
+}
