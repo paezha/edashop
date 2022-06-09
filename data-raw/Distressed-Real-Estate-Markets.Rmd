@@ -1,0 +1,118 @@
+---
+title: "Industrial Readiness Index"
+output: html_notebook
+---
+
+A dataset with information about distressed real estate market auctions in Italy. Data source:
+
+Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in brief 18 (2018): 319-324. https://doi.org/10.1016/j.dib.2018.03.009
+
+Paper saved as: 1-s2.0-S2352340918302105-main.pdf
+
+In this notebook, the data are pre-processed for packaging in `R`.
+
+Load libraries:
+```{r}
+library(labelled)
+library(lubridate)
+library(readxl)
+library(tidyverse)
+```
+
+Data saved as: 1-s2.0-S2352340918302105-mmc2.xlsx
+
+## Original data
+
+Read data file (original is in Stata format):
+```{r}
+italy_auctions <- read_excel("1-s2.0-S2352340918302105-mmc2.xlsx", 
+                             col_types = c("numeric", "numeric", "numeric", 
+                                           "numeric", "numeric", "numeric", 
+                                           "numeric", "numeric", "numeric", 
+                                           "numeric", "numeric", "numeric", 
+                                           "numeric", "numeric", "date"),
+                             skip = 1)
+```
+
+Fix one date that was incorrectly coded:
+```{r}
+italy_auctions$DV[44] <- "2015-06-01 UTC"
+```
+
+Preprocess data frame:
+```{r}
+italy_auctions <- italy_auctions %>%
+  rename(type_class = TC,
+         gross_building_area = GBA,
+         quality = Q,
+         state_maintenance = SM,
+         occupancy = Oc,
+         location = Loc,
+         income = Inc,
+         delta_ntn = DNTN,
+         re_activity_index = REAI,
+         population = Pop,
+         days_on_market = DD,
+         number_auctions = `NA`,
+         discount = Ds,
+         premium = Pr,
+         date = DV) %>%
+  mutate(type_class = case_when(type_class == 0 ~ "Factory",
+                                type_class == 1 ~ "Residence",
+                                type_class == 2 ~ "Retail",
+                                type_class == 3 ~ "Mixed",
+                                type_class == 4 ~ "Build-on Land",
+                                type_class == 5 ~ "Office",
+                                type_class == 6 ~ "Agricultural Building"
+  ),
+  type_class = factor(type_class),
+  quality = factor(quality,
+                   levels = 1:5,
+                   labels = c("Poor", "Adequate", "Fair", "Good", "Excellent"),
+                   ordered = TRUE),
+  state_maintenance = factor(state_maintenance,
+                             levels = 1:5,
+                             labels = c("Poor", "Adequate", "Fair", "Good", "Excellent"),
+                             ordered = TRUE),
+  occupancy = factor(occupancy,
+                     levels = c(0, 1, 2),
+                     labels = c("Unoccupied", "Tenant", "Owner")),
+  location = factor(location,
+                    levels = c(0, 1, 2),
+                    labels = c("Center", "Semi-center", "Suburban")),
+  date = as.Date(ymd_hms(date)))
+```
+
+
+Get the column names and labels; these will be used in the documentation:
+```{r}
+data_names <- data.frame(names = colnames(italy_auctions),
+                         label = c("Type of auctioned property; factor with 7 levels (Factory, Residence, Retail, Mixed, Build-on Land, Office, Agricultural Building)",
+"Gross Building Area (m2)",
+"An ordinal factor that describes the quality of the property, including design work and materials employed (Poor, Adequate, Fair, Good, Excellent)",
+"An ordinal factor that describes the state of maintenance of the property, if it is new, recently renovated or damaged over the years (Poor, Adequate, Fair, Good, Excellent)",
+"The state of ccupancy of the auctioned property as an indicator of whether the property generates income; factor with 3 levels (Unoccupied, Tenant, Owner)",
+"Physical location based on distance from the city center of property, ordinal factor (Center, Semi-center, Suburban)",
+"Average per capita income for the city where the auction takes place (euros/year)",
+"Variation in the number of local real estate transactions over the observed period, an index that describes the activity of the local real estate market (percentage)",
+"Real Estate Activity Index (REAI) is an index that describes the activity and the performance of the local real estate market. This index is calculated as the ratio between delta_ntn and the total stock of real estate units in the area where the property is auctioned",
+"Population in the city where the property is auctioned",
+"Number of days the property stayed on the auctioned market before being sold; the difference between the date of sale (closing date) and the first auction starting date (opening bid)",
+"The number of bidding proceedings before the selling",
+"Percentage variation between the first listing value (which equals the market value assessed by the appraisal) and the selling price ",
+"Premium paid by the winner bidder to win the auction calculated as the percentage variation between the last listing value and the final selling price",
+"Date when the property was assessed by the appraisal, in Year-Month-Day format"
+))
+```
+
+Write description of variables in roxygen-style:
+```{r}
+data_names <- data_names %>% mutate(description = glue::glue("#'   \\item{{{names}}}{{{label}}}"))
+```
+
+Save to file:
+```{r}
+usethis::use_data(italy_auctions,
+                  overwrite = TRUE)
+```
+
