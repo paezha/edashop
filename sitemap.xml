@@ -28,6 +28,9 @@
     <loc>https://paezha.github.io/edashop/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://paezha.github.io/edashop/reference/italy_auctions.html</loc>
+  </url>
+  <url>
     <loc>https://paezha.github.io/edashop/reference/italy_nuts2.html</loc>
   </url>
   <url>
@@ -41,5 +44,8 @@
   </url>
   <url>
     <loc>https://paezha.github.io/edashop/reference/price_gradient.html</loc>
+  </url>
+  <url>
+    <loc>https://paezha.github.io/edashop/reference/vineyards.html</loc>
   </url>
 </urlset>
