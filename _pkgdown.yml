@@ -20,7 +20,7 @@ reference:
   contents:
   - italy_auctions
 
-  - subtitle: Housing Price Gradients in Italian Capitals
+- subtitle: Housing Price Gradients in Italian Capitals
   desc: >
     A data set with information about housing price gradients in 112 provincial
     capitals in Italy.
