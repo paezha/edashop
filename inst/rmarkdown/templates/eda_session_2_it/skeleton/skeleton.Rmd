@@ -31,70 +31,474 @@ output:
 always_allow_html: true
 ---
 
-> “Be willing to be a beginner every single morning.”
-> --― Meister Eckhart
+> “If you think education is expensive, try ignorance.”  
+>
+> --― Robert Orben
 
 # Session Outline
 
-- Why measuring things?  
-- Scales of measurement  
-- Data objects revisited 
+- Why measuring things?
+- Scales of measurement
+- Data objects revisited
 - Quick data summaries
 - Data manipulation
 - {dplyr}: a grammar of data manipulation
 
-# Suggested Readings
+# Reminder
 
-
-
-# Introduction
-
-NOTE: This is an [R Markdown](http://rmarkdown.rstudio.com) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. R Markdown files are _computational notebooks_ which implement a coding philosophy called [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible. 
+This document is in [R Markdown](http://rmarkdown.rstudio.com) format, a plain text file with support for embedded code, in other words, a computational notebook that implements [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and code to communicate with the computer. This enforces discipline in coding by forcing the writer to _document_ in natural language the process, as if speaking directly to a human (which could be the very same person but in the future). Coding in literate programming style has a higher upfront cost, but it is less expensive in the long term (think of the time wasted when someone else or yourself is trying to puzzle the computer code at a later time or different place.)  
 
 # Preliminaries
 
-It is good practice to clear the working memory in RStudio when you begin working on something new. This is to make sure that there is no extraneous info in memory that might confuse your work. The command in `R` to clear the workspace is `rm` (for 'remove'), followed by a list of items to be removed. To clear the workspace from _all_ objects, run the following chunk (by clicking on the 'play' icon):
+Clear the workspace from _all_ objects:
 ```{r}
 rm(list = ls())
 ```
 
-Note that `ls()` lists all objects currently on the workspace.
-
-An alternative way of doing this is to just click on the little broom icon in the 'Environment' tab (top right of your screen in the standard configuration of the RStudio app).
-
-Next, we probably want to load all _packages_ that we wish to use in our work session. A package is a unit of shareable code that augments the capabilities of base `R`. Packages can be installed from different sources; the most common one is CRAN (Comprehensive R Archive Network), but sometimes from GitHub repositories, among other places where developers put their packages. A big advantage of CRAN is that it keeps track of dependencies, that is, the ways in which packages depend on one another. This reduces the probability of packages not working.
-
-When packages are in CRAN, they can be installed using `install.packages()`. A very useful set of packages is `tidyverse`, which includes code for data manipuation and visualization. If you have not done so before, you can install the package with `install.packages("tidyverse")`. As an alternative, you can install it from RStudio using the 'Install Packages' command in the 'Tools' menu, on the menu bar above. Simply click on 'Tools - Install Packages...' on the menu bar, and enter `tidyverse` in the window. Or you can use the 'Packages' pane in the app (in the bottom right).
-
-Once the package is part of your _library_, it becomes available for use in your computer; to use the package afterwards, you must load it into memory. For this, we use the command `library()`, which is used to load a package, that is, to activate it for use, for example:
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(edashop)
 ```
 
-# Data Frames in `R`
+The `R` community has over time developed consistent standards for sharing packages, including the need for documentation. Good documentation is a sign of a quality package. You can always consult the help pages of a package (or its contents), with the following function:
+```r
+?dplyr
+```
+<!---
+Code is commented using "#". Text in the body of the text is commented in this style. We will use comments like this to explain things about the R Markdown document that we do not necessarily want or need in the output document. For example, code that starts with three backtics followed by "r" but without the curly brackets, is not executable. It is rendered in the output document using the style for code. 
+-->
 
+Package {[dplyr](https://dplyr.tidyverse.org/)} (the name is a riff on "data plier"), provides numerous functions for data "carpentry" or data "wrangling". What distinguishes the package is that functions are implemented following a consistent _grammar_ of data manipulation. Data are manipulated using "verbs" that act on data objects. Verbs can be linked by means of _pipes_ to form complete _phrases_ of data manipulation. These concepts will be discussed in more detail in this session.
 
+<!--
+Images can be inserted in an R Markdown document using the format ![name of figure](/path/to/figure). An R Markdown document always assumes that the place it resides is the working directory.
+-->
 
+![Pliers](pliers.png)
+
+![dplyr](dplyr.png)
+
+We will also load the following data frames for this session:
+```{r}
+data("auctions_amf")
+data("auctions_pf")
+data("auctions_phy")
+data("auctions_sef")
+```
+
+These data frames contain information about real estate transactions in distressed markets in Italy. You can check the documentation in the usual way:
+```r
+?auctions_amf
+```
+
+# Why measuring?
+
+Measuring stuff is a lot of effort. It can be expensive too. Sometimes need special equipment. And instruments. Why do we bother?
+
+## Why do we measure?
+
+<!-- Two hasthtags are a secondary heading -->
+
+<!-- Use an unnumbered list (i.e., bullet points) to list/explain the resons why measuring. Add bullet points as appropriate -->
+
+-
+-
+-
+
+## Examples of instruments used for measurement
+
+<!-- Use an unnumbered list to list/describe instruments used to measure. Add bullet points as appropriate -->
+
+-
+-
+-
+
+# Scales of measurement
+
+There are several typologies that describe appropriate [scales of measurement](https://en.wikipedia.org/wiki/Level_of_measurement). A useful and widely used on was developed by psychologist Stanley Smith Stevens, and recognizes four scales of measurement: two categorical and two quantitative scales.
+
+## Categorical: Nominal scale
+
+This is the most basic, and in a way, the least informative scale for measuring things. It assigns unique labels/categories to things. Examples of this scale include modes of transportation (e.g., car, bus, walk, bicycle) and brands (e.g., Apple, Huawei, Nokia). The labels reduce/compress much information into a single recognizable category. The labels, on the other hand, do not have any natural order, in the sense that category "car" is not intrinsically higher than or closer to category "bicycle". Different categories can be compared with boolean operations "=="	(i.e., _exactly equal to_) and "!="	(i.e., _not equal to_).
+```{r}
+"car" == "car"
+"car" == "bus"
+```
+
+What things are you aware of that are measured using the nominal scale?
+
+-
+-
+-
+
+## Categorical: Ordinal scale
+
+Measurements in an ordinal scale are still categorical, and include items measured in Likert-style scales, for example five-point scales from "Strongly Disagree" to "Strongly Agree" with a "Neutral" point. The difference with the nominal scale is that there is a natural way of ordering the categories: "Strongly Disagree" is closer to "Disagree" than it is to "Neutral", and "Strongly Agree" is even more distant from it than "Neutral". Sometimes quantitative variables (for instance, income) are collected and/or reported using ordinal scales: income less than 20,000, income between 20,000 and 40,000, and income more than 40,000. This of course involves a loss of information, but may reduce respondent burden or satisfy confidentiality constraints when income data are collected.
+
+Like nominal variables, different categories can be compared with boolean operations "=="	and "!="	(i.e., not equal to). In addition, the following operations are also valid: "<" and "<=" (i.e., _less than_) and ">" (i.e., greater than).
+
+What things are you aware of that are measured using the ordinal scale?
+
+-
+-
+-
+
+## Quantitative: Interval scale
+
+In the ordinal scale, the order of the categories is important, but the difference between categories is not a quantity. For example, the difference between category "income less than 20,000" and "income more than 40,000" is not a quantity. We can count the steps that separate these two categories but cannot impute a quantity in dollars to the difference. Attitudinal variables measured using a Likert scale relate to a subjective state of mind which is not necessarily identical for all individuals. For example, suppose that the answer to a statement such as "This mode of transportation is safe" is "Strongly Agree" by two individuals with different levels of tolerance for risk. Can we quantify the difference between this response and "Agree" in a consistent way?
+
+The interval scale is similar to the ordinal scale in the sense that the values have a natural ordering. In addition, the differences between levels _are_ meaningful. An example of an interval variable is scores from an examination; an examination is an instrument aims to measure knowledge/understanding of a subject. When a scale of 1-100 is used, the difference between a score of 80 and a score of 90 is 10 points. However, a zero does not indicate the absolute _absence_ of knowledge/understanding, just as a score of 100 does not indicate absolutely _complete_ knowledge/understanding of the subject.
+
+Valid operations for variables in interval scale include all those for ordinal variables, and in addition "+" and "-" (which is how 5 points in question 1 plus 10 points in question 2 add 15 points to the final score). 
+
+What things are you aware of that are measured using the interval scale?
+
+-
+-
+-
+
+## Quantitative: Ratio scale
+
+The interval scale is more informative than the ordinal scale in the sense that it is possible to quantify the differences between to values in a consistent way across measurements. On the other hand, the ratio between two values is not meaningful. Since variables measured in interval scale do not have a natural origin (i.e., the value of zero does not indicate complete absence), a score of 20 does not mean infinitely more knowledge/understanding than a score of zero, just as 100 does not mean twice as much knowledge/understanding as a score of 50.
+
+Ratio variables have a natural origin that indicates the _absence_ of the thing being measured. A length of zero means the absence of this dimension; an income of zero means the absence of income. This means that we can use all the operations available for interval variables, and in addition "*" and "/" (i.e., an income of 40,000 is twice as high as an income of 20,000).
+
+What things are you aware of that are measured using the ratio scale?
+
+-
+-
+-
+
+# Data objects revisited and quick data summaries
+
+`R` provides data classes for categorical and quantitative variables. To illustrate them, suppose that we have information about modes of transportation used by a small sample of respondents, as well as how frequently they use this mode (times per week) and responses to the statement "this mode of transportation is safe" with 1: Strongly Disagree and 5: Strongly Agree. We will create the following vectors to represent this information:
+```{r}
+modes <- c("car", "bus", "walk", "walk", "car", "walk", "walk", "car")
+frequency <- c(6, 3, 4, 5, 4, 3, 5, 4)
+safe <- c(5, 1, 2, 3, 4, 2, 3, 4)
+```
+
+Check the class of these vectors:
+```{r}
+class(modes)
+class(frequency)
+class(safe)
+```
+
+Of these, only the frequency is a quantitative variable. The class "character" is not a scale of measurement: it is a way to store alphanumeric information. The variable `safe` is stored as a numeric variable, but it should be an ordinal variable. 
+
+Categorical data in `R` is coded as _factors_. Factors can be nominal (the default) and ordinal. A factor can be created by means of the function `factor()`. To properly code `modes` and `safe` as factors we do the following:
+```{r}
+modes <- factor(modes,
+                levels = c("bus", "car", "walk"))
+
+safe <- factor(safe,
+               levels = c(1, 2, 3, 4, 5),
+               labels = c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"),
+               ordered = TRUE)
+```
+
+Notice that the levels of the factor (i.e., the categories) can be of class "character" or "numeric". When the levels are numeric we can assign _labels_ to them to explicitly identify the category. Argument `ordered = TRUE` is used for ordinal data.
+
+Check again the classes of the vectors:
+```{r}
+class(modes)
+class(safe)
+```
+
+Now the variables are recognized as categorical (i.e., factors), and also as ordinal when appropriate.
+
+Correctly defining the scale of measurement allows `R` to know which operations make sense for the kind of data at hand. For example:
+```{r}
+modes[1] == modes[3]
+```
+
+Respondents 1 and 3 in the data frame do not use the same mode of transportation.
+
+However, the sum of "car" and "walk" is not defined:
+```{r}
+modes[1] + modes[3]
+```
+
+With ordinal variables we can compare the relative values of levels:
+```{r}
+safe[1] >= safe[2]
+```
+
+As noted above, though, the difference between levels is not meaningful:
+```{r}
+safe[1] - safe[2]
+```
+
+In contrast, frequency is a ratio variable, and this is a meaningful operation:
+```{r}
+frequency[1]/7
+```
+
+The above is the proportion of the week that Respondent 1 uses the mode indicated.
+
+Here we collect the vectors in a data frame, which we are going to call unimaginatively `df`:
+```{r}
+df <- data.frame(modes, frequency, safe)
+```
+
+Since `R` understands the classes of the variables, it is possible to obtain quick summaries of the data:
+```{r}
+summary(df)
+```
+
+Function `summary()` uses appropriate methods for the data.
+
+# Data manipulation
+
+What are the things that you most commonly need to do when you are preparing/organizing data?
+
+-
+-
+-
+
+# Data carpentry/wrangling and the {dplyr} package
+
+Package {[dplyr](https://dplyr.tidyverse.org/index.html)} 
+
+## Pipes
+
+Piping is the process of passing information from one function to another. There are at least two pipe operators in `R`: {maggritr} implements `%>%` and base `R` implements pipes natively with `|>` since version 4.1. These two operators do essentially the same thing, but their behaviors are slightly different. 
+
+A pipe operator basically works by taking the value on the left (which could be the output of a function) and passing it to another function. For example:
+```{r}
+df |> 
+  summary()
+```
+
+The chunk of code above is read as "take data frame `df` and pass it on to function `summary()`.
+
+Pipes are great for increasing the legibility of code.
+
+## Subsetting a table
+
+In the previous session we saw how indexing works to call _parts_ of data frames, in other words, to _subset_ data frames. Recall that we can retrieve a column from a data frame by naming it:
+```{r}
+df$modes
+```
+
+Similarly, we can retrieve rows as follows. Suppose that we want the first row from the table:
+```{r}
+df[1,]
+```
+Or the first two rows:
+```{r}
+df[1:2,]
+```
+
+Or rows 1, 3, and 5:
+```{r}
+df[c(1, 3, 5),]
+```
+
+As an alternative scenario, suppose that we want to extract only the rows corresponding to "walk":
+```{r}
+df[df$modes == "walk",]
+```
+
+Package {dplyr} implements several verbs that are useful to subset a data frame. The verb `select()` acts on columns. For instance, with piping:
+```{r}
+df |>
+  select(modes)
+```
+
+The above is read as "take data frame `df` and select column `modes`". It is possible to select by negation:
+```{r}
+df |>
+  select(-modes)
+```
+
+As well, it is possible to select multiple columns:
+```{r}
+df |>
+  select(modes, safe)
+```
+
+Or:
+```{r}
+df |>
+  select(-modes, -safe)
+```
+
+Verb `slice()` acts on rows. For example:
+```{r}
+df |>
+  slice(1)
+```
+Tha above is read as "take data frame `df` and slice the first row". The following chunk implements "take data frame `df` and slice rows one to two":
+```{r}
+df |>
+  slice(1:2)
+```
+
+Or "slice rows 1, 3, and 5":
+```{r}
+df |>
+  slice(c(1, 3, 5))
+```
+
+The following variations of `slice()` are available: `slice_head()`, `slice_tail()`, `slice_min()`, `slice_max()`, and `slice_sample()`. Use `?` to check the documentation.
+
+Another verb, `filter()`, also acts on rows, but instead of retrieving them by position does it by some condition. The following _phrase_ implements "take data frame `df` and filter all rows where the mode is equal to "walk"":
+```{r}
+df |>
+  filter(modes == "walk")
+```
+
+The value of a grammatical approach with piping becomes more evident when we wish to form more complex _phrases_ of data manipulation and analysis. For example:
+```{r}
+summary(df[df$modes == "walk",])
+```
+
+In the above, the arguments are nested and the phrase has to be read from inside out, as it were. Compare to the more linear grammar of the following chunk:
+```{r}
+df |> 
+  filter(modes == "walk") |>
+  summary()
+```
+
+Which one is easier to read?
+
+## Creating new variables
+
+Often we wish to create and add new variables to a data frame. The verb `mutate()` is useful for this purpose. For example, our sample data frame does not include an explicit identifier for the respondents. We can add one with mutate:
+```{r}
+df <- df |>
+  mutate(id = factor(1:n()))
+```
+
+Function `n()` returns the number of rows in the input data frame. Check the table: it now has a new column with the respondent ids. By the way, notice that we assigned the results of our data manipulation phrase back to `df`, if we had not done so, the results would not have been kept in memory.
+
+Suppose that we wanted to convert the variable `frequency()` from days per week to proportion of the week that the mode is used. Mutate can replace an existing variable in the data frame:
+```{r}
+df |>
+  mutate(frequency = frequency/7)
+```
+
+Another verb, `transmute()` combines the behavior of `select()` and `mutate()`. See for instance:
+```{r}
+df |>
+  transmute(id,
+            frequency = frequency/7)
+```
+
+Verb `relocate()` changes the order of columns:
+```{r}
+df |>
+  mutate(frequency = frequency/7) |>
+  relocate(id,
+           .before = "modes")
+```
+
+## Working on groups of cases
+
+Sometimes we wish to work with parts of the table. For example, in the previous session you were asked to count the number of spinoffs by geography of Italy (i.e., Northern, Central, Southern). To achieve this you probably subset the table three times (one for each region), and then calculated the number of cases.
+
+A more elegant approach is to create groups and to summarize by group. The pair of verbs `group_by()` and `summarize()` work in this way. Suppose that we would like to know what is the mean proportion of use of modes of travel but by mode:
+```{r}
+df |>
+  group_by(modes) |>
+  summarize(mean_frequency = mean(frequency),
+            .groups = "drop")
+```
+
+The argument `.groups = "drop"` ungroups the output of the phrase. It is possible to group by various variables, for example:
+```{r}
+df |>
+  group_by(modes, 
+           safe) |>
+  summarize(mean_frequency = mean(frequency),
+            .groups = "drop")
+```
+
+Grouping is a powerful way to work simultaneously on separate parts of a data frame.
+
+## Combining tables
+
+Related data often come in separate tables, for convenience or because the data come from different sources. When two tables are of the same size they can be combined with verb `bind_cols()`. This verb puts two tables side by side as if they were a single table. Suppose that we had a second table (which we will unimaginatively call `df_2`) with information about the personal attributes of respondents to the survey (i.e., age in years and gender):
+```{r}
+df_2 <- data.frame(age = c(25, 32, 39, 28, 40, 33, 21, 32),
+                   gender = factor(c("male", "female", "female", "non-binary", "male", "female", "female", "male")))
+```
+
+The two columns are combined as follows:
+```{r}
+df |> 
+  bind_cols(df_2)
+```
+
+This works on the assumption that the rows are arranged _in the same order_ and does not match by case. Suppose that the second table had been:
+```{r}
+df_2 <- data.frame(id = factor(c(5, 4, 8, 1, 7, 2, 3, 6)),
+                   age = c(25, 32, 39, 28, 40, 33, 21, 32),
+                   gender = factor(c("male", "female", "female", "non-binary", "male", "female", "female", "male")))
+```
+
+Notice that for whatever reason, the respondents in `df_2` are not sorted in the same order as in `df`. Using `bind_cols()` would lead to the erroneous table:
+```{r}
+df |> 
+  bind_cols(df_2)
+```
+
+Relational joins combine tables based on one or more _keys_, that is, common variables. For example, `df` and `df_1` have a common id. Verb `left_join()` takes the rows in the table on the right and joins them to the table in the left so that the key variable(s) match(es):
+```{r}
+df |>
+  left_join(df_2,
+            by = c("id" = "id"))
+```
+
+Check how now the individual attributes match correctly the rows in the left table.
+
+Other possible joins are `right_join()`, `inner_join()`, and `full_join()`. Use `?` to check the documentation.
+
+A different situation arises when we have more _cases_ (i.e., rows) of the same variables. For example, this table has two more cases that can be combined with the original table:
+```{r}
+df_3 <- data.frame(id = factor(c(9, 10)),
+                   modes = c("bus", "walk"),
+                   frequency = c(2, 5),
+                   safe = c("Disagree", "Agree"))
+```
+
+Now we want to combine the tables not by adding columns but by adding rows. The appropriate verb is `bind_rows`, and it combines the table by joining the second argument to the bottom of the first argument. Notice that the bind matches by column name, so it does not matter if the columns are in the same order:
+```{r}
+df |>
+  bind_rows(df_3)
+```
+
+If the number of columns does not match, missing values will be added as needed (here the bottom table has an additional random variable):
+```{r}
+df |> 
+  bind_rows(df_3 |>
+              mutate(random_variable = sample(5, n())))
+```
+
+The classes of the variables must match! The following code will throw an error because the variable `id` in one table is a factor but in the other it is a number:
+```r
+df |> 
+  bind_rows(df_3 |>
+              mutate(id = c(9, 10)))
+```
 
 # Practice
 
-1. Describe in your own words the concept of literate programming. What is a computational notebook?
+1. Summarize table `auctions_phy`. What are the scales of measurement of the variables in this table? (Hint: check the documentation of the table)
 
-2. Load the full version of the dataset used in the examples in this session (distributed with package [{edashop}](https://paezha.github.io/edashop/)).
+2. Summarize table `auctions_amf`. What are the scales of measurement of the variables in this table?
 
-```{r}
-data("phd_italy_regions", 
-     package = "edashop")
-```
+3. Join the following tables using an appropriate key variable: `auctions_amf`, `auctions_phy`, `auctions_sef`.
 
-3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)?
+4. Create a new table with only variables `id`, `type_class`, `days_on_market`, `gross_building_area`, and `location`.
 
-4. Which region in Italy had the largest number of respondents to the survey? Which had the least? Can we infer from the number of respondents the population of Ph.D. students in each region? Explain.
+5. Obtain a summary of the new table.
 
-5. Calculate the mean size of active spinoffs for every region.
+6. Obtain a summary of the new table but only for properties of `type_class` "Residential".
 
-6. What is the maximum mean spinoff size by region? (Hint: use `?max` to see how to deal with the `NaN` value)
+7. Obtain a summary of the new table but only for properties _not_ of `type_class` "Residential".
 
-7. Calculate the regional spinoff intensity started by Ph.D. students: this is number of currently active spinoffs founded by Ph.D. students in the sample.
-
-8. What is the total number of spinoff companies in Northern, Central, and Southern Italy? (Hint: check the variable `geo` in the data frame)
+8. What is the mean `gross_building_area` by `type_class` of property?

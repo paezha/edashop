@@ -31,7 +31,8 @@ output:
 always_allow_html: true
 ---
   
-> “Be willing to be a beginner every single morning.”
+> “Be willing to be a beginner every single morning.  
+>
 > --― Meister Eckhart
 
 # Session Outline
