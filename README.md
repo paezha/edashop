@@ -66,8 +66,8 @@ can work with them in ways not possible with conventional printed notes.
 
 -   What is EDA?
 -   Data summaries revisited
--   Properties of data: central tendency and dispersion
 -   Appropriate summary statistics by scale of measurement
+-   Properties of data: central tendency and spread
 -   (Break)
 -   Univariate description
 -   Bivariate description

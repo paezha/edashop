@@ -116,7 +116,7 @@ Measuring stuff is a lot of effort. It can be expensive too. Sometimes need spec
 
 # Scales of measurement
 
-There are several typologies that describe appropriate [scales of measurement](https://en.wikipedia.org/wiki/Level_of_measurement). A useful and widely used on was developed by psychologist Stanley Smith Stevens, and recognizes four scales of measurement: two categorical and two quantitative scales.
+There are several typologies that describe appropriate [scales of measurement](https://en.wikipedia.org/wiki/Level_of_measurement). A useful and widely used on was developed by psychologist [Stanley Smith Stevens](https://en.wikipedia.org/wiki/Stanley_Smith_Stevens), and recognizes four scales of measurement: two categorical and two quantitative scales.
 
 ## Categorical: Nominal scale
 
@@ -188,7 +188,7 @@ class(safe)
 
 Of these, only the frequency is a quantitative variable. The class "character" is not a scale of measurement: it is a way to store alphanumeric information. The variable `safe` is stored as a numeric variable, but it should be an ordinal variable. 
 
-Categorical data in `R` is coded as _factors_. Factors can be nominal (the default) and ordinal. A factor can be created by means of the function `factor()`. To properly code `modes` and `safe` as factors we do the following:
+Categorical data in `R` are coded as _factors_. Factors can be nominal (the default) and ordinal. A factor can be created by means of the function `factor()`. To properly code `modes` and `safe` as factors we do the following:
 ```{r}
 modes <- factor(modes,
                 levels = c("bus", "car", "walk"))

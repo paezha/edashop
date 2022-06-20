@@ -1,0 +1,295 @@
+---
+title: "Session 3. Exploratory data analysis I: Descriptive statistics"
+author:
+- name: Antonio Paez
+  # Enter your name here:
+- name: My Name
+subject: "Workshop: Exploratory Data Analysis in `R`"
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+highlights: |
+    This is my mini-reflection. Paragraphs must be indented.
+    
+    It can contain multiple paragraphs.
+    
+# Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+threshold_concepts: 
+- threshold concept 1
+- threshold concept 2 
+- threshold concept 3
+- threshold concept 4
+
+# Do not edit below this line unless you know what you are doing
+# --------------------------------------------------------------
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document:
+    # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
+    # http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/
+    # https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-latex-ms.tex
+    template: exercise-template-default.tex
+font-family: Times New Roman    
+always_allow_html: true
+---
+
+> ““We never look beyond our assumptions and what's worse, we have given up trying to meet others; we just meet ourselves.”  
+>
+> --― Muriel Barbery
+
+# Session Outline
+
+- What is EDA?
+- Data summaries revisited
+- Appropriate summary statistics by scale of measurement
+- Properties of data: central tendency and spread
+- Univariate description
+- Bivariate description 
+- Multivariate description 
+
+# Reminder
+
+Remember that literate programming asks you to do the hard work up front so that your life can be easier later.
+
+# Preliminaries
+
+Clear the workspace from _all_ objects:
+```{r}
+rm(list = ls())
+```
+
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
+```{r}
+library(dplyr)
+library(edashop)
+library(kableExtra)
+library(skimr)
+```
+
+We will also load the following data frames for this session:
+```{r}
+data("auctions_amf")
+data("auctions_pf")
+data("auctions_phy")
+data("auctions_sef")
+```
+
+These data frames contain information about real estate transactions in distressed markets in Italy. You can check the documentation in the usual way:
+```r
+?auctions_amf
+```
+In brief, these four tables give information about properties auctioned in Italy between 2000 and 2016 in distressed real estate markets. Each table gives information about one aspect of the issue: features of the auction market (_amf), profitability features of the property (_pf), physical features of the property (_phy), and socio-economic features of the location of the property (_sef). For convenience we will combine the tables into a single `auctions` data frame (see Session 2):
+```{r}
+auctions <- auctions_amf |>
+  left_join(auctions_pf,
+            by = "id") |>
+  left_join(auctions_phy,
+            by = "id") |>
+  left_join(auctions_sef,
+            by = "id")
+```
+
+# What is EDA?
+
+Measuring stuff is a lot of effort. It can be expensive too. Sometimes need special equipment. And instruments. Why do we bother?
+
+# Data summaries revisited
+
+In the previous session we used the function `summary()` from base `R` to obtain quick summaries of data. For example:
+```{r}
+summary(auctions)
+```
+
+Package {[skimr](https://docs.ropensci.org/skimr/)} is an alternative to the basic summary. It implements tools to "skim" data, and produces reports that are easier to read because it separates variables by type, provides a larger set of summary statistics that are appropriate to the type of data, and it also generates [_sparklines_](https://en.wikipedia.org/wiki/Sparkline). {skimr} is also pipe-friendly. The basic function is `skim()`. It is possible to skim a complete data frame or parts thereby. For example:
+<!-- The output of `skim()` does not render well in the pdf unless prepared as shown in the next chunk. This is why this code is not set to be evaluated, and will not be run during knitting -->
+```r
+auctions |>
+  select(days_on_market) |>
+  skim()
+```
+
+This is read as "pass `auctions` to `select`, retrieve `days_on_market` and skim". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
+
+To render the code in the PDF file, we will use package {[kableExtra](https://haozhu233.github.io/kableExtra/)}, which includes functionality to format tables. Below is the output of skimming our selected variable; from the output we strip the variable that contains the sparklines (`numeric.hist`), which are tricky to render in PDF. This is then passed to functions `kable()` and `kable_styling()`:
+```{r}
+auctions |>
+  select(days_on_market) |>
+  skim() |>
+  select(-numeric.hist) |>
+  kable("latex",
+        digits = 2,
+        booktabs = TRUE) |>
+  kable_styling(latex_options="scale_down")
+```
+
+The arguments in `kable()` and `kable_styling()` control the appearence of the table in the output document: how to format the rows (booktabs), how many digits to use, whether to scale down a wide table so that it fits the page. Much more information about the possibilities of working with {kableExtra} can be found in the documentation.
+
+Since {skimr} plays well with {dplyr} it is possible to combine it with other data carpentry functions. For example, the next code of chunk uses `group_by()` before skimming the table:
+```r
+auctions |>
+  select(type_class, 
+         days_on_market) |>
+  group_by(type_class) |>
+skim_without_charts()
+```
+
+Try it in your console. The chunk above is read as "take data frame `auctions`, select columns `type_class` and `days_on_market`, group by `days_on_market`, and skim". The descriptive statistics skimmed include the number of missing observations and completeness of the data, the mean, standard deviation, and [_quantiles_](https://en.wikipedia.org/wiki/Quantile), that is, the values that cut the sample at a certain proportion of observations (e.g., "p50" is the value where the sample is split in two equal parts, the bottom 50% and the top 50%).
+
+As you can see, three observations lack the `type_class` category. Of the rest, properties of type "Residence" stayed in auction on average for as long as 815 days, and the quickest sale took as much as 190 days.
+
+Skimming the full table gives the following:
+```r
+auctions |>
+  skim()
+```
+
+The summaries are separated by type of data: dates are reported separately from factors and from quantitative (numeric) variables. Appropriate summary statistics are calculated for each type of data.
+
+# Appropriate summary statistics by scale of measurement
+
+Wait, what does "appropriate summary statistics" mean??
+
+Recall from Session 2 that not all operations are defined for all scales of measurement. For example, variables in the nominal scale could be compared using only boolean operators "==" (exactly equal to) and "!=" (not equal to). No arithmetic operations are defined for ordinal data. And division and multiplication are not appropriate for interval data.
+
+This has implications for the kind of statistics that are appropriate by scale of measurement.
+
+Consider the mean of a variable. The mean is defined as follows:
+$$
+\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{1}{n}\sum_{i-1}^n x_i
+$$
+
+Is it appropriate to calculate the mean of a categorical variable? What is the meaning of two cars plus one bicycle divided by three?
+
+To understand which summary statistics are appropriate, we must know how various summary statistics are calculated.
+
+# Properties of data
+
+Summary statistics are information reduction techniques. Recall that the objective of EDA is to see the data from different perspectives. Two important properties of data that we often wish to summarize are their central tendency and dispersion.
+
+## Central tendency
+
+A measure of central tendency is a summary of a distribution of values that gives a "typical" value, or the one most frequently observed. Conceptually, this is similar to organizing all data values and finding the location of the _center of mass_ of the distribution. To illustrate the concept of center of mass consider the following sequence of quantitative values:
+```{r}
+x <- c(20, 30, 32, 34, 41, 41, 45, 46, 48, 51, 53, 54, 54, 56, 57, 58, 58, 59, 
+  60, 61, 64, 65, 65, 69, 71, 74, 77, 79, 88, 94)
+```
+
+The same sequence of values is shown below in the style of a [stem-and-leaf](https://en.wikipedia.org/wiki/Stem-and-leaf_display) table:
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+Where is the distribution "heavier"? Thereabouts will be its center of mass. There are various measures of central tendency, three of which are discussed next.
+
+### Mode
+
+The mode of a distribution is the most frequent value found in a distribution. Since it only involves counting the instances of each values, it is appropriate for nominal and ordinal variables. We can find the mode by tabulating the values. Let us do so for the variable `type_class` (factor) in data frame `auctions`. Here we introduce function `pull()` from {dplyr}. This function extracts a column from a data frame as a vector:
+```{r}
+auctions |> 
+  pull(type_class) |> 
+  table()
+```
+
+We see that the mode of the distribution is "Residence", the most frequent value of the variable in this distribution. (Notice that by default the values of the factor are sorted alphabetically; this can be changed by redefining the factor and changing the order of the levels).
+
+Next, let us try variable `quality` (ordered factor):
+```{r}
+auctions |> 
+  pull(quality) |> 
+  table()
+```
+
+We see that the mode of this distribution is "Adequate" and "Fair". Since ordinal variables have by definition a natural order, the shape of their distribution can be conveniently presented in the style of a stem-and-leaf table, with each "I" representing one instance of the value:
+
+stem        | leaf
+------------|--------
+Poor        |IIIII IIIII IIIII III
+Adequate    |IIIII IIIII IIIII IIIII IIIII IIIII I
+Fair        |IIIII IIIII IIIII IIIII IIIII IIIII I
+Good        |IIIII IIIII IIIII IIIII IIII
+Excellent   |IIIII I
+
+### Median
+
+The median is defined for a quantitative variables as the value that splits the distribution in two parts of equal size. 
+
+Check again the stem-and-leaf table of our sample quantitative variable.
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+There are $n=30$ observations in this vector. Which value splits the distribution in half, say the bottom 50% and the top 50% of values? The median of quantitative variables is reported both by `summary()` and `skim()`
+
+### Mean
+
+The mean is probably the best known measure of central tendency, and it is defined as the sum of the values divided by the number of observations. Since it involves arithmetic operations it is not appropriate for categorical variables. The mean of quantitative variables is reported by `summary()` and `skim()`.
+
+## Spread
+
+Another important property of a distribution of values is how wide or compact it is. Compare the two steam-and-leaf tables below.
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+stem    | leaf
+--------|--------
+1       |48
+2       |08
+3       |024
+4       |1156
+5       |13789
+6       |01459
+7       |149
+8       |468
+9       |45
+10      |7
+
+### Minimum and maximum
+
+
+
+### Inter-quartile range
+
+### Standard deviation
+
+
+# Univariate description
+
+frequency tables, summary statistics
+
+# Bivariate description
+
+correlation, cross-tabulation
+
+# Multivariate description
+
+multiple correlation, multiple cross-tabulation??
+
+# Practice
+
+1. Calculate the mean and median of variable `x` used in the examples in this session. Why do you think these two summary statistics are different? (Hint: use `?mean` and `?median` to check the documentation)
+
+2. 

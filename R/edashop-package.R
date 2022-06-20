@@ -556,6 +556,20 @@ eda_session_2_it <- function(){
   writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_2_it from the menu")
 }
 
+#' EDA Workshop Session 3 Template (Italian Edition).
+#'
+#' Template for creating a computational notebook for Session 3 of the Italian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_3_it
+#' @export
+eda_session_3_it <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_3_it from the menu")
+}
+
 #' EDA Workshop Session 5 Template (All Editions).
 #'
 #' Template for creating a computational notebook for Session 5 of the workshop.
