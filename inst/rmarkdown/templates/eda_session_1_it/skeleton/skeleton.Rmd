@@ -35,14 +35,13 @@ always_allow_html: true
 >
 > --― Meister Eckhart
 
-# Session Outline
+# Session outline
 
 - Why `R`?
 - Installing the software: `R` and R Studio
 - Packages
 - Installing packages: CRAN and other sources
 - Getting help
-- (Break)
 - Creating a project
 - Directory structure
 - Creating new files: types of files

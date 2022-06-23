@@ -35,7 +35,7 @@ always_allow_html: true
 >
 > --― Robert Orben
 
-# Session Outline
+# Session outline
 
 - Why measuring things?
 - Scales of measurement

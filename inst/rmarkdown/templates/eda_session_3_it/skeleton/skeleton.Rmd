@@ -36,7 +36,7 @@ always_allow_html: true
 >
 > --― Muriel Barbery
 
-# Session Outline
+# Session outline
 
 - What is EDA?
 - Data summaries revisited
@@ -48,7 +48,7 @@ always_allow_html: true
 
 # Reminder
 
-Remember that literate programming asks you to do the hard work up front so that your life can be easier later.
+Remember that literate programming asks you to do the hard work up front to make your life easier later.
 
 # Preliminaries
 
@@ -59,8 +59,10 @@ rm(list = ls())
 
 Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
 ```{r}
+library(corrr)
 library(dplyr)
 library(edashop)
+library(janitor)
 library(kableExtra)
 library(skimr)
 ```
@@ -77,41 +79,48 @@ These data frames contain information about real estate transactions in distress
 ```r
 ?auctions_amf
 ```
-In brief, these four tables give information about properties auctioned in Italy between 2000 and 2016 in distressed real estate markets. Each table gives information about one aspect of the issue: features of the auction market (_amf), profitability features of the property (_pf), physical features of the property (_phy), and socio-economic features of the location of the property (_sef). For convenience we will combine the tables into a single `auctions` data frame (see Session 2):
-```{r}
-auctions <- auctions_amf |>
-  left_join(auctions_pf,
-            by = "id") |>
-  left_join(auctions_phy,
-            by = "id") |>
-  left_join(auctions_sef,
-            by = "id")
-```
+In brief, these four tables give information about properties auctioned in Italy between 2000 and 2016 in distressed real estate markets. Each table gives information about one aspect of the issue: features of the auction market (_amf), profitability features of the property (_pf), physical features of the property (_phy), and socio-economic features of the location of the property (_sef).
 
 # What is EDA?
 
-Measuring stuff is a lot of effort. It can be expensive too. Sometimes need special equipment. And instruments. Why do we bother?
+Exploratory Data Analysis is the process of learning from the data by concentrating on its intrinsic characteristics and attributes. [John W. Tukey](https://en.wikipedia.org/wiki/John_Tukey), the statistician most responsible for clarifying the distinction between exploratory and confirmatory data analysis, likened exploratory data analysis to detective work. Exploratory data analysis is useful to discover essential evidence regarding the phenomenon of interest, similar to checking fingerprints and alibis that can be used in a trial - the equivalent of confirmatory data analysis, where hypotheses are tested and the evidence is evaluated.
+
+To effectively deploy EDA, it is important to approach the data with as few assumptions as possible. By allowing the data to speak for themselves, EDA aims to: 
+
+1. _Simplify_ descriptions to make them easier to handle with available cognitive power; and
+2. Look _below_ previously described surfaces to make the description more effective.
+
+The main tools of EDA are descriptive statistics and visualization techniques. The focus in this session is on descriptive statistics, with an emphasis on _appropriate_ descriptors for different types of data.
+
+Before proceeding, it is worthwhile to briefly think about the things that we are first interested in when we begin working with a data set. What are the most important characteristics of the data that you care about?
+
+-
+-
+-
 
 # Data summaries revisited
 
-In the previous session we used the function `summary()` from base `R` to obtain quick summaries of data. For example:
+In the previous session we used the function `summary()` from base `R` to obtain quick summaries of data. These summaries already provided some key information about the data, including descriptive statistics. For example, in our table with information about auctions in distressed markets:
 ```{r}
-summary(auctions)
+summary(auctions_phy)
 ```
 
-Package {[skimr](https://docs.ropensci.org/skimr/)} is an alternative to the basic summary. It implements tools to "skim" data, and produces reports that are easier to read because it separates variables by type, provides a larger set of summary statistics that are appropriate to the type of data, and it also generates [_sparklines_](https://en.wikipedia.org/wiki/Sparkline). {skimr} is also pipe-friendly. The basic function is `skim()`. It is possible to skim a complete data frame or parts thereby. For example:
+We can see that the function `summary()` understands what type of data it is dealing with, and provides summaries that are different for categorical and quantitative variables. 
+
+An alternative to the basic summary is provided by package {[skimr](https://docs.ropensci.org/skimr/)}. This package implements tools to "skim" data, and produces reports that are easier to read because they separate variables by type, provide a larger set of summary statistics that are appropriate to the type of data, and also generate [_sparklines_](https://en.wikipedia.org/wiki/Sparkline). {skimr} is also pipe-friendly. The basic function is `skim()`. It is possible to skim a complete data frame or parts thereby. For example:
+
 <!-- The output of `skim()` does not render well in the pdf unless prepared as shown in the next chunk. This is why this code is not set to be evaluated, and will not be run during knitting -->
 ```r
-auctions |>
+auctions_amf |>
   select(days_on_market) |>
   skim()
 ```
 
-This is read as "pass `auctions` to `select`, retrieve `days_on_market` and skim". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
+This is read as "pass `auctions` to `select()` to retrieve `days_on_market` before skimming". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
 
 To render the code in the PDF file, we will use package {[kableExtra](https://haozhu233.github.io/kableExtra/)}, which includes functionality to format tables. Below is the output of skimming our selected variable; from the output we strip the variable that contains the sparklines (`numeric.hist`), which are tricky to render in PDF. This is then passed to functions `kable()` and `kable_styling()`:
 ```{r}
-auctions |>
+auctions_amf |>
   select(days_on_market) |>
   skim() |>
   select(-numeric.hist) |>
@@ -121,49 +130,51 @@ auctions |>
   kable_styling(latex_options="scale_down")
 ```
 
-The arguments in `kable()` and `kable_styling()` control the appearence of the table in the output document: how to format the rows (booktabs), how many digits to use, whether to scale down a wide table so that it fits the page. Much more information about the possibilities of working with {kableExtra} can be found in the documentation.
+The arguments in `kable()` and `kable_styling()` control the appearence of the table in the output document: how to format the rows (booktabs), how many digits to use, whether to scale down a wide table so that it fits the page. The latex option "scale_down" ensures that very wide tables are scaled to fit the page.
 
-Since {skimr} plays well with {dplyr} it is possible to combine it with other data carpentry functions. For example, the next code of chunk uses `group_by()` before skimming the table:
+Much more information about the possibilities of working with {kableExtra} can be found in the documentation.
+
+Since {skimr} plays well with {dplyr} it is possible to combine it with other data grammar functions to create phrases that include summary statistics. For example, the next chunk of code uses `group_by()` before skimming the table:
 ```r
-auctions |>
-  select(type_class, 
-         days_on_market) |>
+auctions_phy |>
+  select(gross_building_area, 
+         type_class) |>
   group_by(type_class) |>
 skim_without_charts()
 ```
 
-Try it in your console. The chunk above is read as "take data frame `auctions`, select columns `type_class` and `days_on_market`, group by `days_on_market`, and skim". The descriptive statistics skimmed include the number of missing observations and completeness of the data, the mean, standard deviation, and [_quantiles_](https://en.wikipedia.org/wiki/Quantile), that is, the values that cut the sample at a certain proportion of observations (e.g., "p50" is the value where the sample is split in two equal parts, the bottom 50% and the top 50%).
+Try this code in your console. The chunk above is read as "take data frame `auctions_phy`, select columns `gross_building_area` and `type_class`, group by `type_class`, and skim". The descriptive statistics skimmed include the number of missing observations and completeness of the data, the mean, standard deviation, and [_quantiles_](https://en.wikipedia.org/wiki/Quantile), that is, the values that cut the sample at a certain proportion of observations (e.g., "p50" is the value where the sample is split in two equal parts, the bottom 50% and the top 50%).
 
-As you can see, three observations lack the `type_class` category. Of the rest, properties of type "Residence" stayed in auction on average for as long as 815 days, and the quickest sale took as much as 190 days.
+As you can see, three observations are missing the `type_class` category. Of the rest, properties of type "Residence" had an average gross building area of $157m^2$. The largest had a gross building area of $1855m^2$, larger than the largest property of type "Factory".
 
 Skimming the full table gives the following:
 ```r
-auctions |>
+auctions_phy |>
   skim()
 ```
 
-The summaries are separated by type of data: dates are reported separately from factors and from quantitative (numeric) variables. Appropriate summary statistics are calculated for each type of data.
+The summaries are separated by type of data: dates are reported separately from factors and from quantitative (numeric) variables. Appropriate summary statistics are calculated for each type of data, with _appropriate_ being a keyword here.
 
 # Appropriate summary statistics by scale of measurement
 
-Wait, what does "appropriate summary statistics" mean??
+Wait, what do you mean by "appropriate summary statistics"??
 
 Recall from Session 2 that not all operations are defined for all scales of measurement. For example, variables in the nominal scale could be compared using only boolean operators "==" (exactly equal to) and "!=" (not equal to). No arithmetic operations are defined for ordinal data. And division and multiplication are not appropriate for interval data.
 
 This has implications for the kind of statistics that are appropriate by scale of measurement.
 
-Consider the mean of a variable. The mean is defined as follows:
+Consider a commonly used summary statistic: the mean of a variable. The mean is defined as follows:
 $$
 \bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{1}{n}\sum_{i-1}^n x_i
 $$
 
 Is it appropriate to calculate the mean of a categorical variable? What is the meaning of two cars plus one bicycle divided by three?
 
-To understand which summary statistics are appropriate, we must know how various summary statistics are calculated.
+To understand which summary statistics are appropriate, we must know what various summary statistics aim to represent, and how they are calculated.
 
 # Properties of data
 
-Summary statistics are information reduction techniques. Recall that the objective of EDA is to see the data from different perspectives. Two important properties of data that we often wish to summarize are their central tendency and dispersion.
+Summary statistics are information reduction techniques. Recall that the objective of EDA is to see the data from different perspectives. Two important properties of data that we often wish to summarize are their central tendency and dispersion. These are discussed next.
 
 ## Central tendency
 
@@ -188,11 +199,13 @@ stem    | leaf
 
 Where is the distribution "heavier"? Thereabouts will be its center of mass. There are various measures of central tendency, three of which are discussed next.
 
+In the case of nominal variables, the categories do not have a meaningful order, and yet the center of mass is always the same. Consider for instance: 
+
 ### Mode
 
 The mode of a distribution is the most frequent value found in a distribution. Since it only involves counting the instances of each values, it is appropriate for nominal and ordinal variables. We can find the mode by tabulating the values. Let us do so for the variable `type_class` (factor) in data frame `auctions`. Here we introduce function `pull()` from {dplyr}. This function extracts a column from a data frame as a vector:
 ```{r}
-auctions |> 
+auctions_phy |> 
   pull(type_class) |> 
   table()
 ```
@@ -201,7 +214,7 @@ We see that the mode of the distribution is "Residence", the most frequent value
 
 Next, let us try variable `quality` (ordered factor):
 ```{r}
-auctions |> 
+auctions_phy |> 
   pull(quality) |> 
   table()
 ```
@@ -218,7 +231,7 @@ Excellent   |IIIII I
 
 ### Median
 
-The median is defined for a quantitative variables as the value that splits the distribution in two parts of equal size. 
+The median is the quantile that splits a quantitative variables in two parts of equal size, the bottom 50% and the top 50% of values.  
 
 Check again the stem-and-leaf table of our sample quantitative variable.
 
@@ -233,7 +246,7 @@ stem    | leaf
 8       |8
 9       |4
 
-There are $n=30$ observations in this vector. Which value splits the distribution in half, say the bottom 50% and the top 50% of values? The median of quantitative variables is reported both by `summary()` and `skim()`
+There are $n=30$ observations in this vector. Which value splits the distribution in half? The median of quantitative variables is reported both by `summary()` and `skim()`
 
 ### Mean
 
@@ -267,26 +280,168 @@ stem    | leaf
 9       |45
 10      |7
 
+The first stem-and-leaf table is more "compact": the tails of the distribution are closer together and the center of mass is "heavier", compared to the second table, that has a wider spread.
+
 ### Minimum and maximum
 
+The minimum and maximum values give an idea of how spread the distribution is. In the first of the preceding tables the minimum is $20$ and the maximum is $94$. In the second table, the minimum is $14$ and the maximum is $107$. The _range_ is the difference between the maximum and the minimum:
+```{r}
+94 - 20
+107 - 14
+```
 
+The second distribution is more spread.
 
 ### Inter-quartile range
 
-### Standard deviation
+The inter-quartile range is similar to the range, but instead of being calculated using the minimum and maximum values of the distribution, it uses the third and first quartiles. [Quartiles](https://en.wikipedia.org/wiki/Quartile) are a form of quantile that divides a sequence of values in four equal parts, so the second quantile represents the value that separates the lowest 25% of the sample from the remaining 75%, and the third quantile is the value that splits the highest 25% of the sample from the lowest 75%.
 
+If we skim the data, we see that the quartiles are reported ("p25" is the first quartile and "p75" is the third). The inter-quartile range can be calculated using those values.
+```r
+auctions_amf |>
+  select(days_on_market) |>
+  skim()
+```
+
+The difference between the third and first quartile is:
+```{r}
+931 - 497
+```
+
+We can _pull_ the variable from the data frame, and use function `IQR()` to directly calculate the inter-quartile range. From the skim of the variable we know that there are some missing (NA) records that need to be removed, hence `na.rm = TRUE`:
+<!--- Function `pull()` from {dplyr} is the verb to extract one column from a data frame as a vector --->
+```{r}
+auctions_amf |>
+  pull(days_on_market) |>
+  IQR(na.rm = TRUE)
+```
+
+The inter-quartile range involves an arithmetic operation, which is why it is not an appropriate statistic for categorical variables.
+
+### Variance and standard deviation
+
+The variance is another widely used measure of the spread of a distribution. It is defined as:
+$$
+\sigma^2 = \frac{1}{n}\sum_{i=1}^n(x_i - \bar{x})^2
+$$
+
+In this formula, $\bar{x}$ is the mean of $x$ and $n$ is the number of observations in the sample. Accordingly, $x_i-\bar{x}$ is the deviation of $x_i$ from the mean of $x$. If we rewrite this as follows:
+$$
+z_i = (x_i - \bar{x})^2
+$$
+
+It is easy to see that the variance is actually the mean of the square of the deviations from the mean:
+$$
+\sigma^2 = \frac{1}{n}\sum_{i=1}^nz_i
+$$
+
+The standard deviation is simply the square root of the variance and returns the variance to the same units as the original variable. The standard deviation is reported by `skim()` as `sd`, and can also be calculated with function `sd()` (remember to remove the missing values):
+```{r}
+auctions_amf |>
+  pull(days_on_market) |>
+  sd(na.rm = TRUE)
+```
+
+We see that the typical deviation from the mean of `days_on_market` was about $561$ days, that is a spread of approximately one and a half year.
 
 # Univariate description
 
-frequency tables, summary statistics
+Summary statistics of central tendency and spread refer to a single variable and are appropriately called univariate descriptors. These descriptors are very important, and we neglect exploring them at our own peril. They often tell us important aspects of the data, including how complete a data set is, how much variation is there, whether there are atypical or unusual values.
+
+As an example, let us calculate the mean, standard deviation, and maximum of `days_on_market`:
+```{r}
+mean_days_on_market <- auctions_amf |> 
+  pull(days_on_market) |> 
+  mean(na.rm = TRUE)
+
+sd_days_on_market <- auctions_amf |> 
+  pull(days_on_market) |> 
+  sd(na.rm = TRUE)
+
+max_days_on_market <- auctions_amf |> 
+  pull(days_on_market) |> 
+  max(na.rm = TRUE)
+```
+
+The property that stayed the longest in auction in this data set did so for $4,104$ days. Just how common or unusual is this value? That depends on how close (or far away) from the mean of the distribution this is, as well as on the spread of the distribution. The deviation from the mean is:
+```{r}
+max_days_on_market - mean_days_on_market
+```
+
+That is, approximately $3,273$. But the typical deviation from the mean in the sample was only about $561$ days! This tells us that the property that stayed the longest in the market, did so for for:
+```{r}
+(max_days_on_market - mean_days_on_market)/sd_days_on_market
+```
+
+Or, almost six times longer than the typical stay in the market above the mean. This observation is indeed quite unusual. How unusual was the property that stayed the least in auction? Let us retrieve the minimum duration:
+```{r}
+min_days_on_market <- auctions_amf |> 
+  pull(days_on_market) |> 
+  min(na.rm = TRUE)
+```
+
+That is, approximately $3,273$. But the typical deviation from the mean in the sample was only about $561$ days! This tells us that the property that stayed the longest in the market, did so for for:
+```{r}
+(min_days_on_market - mean_days_on_market)/sd_days_on_market
+```
+
+The property that stayed the least in auction is a lot closer to the mean, and barely above one standard deviation below the mean.
+
+Univariate description is a powerful way to get to know our data before doing any more sophisticated explorations or analysis.
 
 # Bivariate description
 
-correlation, cross-tabulation
+## Categorical variables: cross-tabulations
+
+```{r}
+auctions_phy |>
+  tabyl(type_class, quality) 
+```
+
+
+```{r}
+auctions_phy |>
+  tabyl(type_class, quality)|>
+  adorn_totals(where = "col") |>
+  adorn_percentages(denominator = "row") |>
+  adorn_pct_formatting(digits = 2)
+```
+
+## Quantitative variables: correlation
+
+```{r}
+auctions_amf |>
+  select(days_on_market, number_auctions) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs")
+```
+
+```{r}
+auctions_amf |>
+  select(days_on_market, number_auctions) |>
+  correlate(method = "spearman",
+            use = "pairwise.complete.obs")
+```
 
 # Multivariate description
 
-multiple correlation, multiple cross-tabulation??
+## Categorical variables: multiple cross-tabulations
+
+```{r}
+auctions_phy |>
+  tabyl(quality, state_maintenance, type_class) 
+```
+
+## Quantitative variables: correlation matrices
+
+```{r}
+auctions_amf |>
+  select(where(is.numeric)) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs") |> 
+  shave()
+```
+
 
 # Practice
 
