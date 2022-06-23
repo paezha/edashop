@@ -2,7 +2,7 @@ pandoc: 2.14.2
 pkgdown: 2.0.4
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-06-20T06:48Z
+last_built: 2022-06-23T21:01Z
 urls:
   reference: https://paezha.github.io/edashop/reference
   article: https://paezha.github.io/edashop/articles
