@@ -2,4 +2,5 @@
 
 export(eda_session_1_it)
 export(eda_session_2_it)
+export(eda_session_3_it)
 export(eda_session_5)

@@ -112,8 +112,7 @@ An alternative to the basic summary is provided by package {[skimr](https://docs
 <!-- The output of `skim()` does not render well in the pdf unless prepared as shown in the next chunk. This is why this code is not set to be evaluated, and will not be run during knitting -->
 ```r
 auctions_amf |>
-  select(days_on_market) |>
-  skim()
+  skim(days_on_market)
 ```
 
 This is read as "pass `auctions` to `select()` to retrieve `days_on_market` before skimming". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
@@ -121,8 +120,7 @@ This is read as "pass `auctions` to `select()` to retrieve `days_on_market` befo
 To render the code in the PDF file, we will use package {[kableExtra](https://haozhu233.github.io/kableExtra/)}, which includes functionality to format tables. Below is the output of skimming our selected variable; from the output we strip the variable that contains the sparklines (`numeric.hist`), which are tricky to render in PDF. This is then passed to functions `kable()` and `kable_styling()`:
 ```{r}
 auctions_amf |>
-  select(days_on_market) |>
-  skim() |>
+  skim(days_on_market) |>
   select(-numeric.hist) |>
   kable("latex",
         digits = 2,
@@ -203,11 +201,10 @@ In the case of nominal variables, the categories do not have a meaningful order,
 
 ### Mode
 
-The mode of a distribution is the most frequent value found in a distribution. Since it only involves counting the instances of each values, it is appropriate for nominal and ordinal variables. We can find the mode by tabulating the values. Let us do so for the variable `type_class` (factor) in data frame `auctions`. Here we introduce function `pull()` from {dplyr}. This function extracts a column from a data frame as a vector:
+The mode of a distribution is the most frequent value found in a distribution. Since it only involves counting the instances of each values, it is appropriate for nominal and ordinal variables. We can find the mode by tabulating the values. Let us do so for the variable `type_class` (factor) in data frame `auctions`. Here we introduce function `tabyl()` from package {[janitor](http://sfirke.github.io/janitor/)} for pipe-friendly tabulations:
 ```{r}
 auctions_phy |> 
-  pull(type_class) |> 
-  table()
+  tabyl(type_class)
 ```
 
 We see that the mode of the distribution is "Residence", the most frequent value of the variable in this distribution. (Notice that by default the values of the factor are sorted alphabetically; this can be changed by redefining the factor and changing the order of the levels).
@@ -215,8 +212,7 @@ We see that the mode of the distribution is "Residence", the most frequent value
 Next, let us try variable `quality` (ordered factor):
 ```{r}
 auctions_phy |> 
-  pull(quality) |> 
-  table()
+  tabyl(quality)
 ```
 
 We see that the mode of this distribution is "Adequate" and "Fair". Since ordinal variables have by definition a natural order, the shape of their distribution can be conveniently presented in the style of a stem-and-leaf table, with each "I" representing one instance of the value:
@@ -299,9 +295,9 @@ The inter-quartile range is similar to the range, but instead of being calculate
 If we skim the data, we see that the quartiles are reported ("p25" is the first quartile and "p75" is the third). The inter-quartile range can be calculated using those values.
 ```r
 auctions_amf |>
-  select(days_on_market) |>
-  skim()
+  skim(days_on_market)
 ```
+
 
 The difference between the third and first quartile is:
 ```{r}
@@ -373,7 +369,7 @@ That is, approximately $3,273$. But the typical deviation from the mean in the s
 (max_days_on_market - mean_days_on_market)/sd_days_on_market
 ```
 
-Or, almost six times longer than the typical stay in the market above the mean. This observation is indeed quite unusual. How unusual was the property that stayed the least in auction? Let us retrieve the minimum duration:
+Or, more than five times longer than the typical stay in the market above the mean. This observation is indeed quite unusual (we would call it a five-sigma). How unusual was the property that stayed the least in auction? Let us retrieve the minimum duration:
 ```{r}
 min_days_on_market <- auctions_amf |> 
   pull(days_on_market) |> 
@@ -391,24 +387,110 @@ Univariate description is a powerful way to get to know our data before doing an
 
 # Bivariate description
 
+Moving on from univariate description, understanding how two variables relate to one another is another key aspect of EDA. 
+
 ## Categorical variables: cross-tabulations
 
+Univariate description of a categorical variable involves tabulating the number of instances of each response. This can be expanded to simultaneously tabulating two categorical variables. Function `tabyl()` can be used, as in the following example:
 ```{r}
 auctions_phy |>
-  tabyl(type_class, quality) 
+  tabyl(quality, type_class) 
 ```
 
-
+What do we learn from this table? The output of the `tabyl()` function can be _adorned_, which can improve the readability of the table. The following table gives the total sum of the columns as a row at the bottom of the table:
 ```{r}
 auctions_phy |>
-  tabyl(type_class, quality)|>
+  tabyl(quality, type_class) |>
+  adorn_totals(where = "row")
+```
+
+Or the total sums of the rows as a column at the right of the table:
+```{r}
+auctions_phy |>
+  tabyl(quality, type_class) |>
+  adorn_totals(where = "col")
+```
+
+And the values can be displayed as proportions:
+```{r}
+auctions_phy |>
+  tabyl(quality, type_class) |>
   adorn_totals(where = "col") |>
-  adorn_percentages(denominator = "row") |>
-  adorn_pct_formatting(digits = 2)
+  adorn_percentages(denominator = "col") |>
+  adorn_pct_formatting()
 ```
+
+We already knew from our univariate tabulation that there are some missing observations (NAs). The table can be displayed without the missing values, for instance:
+```{r}
+auctions_phy |>
+  tabyl(type_class, quality,
+        show_na = FALSE) |>
+  adorn_totals(where = "both")
+```
+
+There are in total $n = 110$ valid observations when we consider variables `type_class` and `quality` simultaneously. The proportions (by column) are as follows:
+```{r}
+auctions_phy |>
+  tabyl(type_class, quality,
+        show_na = FALSE) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages(denominator = "row") |>
+  adorn_pct_formatting()
+```
+
+What else do we learn from this table?
+
+_If_ the quality of the buildings did not vary by the type of building, we would expect the percentages in the bottom row to be roughly the same, since every type of building would have a uniform chance of being in any state. We can calculate the values in the table _if_ this was true. This is done by multiplying the row total by the column total for each `type_class` and `quality` combination, and dividing by the size of the sample:
+$$
+E_{ij} = \frac{1}{n} \sum_ix_i \sum_jx_j
+$$
+For example, the expected value for "Agricultural Building" and "Poor" is:
+```{r}
+(18 * 3)/110
+```
+
+The observed value in contrast is $2$. So we see that agricultural buildings are of poor quality more often than if the quality of buildings was random. It is possible to summarize the differences between the observed and expected values in a cross-tabulation:
+$$
+\chi^2=\sum_i\sum_j\frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+If the observed and expected values are identical in every case, the value of $\chi^2$ would be zero. Contrariwise, $\chi^2$ will tend to grown as the differences between observed and expected counts grow. This would suggest that the observed counts are unlikely to follow a random pattern.
+
+The outout of function `tabyl()` can be passed to function `chisq.test()` which computes $\chi^2$ and produces also a $p$-value to aid in the decision whether the distribution follows a random pattern or not. A small $p$-value would indicate a small probability of the distribution being random:
+```{r}
+chi2 <- auctions_phy |>
+  tabyl(type_class, quality,
+        show_na = FALSE)|>
+  chisq.test(tabyl_results = TRUE)
+
+chi2
+```
+
+As a by-product, we also get the table with expected values:
+```{r}
+chi2$expected |>
+  adorn_rounding(digits = 2)
+```
+
+Which can be compared to the observed counts:
+```{r}
+chi2$observed
+```
+
+We see that the distribution is dominated by buildings of class "Residence", which tend to be close to the expected values.
 
 ## Quantitative variables: correlation
 
+The mean and standard deviation are key univariate descriptors of quantitative variables. When we are interested in the relationship between two quantitative variables we use a related concept, the _covariance_. The covariance is the mean of the product of the deviations from the mean of two variables:
+$$
+C(x,y) = \frac{1}{n}\sum_i(x_i - \bar{x})(y_i - \bar{y})
+$$
+In the formula above, $\bar{x}$ and $\bar{y}$ are the means of the two variables. The differences from the mean can be positive, negative, or zero. When both deviations are positive, the product is positive, thus increasing the covariance. Likewise when the two deviations are negative. But when one deviation is positive and the other negative, the product is negative, which subtracts from the covariance. When differences are like-like (positive-positive or negative-negative) the covariance will tend to be a large positive number. The contrary happens when the differences are opposed.
+
+The covariance can be normalized by the standard deviations of the variables to give the correlation coefficient:
+$$
+r(x, y) = \frac{C(x, y)}{\sigma_x\cdot\sigma_y}
+$$
+This quantity has the property of being bound between [-1, 1], and a value of zero indicates that the two variables do not _covary_. Correlations can be calculated in a pipe-friendly way with function `correlate()` from package {[corrr](https://corrr.tidymodels.org/)}:
 ```{r}
 auctions_amf |>
   select(days_on_market, number_auctions) |>
@@ -416,24 +498,25 @@ auctions_amf |>
             use = "pairwise.complete.obs")
 ```
 
-```{r}
-auctions_amf |>
-  select(days_on_market, number_auctions) |>
-  correlate(method = "spearman",
-            use = "pairwise.complete.obs")
-```
+What does the correlation between these two variables indicate?
 
 # Multivariate description
 
+Multivariate description extends ideas similar to those discussed above but for more than two variables.
+
 ## Categorical variables: multiple cross-tabulations
 
+It is possible to cross-tabulate more than two variables, however in practice this is seldom done for more than three because the results quickly become difficult to read and interpret. Function `tabyl()` implements cross-tabulations of up to three variables:
 ```{r}
 auctions_phy |>
   tabyl(quality, state_maintenance, type_class) 
 ```
 
+The $chi^2$ summary of association for a cross-tabulation seen above no longer works for tables in higher dimensions (i.e., when the number of variables cross-tabulated is greater than two). For an example of alternative approaches to describe tables with more than two variables, see the application of Cochran-Mantel-Haenszel $\chi^2$ statistic in Mella-Lira and Paez ([2021](https://doi.org/10.1016/j.jth.2021.101015)).
+
 ## Quantitative variables: correlation matrices
 
+Correlations can be explored among multiple variables. The example below shows how to select the quantitative variables from a data frame and obtain a correlation matrix. The matrix is symmetric, so here we `shave()` the output of correlate to show each pair-wise correlation only once:
 ```{r}
 auctions_amf |>
   select(where(is.numeric)) |>
@@ -442,9 +525,19 @@ auctions_amf |>
   shave()
 ```
 
+Note that the `method` is `pearson`. It is possible to select two other correlation methods that work on ranked data instead of the quantities. Ranking the values is a more robust way of calculating the association between two variables for reasons that will become clear next session when we discuss visualization approaches for EDA.
 
 # Practice
 
-1. Calculate the mean and median of variable `x` used in the examples in this session. Why do you think these two summary statistics are different? (Hint: use `?mean` and `?median` to check the documentation)
+1. Join tables `auctions_amf`, `auctions_pf`, `auctions_phy`, and `auctions_sef`.
 
-2. 
+2. Imagine that you are interested in the discount in distressed property sales. The discount (check `?auction_amf`) is the percent variation between the initial listed price (market value as apprised) and selling price. Describe and discuss this variable.
+
+3. How does the discount relate to other variables in the data set? Discuss.
+
+4. Propose some hypotheses about discount based on your exploration of the data set. How would you propose to investigate these hypotheses?
+
+5. Imagine now that you are interested in the state of maintenance of properties that are sold in distressed conditions (check `?auction_phy`). Repeat questions 3 and 4 but for this variable.
+
+6. What can you say so far about the relationship between discount and the categorical variables in the data set? Or between state of maintenance and the quantitative variables in the data set? Propose an approach to explore a combination of categorical and quantitative variables.
+
