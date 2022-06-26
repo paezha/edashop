@@ -57,8 +57,8 @@ rm(list = ls())
 
 Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
 ```{r}
-library(dplyr)
-library(edashop)
+library(dplyr) # A Grammar of Data Manipulation
+library(edashop) # A Package for a Workshop on Exploratory Data Analysis
 ```
 
 The `R` community has over time developed consistent standards for sharing packages, including the need for documentation. Good documentation is a sign of a quality package. You can always consult the help pages of a package (or its contents), with the following function:
@@ -502,3 +502,4 @@ df |>
 7. Obtain a summary of the new table but only for properties _not_ of `type_class` "Residential".
 
 8. What is the mean `gross_building_area` by `type_class` of property?
+

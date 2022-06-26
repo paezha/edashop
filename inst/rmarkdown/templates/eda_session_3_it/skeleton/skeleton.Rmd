@@ -32,7 +32,7 @@ font-family: Times New Roman
 always_allow_html: true
 ---
 
-> ““We never look beyond our assumptions and what's worse, we have given up trying to meet others; we just meet ourselves.”  
+> "We never look beyond our assumptions and what's worse, we have given up trying to meet others; we just meet ourselves."   
 >
 > --― Muriel Barbery
 
@@ -59,12 +59,12 @@ rm(list = ls())
 
 Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
 ```{r}
-library(corrr)
-library(dplyr)
-library(edashop)
-library(janitor)
-library(kableExtra)
-library(skimr)
+library(corrr) # Correlations in R
+library(dplyr) # A Grammar of Data Manipulation
+library(edashop) # A Package for a Workshop on Exploratory Data Analysis
+library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
+library(kableExtra) # Construct Complex Table with 'kable' and Pipe Syntax
+library(skimr) # Compact and Flexible Summaries of Data
 ```
 
 We will also load the following data frames for this session:
@@ -540,4 +540,5 @@ Note that the `method` is `pearson`. It is possible to select two other correlat
 5. Imagine now that you are interested in the state of maintenance of properties that are sold in distressed conditions (check `?auction_phy`). Repeat questions 3 and 4 but for this variable.
 
 6. What can you say so far about the relationship between discount and the categorical variables in the data set? Or between state of maintenance and the quantitative variables in the data set? Propose an approach to explore a combination of categorical and quantitative variables.
+
 
