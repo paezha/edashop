@@ -93,7 +93,7 @@ auctions <- auctions_amf |>
 
 # Why visualization?
 
-In Session 3 of the workshop we discussed the use of summary statistics for exploring data. Summary statistics are data reduction techniques that focus on one, or possibly a small number of characteristics of the data. They are usually a single number that aims to describe the data from the perspective of the characteristic(s) of interest: for instance, their central tendency or their spread.
+In Session 3 of the workshop we discussed the use of summary statistics for exploring data. Summary statistics are data reduction techniques that focus on one characteristic of the data. They are usually a single number that aims to describe the data from the perspective of the characteristic(s) of interest: for instance, their central tendency or their spread.
 
 Summary statistics are very important, but as with any data reduction techniques, they are _insufficient_ and do not convey other aspects of the data. This is by design. Remember that the aim of EDA is to help us understand the data with our available cognitive capabilities, while avoiding overload. This is why summaries are so useful: they allow us to see, not a lot but wisely.
 
@@ -113,9 +113,9 @@ auctions_amf |>
   summary()
 ```
 
-To complicate matters, this is only a small part of the full table (only ten rows and six columns). The task of identifying patterns becomes increasingly complex as the number of observations and the number of variables grow.
+To make matters more difficult, this is only a small part of the full table (only ten rows and six columns). The task of identifying patterns becomes increasingly complicated as the number of observations and the number of variables grow.
 
-Visualization techniques _encode_ the data in a way that makes fuller use of our visual data processing powers. Last session we introduced a simple visualization technique, called [stem-and-leaf](https://en.wikipedia.org/wiki/Stem-and-leaf_display) tables. The following stem-and-leaf tables present the _exact same information_ as that seen above, but reorganized in a way that engages our ability to process information visually: 
+Visualization techniques work by _encoding_ the data in ways that make fuller use of our visual data processing powers. Last session we introduced a simple visualization technique, called [stem-and-leaf](https://en.wikipedia.org/wiki/Stem-and-leaf_display) tables. The following stem-and-leaf tables present the _exact same information_ as that seen above, but reorganized in a way that engages our ability to process information visually: 
 
 stem        | leaf
 ------------|--------
@@ -150,7 +150,7 @@ stem        | leaf
 0.1         |\color{blue}{3}
 0.2         |\color{blue}{3}
 
-The power of visualization techniques is that we can process multiple information channels _in parallel_. Shapes and colors are only two ways to encode statistical information; in addition, we can distinguish shapes, angles, areas, and positions. These encodings allow the brain to make immediate sense of the underlying values, in the blink of an eye (see Franconeri et al. [2021](https://journals.sagepub.com/doi/abs/10.1177/15291006211051956)), although with less precision than with summary statistics.
+The power of visualization techniques is that we can process multiple information channels _in parallel_. Shapes and colors are only two ways to encode statistical information; in addition, we can distinguish shapes, angles, areas, and positions, among other spatial attributes. These encodings allow the brain to make sense of the underlying patterns in the blink of an eye (see Franconeri et al. [2021](https://journals.sagepub.com/doi/abs/10.1177/15291006211051956)), although with less precision than with summary statistics.
 
 To better appreciate this power, consider the matrix of correlations of Session 3:
 ```{r}
@@ -182,7 +182,7 @@ auctions_amf |>
   network_plot()
 ```
 
-Again, same information, but easier to see how the variables correlate with each other. This plot encodes relationships with colored lines that vary in width and color, and it only requires that we call function `rplot()`. This convenience, on the other hand, comes at a price: what if we wanted to change the _size_ of the text? Or the _position_ of the legend? Or the _width_ of the lines? Or the rate at which the _color_ of the lines fades? By hard-coding a specific type of graph, `rplot()` is easy to use but relatively inflexible. A more flexible approach would generalize the common aspects of creating graphs so that they can be applied in a consistent but flexible fashion.
+Again, same information, but easier to see the overall pattern of correlations among all variables. This plot encodes relationships with lines that vary in width and color according to correlation, and it only requires that we call function `rplot()`. The convenience of a simple function call, we must say, comes at a price: what if we wanted to change the _size_ of the text? Or the _position_ of the legend? Or the _width_ of the lines? Or the rate at which the _color_ of the lines fades? By hard-coding a specific type of graph, `rplot()` is easy to use but relatively inflexible. A more flexible approach would generalize the common aspects of creating graphs so that they can be applied in a consistent but flexible fashion. This is the job of a gramar of plots.
 
 Before proceeding, pause for a moment and think about statistical visualization techniques that you might already be familiar. How do they encode data in visual form?
 
@@ -196,7 +196,7 @@ As a side note, if you are interested in learning more about how the brain proce
 
 Just like the grammar of data manipulation discussed in Session 3 of the workshop was a convenient way to think about data operations, creating statistical plots is probably more flexible and natural when presented in the form of a grammar. A grammar of graphics was formalized by statistician and computer scientist [Leland Wilkinson](https://en.wikipedia.org/wiki/Leland_Wilkinson) in his book [A Grammar of Graphics](https://www.google.it/books/edition/The_Grammar_of_Graphics/ZiwLCAAAQBAJ). This book is the direct inspiration for package {[ggplot2](https://ggplot2.tidyverse.org/index.html)}, one of the most versatile and intuitive plotting packages around (see Wickham, [2010](https://doi.org/10.1198/jcgs.2009.07098))
 
-Package {ggplot2} (the name stands for "grammar of graphics in 2-dimensions) implements a _layered_ grammar of graphics. Each function acts as an element in a phrase of visualization, and by adding them together we can create fully developed phrases of graphics. Unlike easy to implement functions (like `rplot()` and `network_plot()` above), a grammar of graphics requires us to explicitly state what we wish to plot and how we wish to plot it. It is more verbose, but in contrast we can create more elloquent plots.
+Package {ggplot2} (the name stands for "grammar of graphics in 2-dimensions") implements a _layered_ grammar of graphics. Each function acts as a statement in a phrase of plot-building, and by adding them together we can create fully developed and sophisticated phrases of graphics. Unlike easy to implement functions (like `rplot()` and `network_plot()` above), a grammar of graphics requires us to explicitly state what we wish to plot and how we wish to plot it. It is more verbose, but has the advantage that we can create more eloquent plots.
 
 As an illustration of this, the following chunk recreates the correlation matrix as a plot (do not worry too much about the details for the time being): 
 ```{r}
@@ -238,17 +238,17 @@ auctions_amf |>
 
 ```
 
-The first thing to notice is that we combine data manipulation and plotting in a longer sentence. Something very similar to this code exists inside of function `rplot()`; the advantage of making the sentence explicit is that we can more easily manipulate it. For instance, try changing the low and high colors (in `scale_color_gradient2()`) to "brown" and "green". Or change the range (in `scale_size()` to c(2, 10)).  Or layer a title with `ggtitle("My matrix of correlations")` (use the `+` sign to _add_ statements to the plot; this is similar to piping).
+The first thing to notice is that in the chunk above we combine elements of data manipulation and plotting in a single, sophisticated sentence. Something very similar to this code exists inside of function `rplot()`; the advantage of making the sentence explicit is that we can more easily manipulate it. For instance, try changing the low and high colors (in `scale_color_gradient2()`) to "brown" and "green". Or change the range (in `scale_size()` to c(2, 10)).  Or layer a title with `ggtitle("My matrix of correlations")` (use the `+` sign to _add_ statements to the plot; this is similar to piping).
 
-## A grammar of data visualization
+## Elements of the grammar and crafting phrases
 
-A plot is a two-dimensional surface on paper or a screen where we render information. What are the parts of a plot?
+To introduce the elements of the grammar of plots, we must keep in mind that a plot is a two-dimensional surface on paper or a screen where we render information. What are the parts of a plot?
 
 -
 -
 -
 
-As hinted by the example above, package {ggplot2} works by _layering_ statements based on the grammar of graphics. The basic structure of a {ggplot2} phrase includes some or all of the following pieces:
+As hinted by the example above that recreated the matrix of correlations as a plot, package {ggplot2} works by _layering_ statements based on the grammar of graphics. The basic structure of a {ggplot2} phrase includes some or all of the following pieces:
 
 - Create a {ggplot2} object: this is similar to creating a blank canvas for a statistical plot (not optional)
 - Populate the canvas with data (optional)
@@ -600,8 +600,6 @@ In the chunk of code above I deliberately populated the data in `geom_bar()` ins
 
 # Bivariate description
 
-Unlike summary statistics that are defined in the bivariate case for categorical data only or for qualitative data only, visualization approaches are more accommodating and it is possible to visually explore quantitative-categorical combinations of variables too.
-
 ## Two quantitative variables
 
 Let us begin with perhaps the best well-known visualization method for two quantitative variables, the scatterplot. A scatterplot is nothing but a plot of two variables where the values are mapped using points to positions in the x- and y- axes:
@@ -626,6 +624,8 @@ auctions |>
 Count plots are a visual alternative to a cross-tabulation.
 
 ## One categorical and one quantitative variable
+
+Unlike summary statistics that are defined in the bivariate case for categorical data only or for qualitative data only, visualization approaches are more accommodating and it is possible to visually explore quantitative-categorical combinations of variables too.
 
 There are a few visualization techniques that accommodate combinations of one categorical and one quantitative variable. Column plots can map a categorical variable to one axis and a quantitative variable to the other. In this example, we calculate a summary statistic by group (the mean `premium` by quality of `property`) and then use `geom_col()` to visualize these two variables:
 ```{r}
