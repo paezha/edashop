@@ -64,6 +64,8 @@ library(corrr) # Correlations in R
 library(dplyr) # A Grammar of Data Manipulation
 library(edashop) # A Package for a Workshop on Exploratory Data Analysis
 library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
+library(ggridges) # Ridgeline Plots in 'ggplot2'
+library(ggthemes) # Extra Themes, Scales and Geoms for 'ggplot2'
 library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
 library(kableExtra) # Construct Complex Table with 'kable' and Pipe Syntax
 library(skimr) # Compact and Flexible Summaries of Data
@@ -159,7 +161,8 @@ auctions_amf |>
   shave()
 ```
 
-Now compare to 
+Now compare to:
+<!--- Function `rplot()` creates a graphical version of a correlation matrix --->
 ```{r}
 auctions_amf |>
   select(where(is.numeric)) |>
@@ -170,7 +173,7 @@ auctions_amf |>
 ```
 
 By encoding valence using colors and magnitude using size, we can present the same information in a form that we naturally process with greater ease. Now compare to:
-<!--- Function `network_plot()` creates a plot that maps the relationships --->
+<!--- Function `network_plot()` creates a plot that maps the correlations in a correlation matrix --->
 ```{r}
 auctions_amf |>
   select(where(is.numeric)) |>
@@ -193,11 +196,51 @@ As a side note, if you are interested in learning more about how the brain proce
 
 Just like the grammar of data manipulation discussed in Session 3 of the workshop was a convenient way to think about data operations, creating statistical plots is probably more flexible and natural when presented in the form of a grammar. A grammar of graphics was formalized by statistician and computer scientist [Leland Wilkinson](https://en.wikipedia.org/wiki/Leland_Wilkinson) in his book [A Grammar of Graphics](https://www.google.it/books/edition/The_Grammar_of_Graphics/ZiwLCAAAQBAJ). This book is the direct inspiration for package {[ggplot2](https://ggplot2.tidyverse.org/index.html)}, one of the most versatile and intuitive plotting packages around (see Wickham, [2010](https://doi.org/10.1198/jcgs.2009.07098))
 
-Package {ggplot2} (the name stands for "grammar of graphics in 2-dimensions) implements a _layered_ grammar of graphics. Each function acts as an element in a phrase of visualization, and by adding them together we can create fully developed phrases of graphics. Unlike easy to implement functions ()
+Package {ggplot2} (the name stands for "grammar of graphics in 2-dimensions) implements a _layered_ grammar of graphics. Each function acts as an element in a phrase of visualization, and by adding them together we can create fully developed phrases of graphics. Unlike easy to implement functions (like `rplot()` and `network_plot()` above), a grammar of graphics requires us to explicitly state what we wish to plot and how we wish to plot it. It is more verbose, but in contrast we can create more elloquent plots.
+
+As an illustration of this, the following chunk recreates the correlation matrix as a plot (do not worry too much about the details for the time being): 
+```{r}
+# Data manipulation
+auctions_amf |>
+  select(where(is.numeric)) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs") |> 
+  shave() |>
+  # Pivot the table so that all the correlations are in a single column
+  pivot_longer(-term,
+               names_to = "term_2",
+               values_to = "r") |>
+  # Drop all missing observations
+  drop_na() |>
+  # Transmute the data frame
+  transmute(term_1 = factor(term,
+                            levels = c("days_on_market", "premium", "discount", "number_auctions")),
+            term_2 = factor(term_2,
+                            levels = c("days_on_market", "number_auctions", "discount")),
+            r) |>
+  # Plotting
+  ggplot() +
+  geom_point(aes(x = term_2, 
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  geom_point(aes(x = term_2, 
+                 y = term_1,
+                 size = abs(r)),
+             shape = 1) +
+  scale_size(name = "absolute correlation",
+             range = c(1, 5)) +
+  scale_color_gradient2(name = "correlation",
+                        low = "red",
+                        mid = "white",
+                        high = "blue",
+                        midpoint = 0)
+
+```
+
+The first thing to notice is that we combine data manipulation and plotting in a longer sentence. Something very similar to this code exists inside of function `rplot()`; the advantage of making the sentence explicit is that we can more easily manipulate it. For instance, try changing the low and high colors (in `scale_color_gradient2()`) to "brown" and "green". Or change the range (in `scale_size()` to c(2, 10)).  Or layer a title with `ggtitle("My matrix of correlations")` (use the `+` sign to _add_ statements to the plot; this is similar to piping).
 
 ## A grammar of data visualization
-
-## The anatomy of a plot
 
 A plot is a two-dimensional surface on paper or a screen where we render information. What are the parts of a plot?
 
@@ -205,70 +248,481 @@ A plot is a two-dimensional surface on paper or a screen where we render informa
 -
 -
 
-# The basic structure of a {ggplot2} phrase
+As hinted by the example above, package {ggplot2} works by _layering_ statements based on the grammar of graphics. The basic structure of a {ggplot2} phrase includes some or all of the following pieces:
 
-- Create a {ggplot2} object: this is similar to creating a blank canvas for a statistical plot
+- Create a {ggplot2} object: this is similar to creating a blank canvas for a statistical plot (not optional)
 - Populate the canvas with data (optional)
 - Map data attributes to aesthetics on the plot (optional)
 - Add geometric objects to the canvas (add data if you have not done so, and map attributes to aesthetics)
 - Adjust the look of the plot
 
+_Mapping_ attributes to _aesthetics_ is equivalent to encoding the data in visual form. Which variable do we want to encode as colors? Which variable do we want to encode as shapes? Which geometric objects will be used to represent the data?
+
 We will review each of these elements of the grammar next.
 
-# Creating empty plots
-
-In this step we initialize a {ggplot2} object for our desired statistical plot. At its simplest, it only requires that we state that we are creating a canvas:
+Let us return to the plot that we created before and break down the sentence in parts. To reduce the amount of typing, we will begin by naming the output of our data manipulations:
 ```{r}
-ggplot()
+my_r_matrix <- auctions_amf |>
+  select(where(is.numeric)) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs") |> 
+  shave() |>
+  # Pivot the table so that all the correlations are in a single column
+  pivot_longer(-term,
+               names_to = "term_2",
+               values_to = "r") |>
+  # Drop all missing observations
+  drop_na() |>
+  # Transmute the data frame
+  transmute(term_1 = factor(term,
+                            levels = c("days_on_market", "premium", "discount", "number_auctions")),
+            term_2 = factor(term_2,
+                            levels = c("days_on_market", "number_auctions", "discount")),
+            r)
 ```
 
-As we can see, this creates a blank plot for which we can state a number of different things. It is important to note that {ggplot2} objects can be named, and are not actually rendered until stated. For example, here we create a named {ggplot2} object that we will call very imaginatively `my_plot`:
+A correlation is a bivariate statistic, so we need to know which two variables the statistic corresponds to: these are `term_1` and `term_2` in the data frame. The correlation is stored in column `r`:
 ```{r}
-my_plot <- ggplot()
+str(my_r_matrix)
 ```
 
-The canvas is not rendered until we call the object:
+The first step to recreate the plot is to populate a blank canvas with our data frame:
 ```{r}
-my_plot
+my_r_matrix |>
+  ggplot()
 ```
 
-A blank canvas is not a statistical plot. For a statistical plot we need data. We can populate the object with a data frame at the time that we create the canvas; the data frame used in the function `ggplot()` is assumed to be the default for any geometric objects that we add to the plot later on. This step is optional, but if we are working with a single data frame it is an efficient way of declaring the data to be used for the plot:
+Notice that the plot is still blank. A blank canvas is not yet a statistical plot. Although we already populated the {ggplot2} object with data, we have not yet stated _what_ we wish to plot. For this we need to select an appropriate geometric object. Geometric objects are layered by using a function of the family `geom_*`. In this case, we wish to represent correlations as points, so we use `geom_point()`. Now we need to map variables in our table to the plot. Points need to be placed on the plane with "x" and "y" coordinates, so we need to choose which variable maps to the x-axis and which variable maps to the y-axis. To do this, we declare our encoding by means of `aes()`:
 ```{r}
-ggplot(data = auctions)
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1))
 ```
 
-Notice that the canvas is still empty. But the underlying object already knows what data to use when required to do so.
+_Now_ we have points in the canvas. But so far we have encoded (i.e., mapped) only _position_ (for which we used two variables, `term_1` and `term_2`). Next, we also want to represent the correlation, something that we can do by encoding variable `r` using color:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r))
+```
 
-# Mapping data to aesthetics
+The points now map the correlation to a color. The default colors, though, are not very effective: correlation ranges between -1 and 1, but a sequential color scale does not correctly convey the change in valence in correlation (positive and negative). We can modify the color by using a function of the family `scale_color_*`. Each aesthetic value has a scale and the scale can be manipulated with its corresponding scale function. Function `scale_color_gradient2()` is useful here, because it assumes that colors map to a variable that has _diverging_ values (for instance increasingly positive and increasingly negative). Here is our extended phrase:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r)) +
+  scale_color_gradient2()
+```
 
-Before we can actually plot something on our blank canvas, we need to decide how the data will be represented graphically. What are the elements of 
+By default, the midpoint of the scale is set to zero, but we can make this explicit, as well as the colors for the high and low values, and even the midpoint:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r)) +
+  scale_color_gradient2(high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0)
+```
 
+The colors let us more easily perceive the _magnitude_ as well as the _direction_ of the correlation. That said, the points are too small. We can change the size of the points as follows:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r),
+             size = 10) +
+  scale_color_gradient2(high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0)
+```
 
-# Geometric objects
+It is easier to see the colors. But notice how the `size` is a constant and does not map to any variable. This is why the points are all the same size. What if we mapped size to the correlation? Now size goes inside `aes()`; this is where we map (encode) aspects of the plot to variables:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = r)) +
+  scale_color_gradient2(high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0)
+```
 
+We have a small problem here: a correlation of -0.5 is as strong as a correlation of 0.5, but the size of the points is different for each! Similar to our color encoding, we would like the size to understand that -0.5 and 0.5 are identical levels of correlation, even if their valence is different. We can solve this by using a mathematical trick: we are going to map size to the _absolute_ value of the correlation:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  scale_color_gradient2(high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0)
+```
+
+Now the sizes reflect the magnitude of the correlation, while the colors reflect both the magnitude and valence.
+
+So far we have created a canvas, populated it, chosen an appropriate geometry for the data at hand, mapped variables to aesthetics, and adjusted the scale of one aesthetic value. We can also adorn the phrase that builds our plot. For example, we can use the `scale_*` to change the name of the attribute for the legend:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation")
+```
+
+We can modify adjust the range of values for the size of the points:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10))
+```
+
+We can also modify the labels for the axes:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10)) +
+  xlab("variable") +
+  ylab("variable")
+```
+
+To make the symbols easier to see, we can layer another set of points using a different symbol (a circle without fill) that maps size to absolute correlation but uses only the default color (black) as a constant:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 size = abs(r)),
+             shape = 1) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10)) +
+  xlab("variable") +
+  ylab("variable")
+```
+
+Other aspects of the plot can be modified by means of _themes_. This includes the background color, the color of the grid lines, or whether there are gridlines at all, the orientation of text, and and so on. The parts of the plot are named, and correspond to a certain _element_. For example, the legend has a position and also text. By modifying the text _element_ we can adjust the orientation of the text:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 size = abs(r)),
+             shape = 1) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10)) +
+  xlab("variable") +
+  ylab("variable") +
+  theme(legend.position = "bottom",
+        legend.text = element_text(angle = 90))
+```
+
+A number of pre-defined themes exist that give different looks to a plot. For example, the following is a minimalist theme that reduces the amount of "ink" used in the creation of the plot:
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 size = abs(r)),
+             shape = 1) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10)) +
+  xlab("variable") +
+  ylab("variable") +
+  theme_minimal()
+```
+
+Other themes include `theme_bw()`, `theme_light()`, `theme_classic()`, and `theme_linedraw()`. Package {[ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)} includes many additional themes, some of which replicate known themes, for example those used by Tufte, The Economist (`theme_economist()`), Stata (`theme_stata()`), or the Wall Street Journal (`theme_wsj()`):
+```{r}
+my_r_matrix |>
+  ggplot() +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 color = r,
+                 size = abs(r))) +
+  geom_point(aes(x = term_2,
+                 y = term_1,
+                 size = abs(r)),
+             shape = 1) +
+  scale_color_gradient2(name = "correlation",
+                        high = "blue",
+                        mid = "white",
+                        low = "red",
+                        midpoint = 0) +
+  scale_size("absolute correlation",
+             range = c(2, 10)) +
+  xlab("variable") +
+  ylab("variable") +
+  theme_tufte()
+```
+
+To state the phrase that will create a plot we must meticulously think about what we wish to achieve with it. This involves more work than using a function built for a specific type of graph, since we have to painstakingly control all aspects of the plot. On the other hand, we can be more precise and deliberate about the outcome. And if we need to make changes, for instance if we are experimenting with colors, shapes, etc., a programmatic effort means that we just need to make small adjustments and re-run the code. This approach offers high replicability too.
+
+# Appropriate geometric objects by scale of measurement
+
+It will not surprise you, seeing how the scale of measurement was an important consideration when selecting an appropriate summary statistic, that it is also something to think about when choosing geometric objects for statistical plots. Which geometric objects are appropriate will depend on whether the plot is univariate, bivariate, or multivariate and whether the variables that we are trying to encode are categorical or quantitative. We explore this next. 
 
 # Univariate description
 
+Univariate description involves exploring the main attributes of a single variable, typically its central tendency and spread. For quantitative variables, an appropriate geometric object is a histogram, implemented as `geom_hist()`. For instance:
+```{r}
+ggplot(data = auctions,
+       aes(x = premium)) +
+  geom_histogram()
+```
+
+A histogram is the number of cases (the _count_ of cases) by ranges of values. We only need to encode a single variable (in the example above the `premium`), because the "count" on the y-axis is a computed statistic. The default number of bins in `geom_hist()` is 30, but this can be adjusted:
+```{r}
+ggplot(data = auctions,
+       aes(x = premium)) +
+  geom_histogram(bins = 20)
+```
+
+An alternative geometric object is a frequency polygon, as shown here:
+```{r}
+ggplot(data = auctions,
+       aes(x = premium)) +
+  geom_freqpoly(bins = 20)
+```
+
+A density plot is a smoother version of a frequency polygon:
+```{r}
+ggplot(data = auctions,
+       aes(x = premium)) +
+  geom_density(bins = 20)
+```
+
+These plots suggest that premiums tend to be positives (sometimes quite large), but in some relatively rare cases they can be negative The mean and median of this variable are:
+```{r}
+mean_premium <- auctions |> 
+  pull(premium) |> 
+  mean(na.rm = TRUE)
+
+median_premium <- auctions |> 
+  pull(premium) |> 
+  median(na.rm = TRUE)
+
+mean_premium
+median_premium
+```
+
+The difference between the mean and the median is due to the lack of symmetry of the distribution. The mean tends to be pulled towards the longer tail of a distribution, as seen below, where we  use `geom_vline()` to draw vertical lines (the mean in blue, the median in green):
+```{r}
+ggplot(data = auctions,
+       aes(x = premium)) +
+  geom_density(bins = 20) +
+  geom_vline(xintercept = mean_premium,
+             color = "blue",
+             size = 1) +
+  geom_vline(xintercept = median_premium,
+             color = "green",
+             size = 1)
+```
+
+The median is considered a more _robust_ measure of central tendency because it is not affected by few unusual values like the mean is.
+
+When the variable of interest is categorical, an appropriate geometric object is a bar chart, implemented as `geom_bar()`. Superficially bar charts look like histograms, but they are different in two important respects: the order of the categories does not necessarily matter, and there are no "ranges" of values, just the labels themselves.This is illustrated next:
+```{r}
+ggplot() +
+  geom_bar(data = auctions,
+           aes(x = quality))
+```
+
+In the chunk of code above I deliberately populated the data in `geom_bar()` instead of `ggplot()` to illustrate that this is a possibility. Any data declared in `ggplot()` will be used by default in any `geom_*` function in the sentence, unless other data are specified. Data entered in a `geom_*` function will only be used for that geometric object.
 
 # Bivariate description
 
+Unlike summary statistics that are defined in the bivariate case for categorical data only or for qualitative data only, visualization approaches are more accommodating and it is possible to visually explore quantitative-categorical combinations of variables too.
+
+## Two quantitative variables
+
+Let us begin with perhaps the best well-known visualization method for two quantitative variables, the scatterplot. A scatterplot is nothing but a plot of two variables where the values are mapped using points to positions in the x- and y- axes:
+```{r}
+ggplot(data = auctions) +
+  geom_point(aes(x = days_on_market,
+                 y = premium))
+```
+
+There is quite a bit of scatter in this plot, which explains why the correlation between these two variables was so low ($r=0.083$).
+
+## Two categorical variables
+
+Two categorical variables can be explored by means of count plots:
+```{r}
+auctions |>
+  ggplot() +
+  geom_count(aes(x = quality,
+               y = occupancy))
+```
+
+Count plots are a visual alternative to a cross-tabulation.
+
+## One categorical and one quantitative variable
+
+There are a few visualization techniques that accommodate combinations of one categorical and one quantitative variable. Column plots can map a categorical variable to one axis and a quantitative variable to the other. In this example, we calculate a summary statistic by group (the mean `premium` by quality of `property`) and then use `geom_col()` to visualize these two variables:
+```{r}
+auctions |>
+  group_by(quality) |>
+  summarize(mean_premimum = mean(premium, 
+                                 rm.na = TRUE)) |>
+  ggplot() +
+  geom_col(aes(x = quality,
+               y = mean_premimum))
+```
+
+We see that the premium tends to be higher on average for properties of poor quality, and it is interesting to notice that despite being lower for other levels of quality, it tends to increase as the quality improves. Why could this be?
+
+Another useful technique is the _boxplot_. This kind of plot uses rectangles to identify the first and third quantiles of the distribution, whiskers to show the value of 1.5 times the interquartile range (IQR, a measure of spread), and dots to represent extreme values (those beyond 1.5 times the IQR). The median of the distribution is a line in the box. Boxplots are implemented in {ggplot2} as `geom_boxplot()`:
+```{r}
+ggplot(data = auctions) +
+  geom_boxplot(aes(x = quality,
+                 y = premium))
+```
+
+We see from this plot that the distribution of the premium is more spread for properties of fair quality. The boxplot does obscure some of the detail of the underlying distribution of values. Ridge plots address this by plotting the density of the distribution instead:
+```{r}
+ggplot(data = auctions) +
+  geom_density_ridges(aes(x = premium,
+                 y = quality))
+```
 
 # Multivariate description
 
+Higher dimensional visualization can be created by encoding additional variables using available aesthetics. The following chunk of code recreates the boxplot of `quality` and `premium`, and further maps `location` to color:
+```{r}
+ggplot(data = auctions) +
+  geom_boxplot(aes(x = quality,
+                 y = premium,
+                 color = location))
+```
 
+This plot reveals that the extreme values are more often for suburban properties than not. 
+
+The following example recreates the scatterplot of `days_on_market` and `premium` that we did before, but now adds `location` to plot, encoded to color and shape:
+```{r}
+ggplot(data = auctions) +
+  geom_point(aes(x = days_on_market,
+                 y = premium,
+                 color = location,
+                 shape = location), 
+             size = 2)
+```
+
+As we saw above, the correlation between `days_on_market` and `premium` was rather low. But when we look under the surface of the original plot by making it multivariate, we see that the association between these two variables may be particularly poor for suburban properties, and perhaps not so poor for non-suburban properties. The correlation for the whole sample was $0.083$. Let us calculate the correlation for suburban properties only:
+```{r}
+auctions |>
+  filter(location == "Suburban") |>
+  select(days_on_market, 
+         premium) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs")
+```
+
+In contrast, the correlation between `days_on_market` and `premium` for non-suburban properties is higher:  
+```{r}
+auctions |>
+  filter(location != "Suburban") |>
+  select(days_on_market, 
+         premium) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs")
+```
+
+And the correlation between these two variables for central properties is higher still:
+```{r}
+auctions |>
+  filter(location == "Center") |>
+  select(days_on_market, 
+         premium) |>
+  correlate(method = "pearson",
+            use = "pairwise.complete.obs")
+```
+
+This example illustrates how, in the words of Tukey, "[t]he greatest value of a picture is when it forces us to notice what we never expected to see."
 
 # Practice
 
-1. Join tables `auctions_amf`, `auctions_pf`, `auctions_phy`, and `auctions_sef`.
+1. Use the data set with auctions in distressed markets in Italy for this practice.
 
-2. Imagine that you are interested in the discount in distressed property sales. The discount (check `?auction_amf`) is the percent variation between the initial listed price (market value as apprised) and selling price. Describe and discuss this variable.
+2. Create a statistical plot of variable `days_on_market`. Use `geom_vline()` to plot the mean and the median of the variable.
 
-3. How does the discount relate to other variables in the data set? Discuss.
+3. Create a scatterplot of `discount` and `days_on_market`. Which of these variables would you encode on the x-axis and why?
 
-4. Propose some hypotheses about discount based on your exploration of the data set. How would you propose to investigate these hypotheses?
+4. Calculate the correlation between `discount` and `days_on_market`.
 
-5. Imagine now that you are interested in the state of maintenance of properties that are sold in distressed conditions (check `?auction_phy`). Repeat questions 3 and 4 but for this variable.
+5. Recreate the scatterplot of `discount` and `days_on_market` but to make it a multivariate plot, use the aesthetics of color and shape to encode `quality`. What do you learn from this plot?
 
-6. What can you say so far about the relationship between discount and the categorical variables in the data set? Or between state of maintenance and the quantitative variables in the data set? Propose an approach to explore a combination of categorical and quantitative variables.
+6. Recalculate the correlation between `discount` and `days_on_market` by `quality`. What do you learn from this?
 
+7. Calculate the logarithm of `days_on_market` and create a statistical plot of this new variable. Add the mean and the median of the variable to the plot. Discuss this plot.
+
+8. Repeat questions 5 and 6 using the log-transformation of `days_on_market` and discuss the results.
 
