@@ -88,7 +88,8 @@ The _Sessions_ are [R markdown](https://rmarkdown.rstudio.com/) documents with t
 ### Session 5. A date with EDA: Bring your own data (2 h)
 
 - Reading external data
-- Hands-on practice
+- Hands-on practice  
+- Some additional notes on working with Rmarkdown
 
 ## What do I need to use this package?
 

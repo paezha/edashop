@@ -31,92 +31,197 @@ output:
 always_allow_html: true
 ---
 
+> "Errors using inadequate data are much less than those using no data at all."  
+>
+> --― Charles Babbage
+
+> "Data that is loved tends to survive."  
+>
+> --― Kurt Bollacker
+
 # Session Outline
 
 - Reading external data
 - Hands-on practice
+- Some additional notes on working with Rmarkdown
 
-# Introduction
+# Reminder
 
-NOTE: This is an [R Markdown](http://rmarkdown.rstudio.com) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. R Markdown files are _computational notebooks_ which implement a coding philosophy called [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible. 
+The human brain is a highly evolved machine with a specialization in visual recognition of spatial patterns, including shapes, areas, lengths, directions, and colors. This is why well-designed statistical plots are so effective for conveying complex information.
 
 # Preliminaries
 
-It is good practice to clear the working memory in RStudio when you begin working on something new. This is to make sure that there is no extraneous info in memory that might confuse your work. The command in `R` to clear the workspace is `rm` (for 'remove'), followed by a list of items to be removed. To clear the workspace from _all_ objects, run the following chunk (by clicking on the 'play' icon):
+Clear the workspace from _all_ objects:
 ```{r}
 rm(list = ls())
 ```
 
-Note that `ls()` lists all objects currently on the workspace.
-
-An alternative way of doing this is to just click on the little broom icon in the 'Environment' tab (top right of your screen in the standard configuration of the RStudio app).
-
-Next, we probably want to load all _packages_ that we wish to use in our work session. A package is a unit of shareable code that augments the capabilities of base `R`. Packages can be installed from different sources; the most common one is CRAN (Comprehensive R Archive Network), but sometimes from GitHub repositories, among other places where developers put their packages. A big advantage of CRAN is that it keeps track of dependencies, that is, the ways in which packages depend on one another. This reduces the probability of packages not working.
-
-When packages are in CRAN, they can be installed using `install.packages()`. A very useful set of packages is `tidyverse`, which includes code for data manipuation and visualization. If you have not done so before, you can install the package with `install.packages("tidyverse")`. As an alternative, you can install it from RStudio using the 'Install Packages' command in the 'Tools' menu, on the menu bar above. Simply click on 'Tools - Install Packages...' on the menu bar, and enter `tidyverse` in the window. Or you can use the 'Packages' pane in the app (in the bottom right).
-
-Once the package is part of your _library_, it becomes available for use in your computer; to use the package afterwards, you must load it into memory. For this, we use the command `library()`, which is used to load a package, that is, to activate it for use, for example:
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `R`. For this session, the following package/s is/are used:
 ```{r}
-library(readr)
+library(dplyr) # A Grammar of Data Manipulation
+library(edashop) # A Package for a Workshop on Exploratory Data Analysis
+library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics 
+library(haven) # Import and Export 'SPSS', 'Stata' and 'SAS' Files
+library(readr) # Read Rectangular Text Data
+library(readxl) # Read Excel Files
+library(sf) # Simple Features for R
 ```
 
+# Reading external data
+
+In this workshop we have used data that was meticulously prepared and documented to make it analysis-ready. But often we need to read data from so-called external sources, that is, files that are not in native `R` format, including Excel files, csv files, Stata files, shape files, and so on.
+
+The original files of the data sets provided in {[edashop](https://paezha.github.io/edashop/)} are shared with the package. For example, check the following help file:
+```r
+?i40_index_rank
+```
+
+This is one of two data frames created using original files from  Honti et al. ([2020](https://doi.org/10.1016/j.dib.2020.106464)).
+
+The path to the source file is:
 ```{r}
 external_csv <- system.file("extdata", 
                              "rankings.csv", 
                              package = "edashop")
 ```
 
+You can check that this object is just a string with the path to the file:
 ```{r}
-imported_csv <- read.csv(external_file)
+external_csv
 ```
 
+One way to read files in csv format is with function `read.csv`:
 ```{r}
-library(haven)
+imported_csv <- read.csv(external_csv)
 ```
 
+Once the file is imported it can be saved as a file of type rda for ease of access in the future. For reproducibility purposes, it is highly recommended to keep the source files intact and document any data processing done in a script or Rmarkdown document. For example, here we change the names of the columns in the table we just imported:
+```{r}
+imported_csv <- imported_csv |>
+  rename(NUTS_ID = Regio,
+         gdp_rank = GDPrank,
+         promethee_rank = PrometheeRank,
+         regional_innovation_index = RII)
+```
+
+Then we save the file:
+```{r}
+save(external_csv,
+     file = "external_csv.rda",
+     compress = "xz")
+```
+
+This makes it easy to retrieve our prepared data.
+
+An external file in Stata's dat format is also shared:
 ```{r}
 external_dta <- system.file("extdata", 
                              "phd_italy.dta", 
                              package = "edashop")
 ```
 
+As before `external_dta` is a string with the path to the file:
+```{r}
+external_dta
+```
+
+Package {[haven](https://CRAN.R-project.org/package=haven)} has utilities for reading external data in various common formats, including dta:
 ```{r}
 imported_dta <- read_dta(external_dta)
 ```
 
-```{r}
-library(readxl)
-```
-
+Package {[readxl](https://readxl.tidyverse.org/)} has utilities to read Excel files:
 ```{r}
 external_xlsx <- system.file("extdata", 
                              "italy-nuts-codes.xlsx", 
                              package = "edashop")
-```
 
-```{r}
 imported_xlsx <- read_xlsx(external_xlsx)
 ```
 
-# Practice
-
-1. Describe in your own words the concept of literate programming. What is a computational notebook?
-
-2. Load the full version of the dataset used in the examples in this session (distributed with package [{edashop}](https://paezha.github.io/edashop/)).
-
+As a last example, package {[sf](https://r-spatial.github.io/sf/index.html)} includes utilities to read shape files (and much, much more besides!):
 ```{r}
-data("phd_italy_regions", 
-     package = "edashop")
+external_shp <- system.file("extdata", 
+                             "nuts2.shp", 
+                             package = "edashop")
+
+imported_shp <- st_read(external_shp)
 ```
 
-3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)?
+# Hands-on practice
 
-4. Which region in Italy had the largest number of respondents to the survey? Which had the least? Can we infer from the number of respondents the population of Ph.D. students in each region? Explain.
+If you brought a data file of your own in an external format, try reading it here. Then, you can play with it.
 
-5. Calculate the mean size of active spinoffs for every region.
+As an example, I am going to plot the shape file that we just read before. Notice that spatial data in simple features (sf) format are a type of geometric object in the grammar of {ggplot}:
+```{r}
+ggplot() +
+  geom_sf(data = imported_shp)
+```
 
-6. What is the maximum mean spinoff size by region? (Hint: use `?max` to see how to deal with the `NaN` value)
+Next we can join the geometry of the boundaries to the rankings of industrial readinness, and convert to simple features:
+```{r}
+i40_rankings <- imported_csv |>
+  left_join(imported_shp,
+            by = "NUTS_ID") |>
+  st_sf()
+```
 
-7. Calculate the regional spinoff intensity started by Ph.D. students: this is number of currently active spinoffs founded by Ph.D. students in the sample.
+Now we can map something else, for instance, by encoding it to the _fill_ property of the polygons (the color of the areas): 
+```{r}
+ggplot() +
+  geom_sf(data = i40_rankings,
+          aes(fill = gdp_rank))
+```
 
-8. What is the total number of spinoff companies in Northern, Central, and Southern Italy? (Hint: check the variable `geo` in the data frame)
+A great resource to learn about working with spatial data in `R` is Lovelace et al. ([2019](https://geocompr.robinlovelace.net/index.html)).
+
+# Some additional notes on working with Rmarkdown
+
+Rmarkdown is a great invention. It implements principles of literate programming and enforces good discipline when writing and documenting not only code but also analysis processes.
+
+Here is some additional information of value. The chunks of code that we use to communicate with the computer accept a number of options that stipulate the behavior of the chunk. [Chunk options](https://yihui.org/knitr/options/) are written inside the curly brackets. They can also be named:
+```{r example-eval, eval=FALSE}
+# Option eval controls whether the chunk is evaluated (i.e., run). 
+# This chunk of code can only be run manually, by clicking the play icon, 
+# but will be ignored when running the document or when knitting
+?edashop
+```
+
+Some chunks, like eval, control whether the code is run. Others, like echo, control whether the chunk itself is printed in the output document when knitting:
+```{r example-echo, echo=FALSE}
+print("This chunk of code will not be printed in the output. The result of running the code will")
+```
+
+Chunk include is used to include code and results of the code, or to suppress all. For example, when reading files or loading data, we may not wish to have those things printed in the output document:
+```{r example-include, include=FALSE}
+print("This chunk of code will be evaluated but not be printed in the output. The result of running the code will also be suppressed.")
+```
+
+For example, let us say that we wish to show a plot in a paper or report, but we do not need to show the code:
+```{r example-plot, echo=FALSE}
+# This chunk of code will not be printed, but the results of the code
+# will be printed.
+ggplot() +
+  geom_sf(data = i40_rankings,
+          aes(fill = gdp_rank))
+```
+
+Rmarkdown is a great format for creating reproducible research reports and papers. These are some examples:
+
+- Paez, Antonio, et al. "A spatio‐temporal analysis of the environmental correlates of COVID‐19 incidence in Spain." Geographical analysis 53.3 (2021): 397-421. The repository with the reproducible document is here: https://github.com/paezha/covid19-environmental-correlates
+
+- Paez A, Higgins CD (2021) The Accessibility Implications of a Pilot COVID-19 Vaccination Program in Hamilton, Ontario. Findings (doi.org/10.32866/001c.24082). The repository with the reproducible document is here: https://github.com/paezha/Accessibility-Pharmacies-Hamilton-Vaccines
+
+- Higgins, C.D., Páez, A., Kim, G., Wang, J. (2021) Changes in accessibility to emergency and community food services during COVID-19 and implications for low income populations in Hamilton, Ontario. Social Science and Medicine, 291:114442 (doi.org/10.1016/j.socscimed.2021.114442). The repository with the reproducible document is here: https://github.com/paezha/Accessibility-Food-Banks-Hamilton
+
+For your practice, you can create a new template from package {rticles} and write a small exploratory data analysis report using your data set or one of the data sets provided.
+
+Happy analysis!
+
+# Practice
+
+1. Install package {[rticles](https://github.com/rstudio/rticles)}.
+
+2. Create a new Rmarkdown file from am {rticles} template of your choice.
+
+3. Transfer your data analysis exercise to the template and write a small report.

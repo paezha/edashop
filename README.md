@@ -88,7 +88,8 @@ can work with them in ways not possible with conventional printed notes.
 ### Session 5. A date with EDA: Bring your own data (2 h)
 
 -   Reading external data
--   Hands-on practice
+-   Hands-on practice  
+-   Some additional notes on working with Rmarkdown
 
 ## What do I need to use this package?
 
