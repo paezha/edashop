@@ -4,11 +4,11 @@
 \name{edashop-package}
 \alias{edashop}
 \alias{edashop-package}
-\title{edashop: A Package for a Workshop on Exploratory Data Analysis}
+\title{edashop: Resources for Teaching a Workshop on Exploratory Data Analysis}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A package with templates and data useful to teach a workshop on Exploratory Data Analysis using `R`.
+Templates and data for teaching a workshop on Exploratory Data Analysis using `R`.
 }
 \references{
 \url{https://github.com/paezha/edashop}
@@ -23,7 +23,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Antonio Paez \email{paezha@mcmaster.ca} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Antonio Paez \email{paezha@mcmaster.ca} (\href{https://orcid.org/0000-0001-6912-9919}{ORCID})
 
 
 Antonio Paez, School of Earth, Environment and Society, McMaster University \email{paezha@mcmaster.ca}

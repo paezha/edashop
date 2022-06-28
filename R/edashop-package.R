@@ -138,7 +138,7 @@ NULL
 #' @keywords datasets
 #' @name i40_index_db
 #' @usage data(i40_index_db)
-#' @source Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. https://doi.org/10.1016/j.dib.2020.106464
+#' @source Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. \doi{10.1016/j.dib.2020.106464}
 #' @examples
 #'  data(i40_index_db)
 #'  NUTS_2 <- i40_index_db$NUTS_ID
@@ -160,7 +160,7 @@ NULL
 #' @keywords datasets
 #' @name i40_index_rank
 #' @usage data(i40_index_rank)
-#' @source Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. https://doi.org/10.1016/j.dib.2020.106464
+#' @source Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. \doi{10.1016/j.dib.2020.106464}
 #' @examples
 #'  data(i40_index_rank)
 #'  NUTS_2 <- i40_index_rank$NUTS_ID
@@ -251,7 +251,7 @@ NULL
 #' @keywords datasets
 #' @name phd_italy
 #' @usage data(phd_italy)
-#' @source Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \url{https://doi.org/10.1016/j.dib.2018.03.116}
+#' @source Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \doi{10.1016/j.dib.2018.03.116}
 #' @examples
 #'  data(phd_italy)
 #'  annodinascita <- phd_italy$q01_annodinascita
@@ -278,7 +278,7 @@ NULL
 #' @keywords datasets
 #' @name phd_italy_regions
 #' @usage data(phd_italy_regions)
-#' @source Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \url{https://doi.org/10.1016/j.dib.2018.03.116}
+#' @source Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \doi{10.1016/j.dib.2018.03.116}
 #' @examples
 #'  data(phd_italy_regions)
 #'  geo <- phd_italy_regions$geo
@@ -322,7 +322,7 @@ NULL
 #' @keywords datasets
 #' @name price_gradient
 #' @usage data(price_gradient)
-#' @source Antoniucci, Valentina, and Giuliano Marella. "Housing price gradient and immigrant population: Data from the Italian real estate market." Data in Brief 16 (2018): 794-798. \url{https://doi.org/10.1016/j.dib.2017.12.018}
+#' @source Antoniucci, Valentina, and Giuliano Marella. "Housing price gradient and immigrant population: Data from the Italian real estate market." Data in Brief 16 (2018): 794-798. \doi{10.1016/j.dib.2017.12.018}
 #' @examples
 #'  data(price_gradient)
 #'  gradient <- price_gradient$grad_existing
@@ -353,7 +353,7 @@ NULL
 #' @keywords datasets
 #' @name auctions_amf
 #' @usage data(auctions_amf)
-#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \doi{10.1016/j.dib.2018.03.009}
 #' @examples
 #'  data(auctions_amf)
 #'  discount <- auctions_amf$discount
@@ -378,7 +378,7 @@ NULL
 #' @keywords datasets
 #' @name auctions_pf
 #' @usage data(auctions_pf)
-#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \doi{10.1016/j.dib.2018.03.009}
 #' @examples
 #'  data(auctions_pf)
 #'  occupancy <- auctions_pf$occupancy
@@ -406,7 +406,7 @@ NULL
 #' @keywords datasets
 #' @name auctions_phy
 #' @usage data(auctions_phy)
-#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \doi{10.1016/j.dib.2018.03.009}
 #' @examples
 #'  data(auctions_phy)
 #'  quality <- auctions_phy$quality
@@ -433,7 +433,7 @@ NULL
 #' @keywords datasets
 #' @name auctions_sef
 #' @usage data(auctions_sef)
-#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+#' @source Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \doi{10.1016/j.dib.2018.03.009}
 #' @examples
 #'  data(auctions_sef)
 #'  income <- auctions_sef$income
@@ -466,7 +466,7 @@ NULL
 #' @keywords datasets
 #' @name vineyards
 #' @usage data(vineyards)
-#' @source Cogato, Alessia, et al. "A sample of Italian vineyards: Landscape and management parameters dataset." Data in brief 33 (2020): 106589. \url{https://doi.org/10.1016/j.dib.2020.106589}
+#' @source Cogato, Alessia, et al. "A sample of Italian vineyards: Landscape and management parameters dataset." Data in brief 33 (2020): 106589. \doi{10.1016/j.dib.2020.106589}
 #' @examples
 #'  data(vineyards)
 #'  summary(vineyards$row_spacing)
@@ -581,7 +581,7 @@ eda_session_3_it <- function(){
 #' @name eda_session_4_it
 #' @export
 eda_session_4_it <- function(){
-  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_4_it from the menu")
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session__it from the menu")
 }
 
 #' EDA Workshop Session 5 Template (All Editions).

@@ -74,7 +74,7 @@ A data frame with 906 rows and 64 variables:
 }
 }
 \source{
-Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \url{https://doi.org/10.1016/j.dib.2018.03.116}
+Muscio, Alessandro, and Laura Ramaciotti. "Dataset from a qualitative survey on Ph. D. entrepreneurship in Italy." Data in Brief 18 (2018): 1272-1276. \doi{10.1016/j.dib.2018.03.116}
 }
 \usage{
 data(phd_italy)

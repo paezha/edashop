@@ -12,7 +12,7 @@ A data frame with 125 rows and 15 variables:
 }
 }
 \source{
-Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \url{https://doi.org/10.1016/j.dib.2018.03.009}
+Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market: Properties auctions in Italy." Data in Brief 18 (2018): 319-324. \doi{10.1016/j.dib.2018.03.009}
 }
 \usage{
 data(auctions_pf)

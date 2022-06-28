@@ -14,7 +14,7 @@ A data frame with 309 rows and 4 variables:
 }
 }
 \source{
-Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. https://doi.org/10.1016/j.dib.2020.106464
+Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464. \doi{10.1016/j.dib.2020.106464}
 }
 \usage{
 data(i40_index_rank)

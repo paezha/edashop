@@ -6,9 +6,30 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/envsocty3LT3)](https://CRAN.R-project.org/package=envsocty3LT3)
+stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
+[![GitHub
+Stars](https://img.shields.io/github/stars/paezha/edashop?style=social)](https://github.com/paezha/edashop/stargazers)
+
+![GitHub search hit counter:
+R](https://img.shields.io/github/search/paezha/edashop/R)  
+![GitHub search hit counter:
+exploratory](https://img.shields.io/github/search/paezha/edashop/exploratory)
+![GitHub search hit counter:
+data](https://img.shields.io/github/search/paezha/edashop/data) ![GitHub
+search hit counter:
+analysis](https://img.shields.io/github/search/paezha/edashop/analysis)
+![GitHub search hit counter:
+workshop](https://img.shields.io/github/search/paezha/edashop/workshop)
+
+![GitHub issues](https://img.shields.io/github/issues/paezha/edashop)
+![GitHub
+release](https://img.shields.io/github/release-date/paezha/edashop)
+![GitHub commit
+activity](https://img.shields.io/github/commit-activity/y/paezha/edashop)
+![GitHub last
+commit](https://img.shields.io/github/last-commit/paezha/edashop)
+
 <!-- badges: end -->
 
 Package {edashop} is an open educational resource to teach a workshop on
@@ -125,7 +146,7 @@ A good way to think about `R` is as a core package, with a library of
 optional packages that can be attached to increase its core
 functionality. `R` can be downloaded for free at:
 
-<https://cran.rstudio.com/>
+<https://CRAN.R-project.org/>
 
 `R` comes with a built-in console (a graphical user interface), but
 better alternatives to the basic interface include Interactive
@@ -197,8 +218,8 @@ and it is in this pane where this kind of content can be previewed.
 
 Once you have installed `R` and RStudio you are ready to install the
 package {edashop}. The package is available from
-[GitHub](https://github.com/paezha/envsocty3LT3), and to install it you
-need to run the following code in your `R` console:
+[GitHub](https://github.com/paezha/edashop), and to install it you need
+to run the following code in your `R` console:
 
 ``` r
 install.packages("remotes")
@@ -209,7 +230,7 @@ This will download the package to your personal library of packages and
 install it to make the package available for use locally. Behind the
 scenes, {envsocty3LT3} uses LaTeX to convert documents to PDF. For this
 you need to have install LaTeX in your system. The simplest approach on
-any platform is with `R` package [tinytex](https://yihui.name/tinytex/),
+any platform is with `R` package [tinytex](https://yihui.org/tinytex/),
 as follows:
 
 ``` r

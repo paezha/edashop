@@ -31,7 +31,7 @@ A data frame with 112 rows and 21 variables:
 }
 }
 \source{
-Antoniucci, Valentina, and Giuliano Marella. "Housing price gradient and immigrant population: Data from the Italian real estate market." Data in Brief 16 (2018): 794-798. \url{https://doi.org/10.1016/j.dib.2017.12.018}
+Antoniucci, Valentina, and Giuliano Marella. "Housing price gradient and immigrant population: Data from the Italian real estate market." Data in Brief 16 (2018): 794-798. \doi{10.1016/j.dib.2017.12.018}
 }
 \usage{
 data(price_gradient)

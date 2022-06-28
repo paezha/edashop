@@ -21,7 +21,7 @@ A data frame with 3,686, rows and 11 variables:
 }
 }
 \source{
-Cogato, Alessia, et al. "A sample of Italian vineyards: Landscape and management parameters dataset." Data in brief 33 (2020): 106589. \url{https://doi.org/10.1016/j.dib.2020.106589}
+Cogato, Alessia, et al. "A sample of Italian vineyards: Landscape and management parameters dataset." Data in brief 33 (2020): 106589. \doi{10.1016/j.dib.2020.106589}
 }
 \usage{
 data(vineyards)
