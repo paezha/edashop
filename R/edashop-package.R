@@ -524,6 +524,74 @@ NULL
 #'  NAME_LATN <- nuts2$NAME_LATN
 "nuts2"
 
+#' IVSP - Census tracts
+#'
+#' Simple features object with the dataset of the São Paulo Social Vulnerability Index (IVSP) at the census tract level.
+#'
+#' @format A simple features data frame with 59773 rows and 50 variables:
+#' \describe{
+#'   \item{COD_SETOR}{Census tract code}
+#'   \item{SITUACAO}{Census tract status code}
+#'   \item{AGSN}{Is the sector a subnormal agglomeration?}
+#'   \item{IPVS}{IPVS group}
+#'   \item{v11}{Private and collective domiciles}
+#'   \item{v12}{Permanent private domiciles}
+#'   \item{v13}{Total improvised private domiciles}
+#'   \item{v14}{Residents in permanent private domiciles}
+#'   \item{v15}{Average number of residents in permanent private domiciles}
+#'   \item{v16}{Proportion of children aged 0-5 in the population}
+#'   \item{v17}{Total responsible persons}
+#'   \item{v18}{Average income of permanent private domiciles}
+#'   \item{v19}{Per capita income of permanent private domiciles }
+#'   \item{v20}{Proportion of domiciles with no per capita income}
+#'   \item{v21}{Proportion of domiciles with per capita income of up to 1/8 MW - Proxy of up to 70}
+#'   \item{v22}{Proportion of domiciles with per capita income from 1/8 to 1/2 MW - Proxy from 70 to 261}
+#'   \item{v23}{Proportion of domiciles with per capita income from 1/2 to 2 MW - Proxy from 261 to 914}
+#'   \item{v24}{Proportion of domiciles with per capita income of more than 2 MW - Proxy of more than 914}
+#'   \item{v25}{Proportion of private domiciles with nominal monthly income of up to 1/2 MW}
+#'   \item{v26}{Proportion of private domiciles with nominal monthly income of up to 1/4 MW}
+#'   \item{v27}{Average age of head of household}
+#'   \item{v28}{Average income of the person responsible for the household}
+#'   \item{v29}{Proportion of literate heads of household}
+#'   \item{v30}{Proportion of heads of household aged between 10 and 29}
+#'   \item{v31}{Share of the head of household's income in the family income (as a percentage)}
+#'   \item{v32}{Average age of female heads of household}
+#'   \item{v33}{Proportion of female heads of household who are literate}
+#'   \item{v34}{Proportion of female heads of household under 30 years of age}
+#'   \item{v35}{Average income of female heads of household}
+#'   \item{v36}{Factor 1}
+#'   \item{v37}{Factor 2}
+#'   \item{v38}{Factor 1 rural}
+#'   \item{v39}{Factor 2 rural}
+#'   \item{v40}{Proportion of permanent private domiciles with mains water supply}
+#'   \item{v41}{Proportion of permanent private domiciles with a bathroom for the exclusive use of residents or with sanitary sewage and sewage through a general or rainwater network or septic tank}
+#'   \item{v42}{Proportion of permanent private domiciles with garbage collected by a cleaning service or cleaning service garbage can}
+#'   \item{v43}{Proportion of permanent private domiciles with electricity}
+#'   \item{v44}{Population living in collective domiciles - Municipality}
+#'   \item{v45}{Population living in improvised private domiciles - Municipality}
+#'   \item{v46}{Population living in permanent private domiciles - Municipality}
+#'   \item{v47}{Population living in rural areas - Municipality}
+#'   \item{v48}{Population living in urban areas - Municipality}
+#'   \item{v49}{Total resident population - Municipality}
+#'   \item{zone}{Rural or urban}
+#'   \item{code_muni}{Municipality code}
+#'   \item{name_muni}{Municipality name}
+#'   \item{code_district}{District code}
+#'   \item{name_district}{District name}
+#'   \item{code_state}{State code}
+#'   \item{geometry}{Census tracts geometry}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cntr_sp_ipvs
+#' @usage data(cntr_sp_ipvs)
+#' @source SEADE, retrieved with \link{http://ipvs.seade.gov.br/}
+#' @examples
+#'  data(cntr_sp_ipvs)
+#'  indices <- cntr_sp_ipvs$IPVS
+"cntr_sp_ipvs"
+
 ##############################################
 ##                TEMPLATES                 ##
 ##############################################

@@ -2,10 +2,13 @@
 % Please edit documentation in R/edashop-package.R
 \docType{package}
 \name{edashop-package}
-\alias{edashop}
 \alias{edashop-package}
 \title{edashop: Resources for Teaching a Workshop on Exploratory Data Analysis}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Templates and data for teaching a workshop on Exploratory Data Analysis using `R`.
+
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
 Templates and data for teaching a workshop on Exploratory Data Analysis using `R`.
@@ -14,6 +17,14 @@ Templates and data for teaching a workshop on Exploratory Data Analysis using `R
 \url{https://github.com/paezha/edashop}
 }
 \seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/paezha/edashop}
+  \item \url{https://paezha.github.io/edashop/}
+  \item Report bugs at \url{https://github.com/paezha/edashop/issues}
+}
+
+
 Useful links:
 \itemize{
   \item \url{https://github.com/paezha/edashop}
