@@ -1,0 +1,87 @@
+---
+title: "Preprocessing of data from the Indice Paulista de Vulnerabilidade Social"
+output: html_notebook
+---
+
+A dataset with information from census tracts in the Grande ABC Paulista, São Paulo State, Brazil. Data source:
+
+- Pereira, R.H.M.; Gonçalves, C.N.; et. all (2019) geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil. GitHub repository - https://github.com/ipeaGIT/geobr.
+- Fundação Sistema Estadual de Análise de Dados [SEADE]. (2013). Índice Paulista de Vulnerabilidade Social. SEADE. Retrieved May 8, 2024, from http://ipvs.seade.gov.br/
+
+Load libraries:
+```{r load-libraries}
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+library(geobr)
+library(censobr)
+```
+Read the census tracts geometries: 
+```{r reading-census-tract}
+cntr_sp <- read_census_tract(
+  code_tract = "SP", 
+  year = 2010,
+  showProgress = TRUE,
+  )
+```
+
+Selects specific columns from the census dataset:
+```{r columns-ct}
+cntr_sp <- cntr_sp %>%
+  select(code_tract, zone, code_muni, name_muni, code_district, name_district,code_state,geom)
+```
+
+Reads the IPVS csv:
+```{r ipvs-csv}
+ipvs <- read.csv("baseIPVS2010.csv", sep=';',encoding="UTF-8") 
+```
+
+Selects specific columns from the IPVS dataset:
+```{r columns-ipvs}
+ipvs <- ipvs %>%
+  select(v7,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30,v31,v32,v33,v34,v35,v36,v37,v38,v39,v40,v41,v42,v43,v44,v45,v46,v47,v48,v49)
+```
+
+Fill in the NA values in the numeric columns:
+```{r fill-na}
+selected_columns <- c("v11","v12","v13","v14","v15","v16","v17","v18","v19","v20","v21","v22","v23","v24","v25","v26","v27","v28","v29","v30","v31","v32","v33","v34","v35","v40","v41","v42","v43","v44","v45","v46","v47","v48","v49")
+
+ipvs[selected_columns][is.na(ipvs[selected_columns])] <- 0
+```
+
+Join the two datasets:
+```{r join-tables}
+cntr_sp_ipvs <- merge(ipvs, cntr_sp, by.x = "v7", by.y = "code_tract", all.x = TRUE) %>%
+  filter(v10 != 0) %>%
+  mutate( v8 = case_when(v8 == 1 ~ "Área urbanizada de cidade ou vila", 
+                        v8 == 2 ~	"Área não urbanizada de cidade ou vila",
+                        v8 == 3	~ "Área urbana isolada",
+                        v8 == 4	~ "Aglomerado rural de extensão urbana",
+                        v8 == 5	~ "Aglomerado rural isolado - povoado",
+                        v8 == 6	~ "Aglomerado rural isolado - núcleo",
+                        v8 == 7	~ "Aglomerado rural isolado - outros aglomerados",
+                        v8 == 8	~ "Zona rural, exclusive aglomerado rural"), 
+              v9 = case_when(v9 == "N" ~ "Não especial",
+                        v9 == "S" ~ "Subnormal"),
+          v10 = case_when(v10 == 1 ~ "Baixíssima vulnerabilidade", 
+                        v10 == 2 ~	"Vulnerabilidade muito baixa",
+                        v10 == 3	~ "Vulnerabilidade baixa",
+                        v10 == 4	~ "Vulnerabilidade média",
+                        v10 == 5	~ "Vulnerabilidade alta",
+                        v10 == 6	~ "Vulnerabilidade muito alta",
+                        v10 == 7	~ "Vulnerabilidade alta"), 
+          v10 = factor(v10, levels = c("Baixíssima vulnerabilidade","Vulnerabilidade muito baixa","Vulnerabilidade baixa",
+                                       "Vulnerabilidade média","Vulnerabilidade alta", "Vulnerabilidade muito alta"),
+                            ordered=TRUE)) %>%
+  mutate_at(c("v7", "zone", "code_muni", "name_muni", "code_district", "name_district","code_state", "v8","v9"), as.factor)
+```
+
+Rename some columns in the new dataset:
+```{r rename-tables}
+colnames(cntr_sp_ipvs)[1:4] <- c("COD_SETOR","SITUACAO","AGSN","IPVS")
+```
+
+Save data:
+```{r save}
+usethis::use_data(cntr_sp_ipvs, overwrite = TRUE)
+```
