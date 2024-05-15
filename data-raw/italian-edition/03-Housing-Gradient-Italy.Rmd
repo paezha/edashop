@@ -1,0 +1,80 @@
+---
+title: "Data Preprocessing Housing Gradient Italy"
+output: html_notebook
+---
+
+A dataset with information about housing price gradients and immigrant population in regional capitals in Italy. Data source:
+
+Antoniucci, Valentina, and Giuliano Marella. "Housing price gradient and immigrant population: Data from the Italian real estate market." Data in brief 16 (2018): 794-798. https://doi.org/10.1016/j.dib.2017.12.018
+
+Paper saved as: 1-s2.0-S2352340917307138-main.pdf
+
+In this notebook, the data are pre-processed for packaging in `R`.
+
+Load libraries:
+```{r}
+library(labelled)
+library(lubridate)
+library(readxl)
+library(tidyverse)
+```
+
+Data saved as: 1-s2.0-S2352340917307138-mmc2.xlsx
+
+Read data file (original is in Stata format):
+```{r}
+price_gradient <- read_xlsx("1-s2.0-S2352340917307138-mmc2.xlsx")
+```
+
+Get the column names and labels; these will be used in the documentation:
+```{r}
+data_names <- data.frame(names = c("capital_name",
+                                   "grad_existing",
+                                   "grad_new",
+                                   "population",
+                                   "log_population",
+                                   "immigrants",
+                                   "log_immigrants",
+                                   "emp_retail_tourism",
+                                   "emp_service",
+                                   "female_emp_rate",
+                                   "emp_rate",
+                                   "income_per_capita",
+                                   "log_income_per_capita",
+                                   "density",
+                                   "log_density",
+                                   "transit_per_capita",
+                                   "distance",
+                                   "housing_surface",
+                                   "mean_alt",
+                                   "housing_units",
+                                   "building_density"),
+                         label = colnames(price_gradient))
+```
+
+Write description of variables in roxygen-style:
+```{r}
+data_names <- data_names %>% mutate(description = glue::glue("#'   \\item{{{names}}}{{{label}}}"))
+```
+
+Rename columns, which will change after converting data to factors:
+```{r}
+colnames(price_gradient) <- data_names$names
+```
+
+Preprocess data:
+```{r}
+price_gradient <- price_gradient %>%
+  mutate(capital_name = factor(capital_name))
+```
+
+Delete unzipped excel file:
+```{r}
+unlink("1-s2.0-S2352340917307138-mmc2.xlsx")
+```
+
+Save to file:
+```{r}
+usethis::use_data(price_gradient,
+                  overwrite = TRUE)
+```

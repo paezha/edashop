@@ -31,7 +31,7 @@ output:
 always_allow_html: true
 ---
 
-> “If you think education is expensive, try ignorance.”  
+> "If you think education is expensive, try ignorance."  
 >
 > --― Robert Orben
 

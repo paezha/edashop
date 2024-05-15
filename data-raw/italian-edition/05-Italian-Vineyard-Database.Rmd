@@ -1,0 +1,93 @@
+---
+title: "Italian Vineyard Database"
+output: html_notebook
+---
+
+A dataset with a random sample of vineyards in Italy. Data source:
+
+Cogato, Alessia, et al. "A sample of Italian vineyards: Landscape and management parameters dataset." Data in brief 33 (2020): 106589. https://doi.org/10.1016/j.dib.2020.106589
+
+Paper saved as: 1-s2.0-S2352340920314700-main.pdf
+
+In this notebook, the data are pre-processed for packaging in `R`.
+
+Load libraries:
+```{r}
+library(edashop)
+library(labelled)
+library(lubridate)
+library(sf)
+library(tidyverse)
+```
+
+Data saved as: 1-s2.0-S2352340920314700-mmc1.zip
+
+## Original data
+
+Read data file (original is a shape file):
+```{r}
+vineyards <- st_read("italian_vineyards_database/italian_vineyards_database.shp")
+```
+
+Read additional data:
+```{r}
+data("italy_nuts2")
+```
+
+Select variables with name of region and NUTS-2 code:
+```{r}
+region_codes <- italy_nuts2 %>% st_drop_geometry() %>%
+  select(NAME_LATN, NUTS_ID)
+```
+
+
+Preprocess data frame:
+```{r}
+vineyards <- vineyards %>%
+  transmute(id = factor(id),
+         row_spacing = as.numeric(Space..m.),
+         training = factor(Training),
+         lw_ratio = as.numeric(L.W),
+         headland_size = as.numeric(Head..m.),
+         block_shape = factor(Shape),
+         mean_slope = as.numeric(Slomea....),
+         max_slope = as.numeric(Slomax....),
+         NAME_LATN = Region) %>%
+  mutate(NAME_LATN = case_when(NAME_LATN == "Emilia Romagna" | NAME_LATN == "Emilia RomagnaEmilia Romagna" ~ "Emilia-Romagna",
+                                  NAME_LATN == "Friuli Venezia Giulia" ~ "Friuli-Venezia Giulia",
+                                  NAME_LATN == "Trentino Alto Adige" ~ "Provincia Autonoma Trento",
+                                  NAME_LATN == "Valle D'Aosta" ~ "Valle d'Aosta/Vallée d'Aoste",
+                                  TRUE ~ NAME_LATN)) %>%
+  left_join(region_codes,
+            by = "NAME_LATN") 
+```
+
+
+Get the column names and labels; these will be used in the documentation:
+```{r}
+data_names <- data.frame(names = colnames(vineyards),
+                         label = c("Unique ID of vineyard (centroid)",
+"Distance between two rows (m)",
+"Categories of trellising and pruning systems used to control a vine's shape. The first category is vertical training systems, such as Sylvoz, Guyot, Geneva Double Curtain (GDC) and Free-cordon (FC), and is designated as “VS”. The second category (“HS”) includes the horizontal training systems, such as Tendone, Pergola and other local systems. The last category consists of the traditional Alberello training system, also known as Goblet or Bush vine, and is designated as “A”. ",
+"Ratio between the length of the rows and the width of the vineyard; an indicator of management efficiency that relates to agricultural machinery transit and maneuvering",
+"Width of the operational headland (m); sufficiently wide headlands along the vineyard enable turning equipment and may contribute to biodiversity conservation",
+"Shape of the vineyar, classified as regular (designated as “R”) and irregular (designated as “I”); block shape is informative about mechanization propensity",
+"Average percentage of inclination of the block relative to the horizontal plane",
+"Maximum percentage of inclination of the block relative to the horizontal plane",
+"Name of region in Latin script",
+"NUTS-2 identifier of region",
+"Geometry of vineyard centroids"
+))
+```
+
+Write description of variables in roxygen-style:
+```{r}
+data_names <- data_names %>% mutate(description = glue::glue("#'   \\item{{{names}}}{{{label}}}"))
+```
+
+Save to file:
+```{r}
+usethis::use_data(vineyards,
+                  overwrite = TRUE)
+```
+

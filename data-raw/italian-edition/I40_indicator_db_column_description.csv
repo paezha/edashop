@@ -1,0 +1,104 @@
+ColumnName	DataType	Description
+NUTS2	string	Standard European statistical region. 
+YEAR 	int 	The year of the row of the entries stands for. 	
+demo_r_d2jan_UNIT_NR__SEX_T__AGE_TOTAL 	float 	Population on 1 January by age, sex and NUTS 2 region. 
+edat_lfse_04_SEX_T__ISCED11_ED0-2__AGE_Y25-64__UNIT_PC 	float	Percentage of the population aged 25-64 with less than primary or lower secondary education in the NUTS 2 regions.
+edat_lfse_04_SEX_T__ISCED11_ED3-8__AGE_Y25-64__UNIT_PC	float	Percentage of the population aged 25-64 upper secondary, post-secondary non-tertiary and tertiary education in the region.
+edat_lfse_04_SEX_T__ISCED11_ED3_4__AGE_Y25-64__UNIT_PC	float	Percentage of the population aged 25-64 upper secondary and post-secondary non-tertiary education in the region.
+edat_lfse_04_SEX_T__ISCED11_ED5-8__AGE_Y25-64__UNIT_PC	float	Percentage of the population aged 25-64 with tertiary education in the region.
+edat_lfse_12_SEX_T__ISCED11_ED3-8__AGE_Y30-34__UNIT_PC	float	Percentage of the population aged 30-34 with upper secondary, post-secondary non-tertiary and tertiary education.
+edat_lfse_12_SEX_T__ISCED11_ED3_4__AGE_Y30-34__UNIT_PC	float	Percentage of the population aged 30-34 with upper secondary and post-secondary non-tertiary education.
+edat_lfse_12_SEX_T__ISCED11_ED5-8__AGE_Y30-34__UNIT_PC	float	Percentage of the population aged 30-34 with tertiary education
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_TOTAL__AGE_Y15-34 	float	Total employment rates of young people not in education and training, from less than primary education till post-secondary non-tertiary education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_Y1-3__AGE_Y15-34 	float	Employment rates of young people not in education and training, with less than primary and lower secondary education, one to three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_Y_GT3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with less than primary and lower secondary education, three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_Y_GT5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with less than primary and lower secondary education, with more than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_Y_LE3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with less than primary and lower secondary education, less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-2__DURATION_Y_LE5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with less than primary and lower secondary education, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_TOTAL__AGE_Y15-34	float 	Employment rates of young people not in education and training, with non-tertiary education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_Y1-3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with non-tertiary educations, from one to three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_Y_GT3__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with non-tertiary educations, more than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_Y_GT5__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with non-tertiary educations, more than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_Y_LE3__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with non-tertiary educations, less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED0-4__DURATION_Y_LE5__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with non-tertiary educations, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_TOTAL__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with non-tertiary educations, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_Y1-3__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with upper secondary, post-secondary, till tertiary education, one to three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_Y_GT3__AGE_Y15-34 	float 	Employment rates of young people not in education and training, with upper secondary, post-secondary, till tertiary education, more three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_Y_GT5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with upper secondary, post-secondary, till tertiary education, greater than years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_Y_LE3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with upper secondary, post-secondary, till tertiary education, less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3-8__DURATION_Y_LE5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with upper secondary, post-secondary, till tertiary education, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_TOTAL__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_Y1-3__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, on to three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_Y_GT3__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, more than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_Y_GT5__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, greater than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_Y_LE3__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED3_4__DURATION_Y_LE5__AGE_Y15-34	float 	Employment rates of young people not in education and training, upper secondary till non-tertiary education, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED5-8__DURATION_Y1-3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with tertiary education, one to three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED5-8__DURATION_Y_GT3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with tertiary education, more than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED5-8__DURATION_Y_GT5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with tertiary education, more than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED5-8__DURATION_Y_LE3__AGE_Y15-34	float 	Employment rates of young people not in education and training, with tertiary education, less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_ED5-8__DURATION_Y_LE5__AGE_Y15-34	float 	Employment rates of young people not in education and training, with tertiary education, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 	
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_TOTAL__AGE_Y15-34	float 	General employment rates of young people not in education and training, aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_Y1-3__AGE_Y15-34	float 	General employment rates of young people not in education and training, since one to three years, aged between 15-34 years.
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_Y_GT3__AGE_Y15-34	float 	General employment rates of young people not in education and training, since more than three years, aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_Y_GT5__AGE_Y15-34	float 	General employment rates of young people not in education and training, since more than five years, aged between 15-34 years.  
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_Y_LE3__AGE_Y15-34	float 	Employment rates of young people not in education and training, educational less than three years since completion of the highest level of education, for young people aged between 15-34 years. 
+edat_lfse_33_UNIT_PC__SEX_T__ISCED11_TOTAL__DURATION_Y_LE5__AGE_Y15-34	float 	Employment rates of young people not in education and training, educational, less than five years since completion of the highest level of education, for young people aged between 15-34 years. 
+ERASMUS_FROM_COUNT	int 	Count of the students in the Erasmus program in the year, where the selected region is the source region. 
+ERASMUS_TO_COUNT	int 	Count of the students in the Erasmus program, who selected the region as destination.
+Graduates_at_ISCED_6_-_Natural_sciences_mathematics_and_statistics	int 	Number of graduates in natural sciences mathematics and statistics. 
+Graduates_at_ISCED_6_-_Information_and_Communication_Technologies	int 	Number of graduates in information and communication technologies.
+Graduates_at_ISCED_6_-_Engineering_manufacturing_and_construction	int 	Number of graduates in engineering manufacturing and construction.
+hrst_st_rcat_CATEGORY_HRSTC__UNIT_PC_POP	float	Persons with tertiary education  and employed in science and technology in percentage to total population. 
+hrst_st_rcat_CATEGORY_HRSTC__UNIT_THS	float 	Persons with tertiary education  and employed in science and technology in thousands.
+hrst_st_rcat_CATEGORY_HRSTE__UNIT_PC_POP	float 	Persons with tertiary education in percentage to total population.
+hrst_st_rcat_CATEGORY_HRSTE__UNIT_THS 	float 	Persons with tertiary education in thousands.
+hrst_st_rcat_CATEGORY_HRSTO__UNIT_PC_POP 	float 	Persons employed in science and technology in percentage to total population.
+hrst_st_rcat_CATEGORY_HRSTO__UNIT_THS 	float 	Persons employed in science and technology in thousands.
+hrst_st_rcat_CATEGORY_HRST__UNIT_PC_POP 	float 	Persons with tertiary education and/or employed in science and technology in percentage to total population. 
+hrst_st_rcat_CATEGORY_HRST__UNIT_THS 	float 	Persons with tertiary education and/or employed in science and technology in thousands. 
+hrst_st_rcat_CATEGORY_SE__UNIT_PC_POP 	float 	Scientists and engineers in percentage to total population.
+hrst_st_rcat_CATEGORY_SE__UNIT_THS 	float 	Scientists and engineers in thousands.
+htec_emp_reg2_NACE_R2_C_HTC_MH__UNIT_PC_EMP__SEX_T 	float 	Employment in high and medium high-technology manufacturing, in percentage to the total employment.
+htec_emp_reg2_NACE_R2_C_HTC__UNIT_PC_EMP__SEX_T 	float 	Employment in high-technology manufacturing, in percentage to the total employment.
+htec_emp_reg2_NACE_R2_C_LTC_M__UNIT_PC_EMP__SEX_T 	float 	Employment in medium low-technology manufacturing, in percentage to the total employment.
+htec_emp_reg2_NACE_R2_HTC__UNIT_PC_EMP__SEX_T 	float 	Employment in High-technology sectors (high-technology manufacturing and knowledge-intensive high-technology services) , in percentage to the total employment.
+htec_emp_reg2_NACE_R2_KIS_HTC__UNIT_PC_EMP__SEX_T 	float 	Employment in knowledge-intensive high-technology services, ) , in percentage to the total employment. 
+htec_emp_reg2_NACE_R2_KIS__UNIT_PC_EMP__SEX_T 	float 	Employment in knowledge-intensive sectors, in percentage to the total employment.
+htec_emp_reg2_NACE_R2_M__UNIT_PC_EMP__SEX_T 	float 	Employment in  professional, scientific and technical activities, in percentage to the total employment. 
+htec_emp_reg2_NACE_R2_P__UNIT_PC_EMP__SEX_T 	float 	Employment in  education, in percentage to the total employment.
+I40Papers 	int 	Number of Industry 4.0 related studies published in the year. 
+I40_patent_count 	int 	Number of Industry 4.0 related patents in the year. 
+rd_e_gerdreg_SECTPERF_BES__UNIT_PC_GDP 	float 	Intramural R&D expenditure, in business enterprise sector, normalized as percentage of gross domestic product (GDP). 
+rd_e_gerdreg_SECTPERF_GOV__UNIT_PC_GDP 	float 	Intramural R&D expenditure, in governmental sector, normalized as percentage of gross domestic product (GDP).
+rd_e_gerdreg_SECTPERF_HES__UNIT_PC_GDP 	float 	Intramural R&D expenditure, in higher education sector, normalized as percentage of gross domestic product (GDP).
+rd_e_gerdreg_SECTPERF_PNP__UNIT_PC_GDP 	float 	Intramural R&D expenditure, in private non-profit sector, normalized as percentage of gross domestic product (GDP).
+rd_e_gerdreg_SECTPERF_TOTAL__UNIT_PC_GDP 	float 	Total Intramural R&D expenditure, normalized as percentage of gross domestic product (GDP).
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_BES__UNIT_FTE 	float 	Total R&D personnel and researchers in business enterprise sector in percentage to total employment numerator in full time equivalent of the active population. 
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_BES__UNIT_HC 	float 	Headcount of total R&D personnel and researchers in business enterprise sector.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_BES__UNIT_PC_EMP_FTE 	float 	Total R&D personnel and researchers in business enterprise sector in percentage to total employment numerator in full time equivalent, of total employment.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_GOV__UNIT_FTE 	float 	Total R&D personnel and researchers in the government, in percentage to total employment numerator in full time equivalent of the active population.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_GOV__UNIT_HC 	float 	Headcount of R&D personnel and researchers in the government. 
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_GOV__UNIT_PC_EMP_FTE 	float 	Total R&D personnel and researchers in the government, in percentage to total employment numerator in full time equivalent, of total employment.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_HES__UNIT_FTE 	float 	Total R&D personnel and researchers in the higher education, in percentage to total employment numerator in full time equivalent of the active population.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_HES__UNIT_HC 	float 	Headcount of R&D personnel and researchers in the higher education. 
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_HES__UNIT_PC_EMP_FTE 	float 	Total R&D personnel and researchers in the higher education, in percentage to total employment numerator in full time equivalent, of total employment.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_PNP__UNIT_FTE 	float 	Total R&D personnel and researchers in the private non-profit sector, given in percentage to total employment numerator in full time equivalent of the active population.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_PNP__UNIT_HC 	float 	Headcount of the R&D personnel and researchers in the private non-profit sector 
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_PNP__UNIT_PC_EMP_FTE 	float 	Total R&D personnel in private non-profit sector, normalized with the full time equivalents. 
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_TOTAL__UNIT_FTE 	float 	Total R&D personnel and researchers in percentage to total employment numerator in full time equivalent of the active population.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_TOTAL__UNIT_HC 	int 	Total headcount of fulltime R&D personnel and researchers.
+rd_p_persreg_PROF_POS_TOTAL__SEX_T__SECTPERF_TOTAL__UNIT_PC_EMP_HC 	float 	Total headcount of fulltime R&D personnel and researchers. Normalized by total employment. 
+GRID_COUNT 	int 	Count of research institutes in the region. 
+GDELT_TONE_COMPETITIVE_INDUSTRIES 	float 	Average tone of the media articles, queried in the GDELT database matching the “COMPETITIVE INDUSTRIES” keywords and NUTS2 region.
+GDELT_TONE_EDUCATION_SKILLS_DEVELOPMENT_AND_LABOR_MARKET 	float 	Average tone of the media articles, queried in the GDELT database matching the “EDUCATION SKILLS DEVELOPMENT” and “LABOR MARKET” keywords and NUTS2 region.
+GDELT_TONE_EMPLOYABILITY_SKILLS_AND_JOBS 	float 	Average tone of the media articles, queried in the GDELT database matching the “EMPLOYABILITY SKILLS AND JOBS” keyword and NUTS2 region.
+GDELT_TONE_INDUSTRY_POLICY 	float 	Average tone of the media articles queried in the GDELT database matching the “INDUSTRY POLICY” keyword and NUTS2 region.
+GDELT_TONE_JOBS 	float 	Average tone of the media articles queried in the GDELT database matching the “JOBS” keyword and NUTS2 region.
+GDELT_TONE_MANUFACTURING 	float 	Average tone of the media articles queried in the GDELT database matching the “MANUFACTURING” keyword and NUTS2 region.
+GDELT_COUNT_COMPETITIVE_INDUSTRIES 	int 	Count of the media articles, queried in the GDELT database matching the “COMPETITIVE INDUSTRIES” keyword and NUTS2 region.
+GDELT_COUNT_EDUCATION_SKILLS_DEVELOPMENT_AND_LABOR_MARKET 	int 	Count of the media articles, queried in the GDELT database matching the “EDUCATION SKILLS DEVELOPMENT”, ”LABOR MARKET” keywords and NUTS2 region.
+GDELT_COUNT_EMPLOYABILITY_SKILLS_AND_JOBS 	int 	Count of the media articles, queried in the GDELT database matching the “EMPLOYABILITY SKILLS AND JOBS” keywords and NUTS2 region.
+GDELT_COUNT_INDUSTRY_POLICY 	int 	Count of the media articles, queried in the GDELT database matching the “INDUSTRY POLICY” keywords and NUTS2 region.
+GDELT_COUNT_JOBS 	int 	Count of the media articles, queried in the GDELT database matching the “JOBS” keyword and NUTS2 region.
+GDELT_COUNT_MANUFACTURING 	int 	Count of the media articles, queried in the GDELT database matching the “MANUFACTURING” keyword and NUTS2 region.
