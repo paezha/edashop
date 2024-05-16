@@ -351,12 +351,12 @@ data("cntr_sp_ipvs",
 
 3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)? (Hint: check `?str`)
 
-4. Which municipality had the most populated census tract? Which had the least?
+4. What is the maximum average income? In which municipality is this value found? (Hint: check `??cntr_sp_ipvs`)
 
-5. Calculate the mean of proportion of domiciles with no per capita income for every census tract.
+5. Which municipality has the census tract with the highest number of permanent private domiciles? 
 
-6. What is the maximum average income? In which municipality is this value found?
+6. Calculate the mean of proportion of domiciles with no per capita income. (Hint: search for how to calculate the mean across rows with missing values)
 
-7. Calculate the fraction of the population of the census tract relative to the population of the municipality.
+7. Calculate the fraction of the improvised private domiciles relative to the total number of private and collective domiciles. 
 
 8. What is the sum of permanent private domiciles in the municipalities of Diadema, Ribeirão Preto and São Paulo?
