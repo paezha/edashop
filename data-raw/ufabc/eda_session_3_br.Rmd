@@ -112,11 +112,12 @@ An alternative to the basic summary is provided by package {[skimr](https://docs
 
 <!-- The output of `skim()` does not render well in the pdf unless prepared as shown in the next chunk. This is why this code is not set to be evaluated, and will not be run during knitting -->
 ```r
+library(skimr)
 cntr_sp_ipvs |>
   skim(v28)
 ```
 
-This is read as "pass `cntr_sp_ipvs` to `select()` to retrieve `IPVS` before skimming". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
+This is read as "pass `cntr_sp_ipvs` to `select()` to retrieve `v28` (average income of the person responsible for the household)  before skimming". Try the code on your console! You will see that the output includes a summary of the data, with a high level description of the inputs: the number of rows, columns, number of columns by type of data, and any grouping variables. 
 
 To render the code in the PDF file, we will use package {[kableExtra](https://haozhu233.github.io/kableExtra/)}, which includes functionality to format tables. Below is the output of skimming our selected variable; from the output we strip the variable that contains the sparklines (`numeric.hist`), which are tricky to render in PDF. This is then passed to functions `kable()` and `kable_styling()`:
 ```{r}
@@ -142,9 +143,9 @@ cntr_sp_ipvs |>
 skim_without_charts()
 ```
 
-Try this code in your console. The chunk above is read as "take data frame `cntr_sp_ipvs`, select columns `v28` and `IPVS`, group by `IPVS`, and skim". The descriptive statistics skimmed include the number of missing observations and completeness of the data, the mean, standard deviation, and [_quantiles_](https://en.wikipedia.org/wiki/Quantile), that is, the values that cut the sample at a certain proportion of observations (e.g., "p50" is the value where the sample is split in two equal parts, the bottom 50% and the top 50%).
+Try this code in your console. The chunk above is read as "take data frame `cntr_sp_ipvs`, select columns `v28` (average income of the person responsible for the household) and `IPVS` (IPVS group), group by `IPVS`, and skim". The descriptive statistics skimmed include the number of missing observations and completeness of the data, the mean, standard deviation, and [_quantiles_](https://en.wikipedia.org/wiki/Quantile), that is, the values that cut the sample at a certain proportion of observations (e.g., "p50" is the value where the sample is split in two equal parts, the bottom 50% and the top 50%).
 
-The "high vulnerability" census tracts had an average household income of $R\$ 735$. The richest census tracts had an average income of $R\$3912$, which is higher than the richest census tract in the "Very high vulnerability" type.
+The "high vulnerability" (Vulnerabilidade alta ) census tracts had an average household income of $R\$ 735$. The richest census tracts had an average income of $R\$3912$, which is higher than the richest census tract in the "Very high vulnerability" (Vulnerabilidade muito alta) type.
 
 Skimming the full table gives the following:
 ```r
@@ -208,7 +209,7 @@ cntr_sp_ipvs |>
   tabyl(AGSN)
 ```
 
-We see that the mode of the distribution is "Não especial", the most frequent value of the variable in this distribution. (Notice that by default the values of the factor are sorted alphabetically; this can be changed by redefining the factor and changing the order of the levels).
+We see that the mode of the distribution is "Não especial" (Non-subnormal), the most frequent value of the variable in this distribution. (Notice that by default the values of the factor are sorted alphabetically; this can be changed by redefining the factor and changing the order of the levels).
 
 Next, let us try variable `IPVS` (ordered factor):
 ```{r}
@@ -216,7 +217,7 @@ cntr_sp_ipvs |>
   tabyl(IPVS)
 ```
 
-We see that the mode of this distribution is "Adequate" and "Fair". Since ordinal variables have by definition a natural order, the shape of their distribution can be conveniently presented in the style of a stem-and-leaf table, with each "I" representing a thousand instances of the value:
+We see that the mode of this distribution is "Vulnerabilidade muito baixa" (extremely low vulnerability). Since ordinal variables have by definition a natural order, the shape of their distribution can be conveniently presented in the style of a stem-and-leaf table, with each "I" representing a thousand instances of the value:
 
 stem                        | leaf
 ----------------------------|--------
@@ -513,6 +514,7 @@ Multivariate description extends ideas similar to those discussed above but for 
 ## Categorical variables: multiple cross-tabulations
 
 It is possible to cross-tabulate more than two variables, however in practice this is seldom done for more than three because the results quickly become difficult to read and interpret. Since the `cntr_sp_ipvs` has only two categorical variables, we'll join this data set with the `cntr_sp_basico`: 
+
 ```{r}
 cntr_sp_ipvs <- cntr_sp_ipvs |>
   left_join(cntr_sp_basico,

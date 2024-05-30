@@ -330,7 +330,7 @@ Verb `slice()` acts on rows. For example:
 df |>
   slice(1)
 ```
-Tha above is read as "take data frame `df` and slice the first row". The following chunk implements "take data frame `df` and slice rows one to two":
+The above is read as "take data frame `df` and slice the first row". The following chunk implements "take data frame `df` and slice rows one to two":
 ```{r}
 df |>
   slice(1:2)
@@ -496,9 +496,8 @@ df |>
 
 5. Obtain a summary of the new table.
 
-6. Obtain a summary of the new table but only for properties of `IPVS` "Baixíssima vulnerabilidade".
+6. Obtain a summary of the new table but only for properties of `IPVS` "Baixíssima vulnerabilidade" ("Extremely low vulnerability").
 
-7. Obtain a summary of the new table but only for properties _not_ of `IPVS` "Baixíssima vulnerabilidade".
+7. Obtain a summary of the new table but only for properties _not_ of `IPVS` "Baixíssima vulnerabilidade" ("Extremely low vulnerability").
 
 8. What is the mean `b_V005` by `IPVS` of census tract?
-
