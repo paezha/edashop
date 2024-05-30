@@ -3,7 +3,7 @@
 \docType{data}
 \name{cntr_sp_geo}
 \alias{cntr_sp_geo}
-\title{Census tracts geometry}
+\title{Census tract geometries}
 \format{
 A simple features data frame with 66,096 rows and 5 variables:
 \describe{

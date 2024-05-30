@@ -524,7 +524,7 @@ NULL
 #'  NAME_LATN <- nuts2$NAME_LATN
 "nuts2"
 
-#' Census tracts geometry
+#' Census tract geometries
 #'
 #' Simple features object with census tracts of São Paulo State.
 #'
@@ -619,7 +619,7 @@ NULL
 #'  situacao <- cntr_sp_ipvs$situacao
 "cntr_sp_basico"
 
-#' Basico - Census tracts
+#' Head of household - Census tracts
 #'
 #' Variables from the Head of household Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
 #'
