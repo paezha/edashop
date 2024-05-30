@@ -68,7 +68,7 @@ library(ggridges) # Ridgeline Plots in 'ggplot2'
 library(ggthemes) # Extra Themes, Scales and Geoms for 'ggplot2'
 library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
 library(kableExtra) # Construct Complex Table with 'kable' and Pipe Syntax
-library('sf') # 
+library('sf') # Read spatial features
 library(skimr) # Compact and Flexible Summaries of Data
 library(tidyr) # Tidy Messy Data
 ```
@@ -83,7 +83,6 @@ data("cntr_sp_ipvs")
 These are the same data frames that we used in Session 3, which for convenience we will join into a single table:
 ```{r}
 cntr <- cntr_sp_ipvs |>
-  st_drop_geometry() |>
   left_join(cntr_sp_basico,
             by = c('COD_SETOR' = 'code_tract')) |>
   left_join(cntr_sp_head,

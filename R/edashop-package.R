@@ -524,15 +524,39 @@ NULL
 #'  NAME_LATN <- nuts2$NAME_LATN
 "nuts2"
 
+#' Census tracts geometry
+#'
+#' Simple features object with census tracts of São Paulo State.
+#'
+#' @format A simple features data frame with 66,096 rows and 5 variables:
+#' \describe{
+#'   \item{COD_SETOR}{Census tract code}
+#'   \item{code_muni}{Municipality code}
+#'   \item{name_muni}{Municipality name}
+#'   \item{code_state}{State code}
+#'   \item{geometry}{Census tracts geometry}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cntr_sp_geo
+#' @usage data(cntr_sp_geo)
+#' @source CENSOBR R, https://ipeagit.github.io/censobr/index.html
+#' @examples
+#'  data(cntr_sp_geo)
+#'  codes <- cntr_sp_geo$COD_SETOR
+"cntr_sp_geo"
+
 #' IVSP - Census tracts
 #'
 #' Simple features object with the dataset of the São Paulo Social Vulnerability Index (IVSP) at the census tract level.
 #'
-#' @format A simple features data frame with 66,096 rows and 30 variables:
+#' @format A simple features data frame with 66,096 rows and 29 variables:
 #' \describe{
 #'   \item{COD_SETOR}{Census tract code}
 #'   \item{AGSN}{Is the sector a subnormal agglomeration?}
 #'   \item{IPVS}{IPVS group}
+#'   \item{v11}{Private and collective domiciles}
 #'   \item{v12}{Permanent private domiciles}
 #'   \item{v13}{Total improvised private domiciles}
 #'   \item{v16}{Proportion of children aged 0-5 in the population}
@@ -558,7 +582,6 @@ NULL
 #'   \item{code_district}{District code}
 #'   \item{name_district}{District name}
 #'   \item{code_state}{State code}
-#'   \item{geometry}{Census tracts geometry}
 #' }
 #'
 #' @docType data
@@ -683,6 +706,62 @@ eda_session_3_it <- function(){
 #' @export
 eda_session_4_it <- function(){
   writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session__it from the menu")
+}
+
+#' EDA Workshop Session 1 Template (Brazilian Edition).
+#'
+#' Template for creating a computational notebook for Session 1 of the Brazilian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_1_br
+#' @export
+eda_session_1_br <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_1_br from the menu")
+}
+
+#' EDA Workshop Session 2 Template (Brazilian Edition).
+#'
+#' Template for creating a computational notebook for Session 2 of the Brazilian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_2_br
+#' @export
+eda_session_2_br <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_2_br from the menu")
+}
+
+#' EDA Workshop Session 3 Template (Brazilian Edition).
+#'
+#' Template for creating a computational notebook for Session 3 of the Brazilian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_3_br
+#' @export
+eda_session_3_br <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_3_br from the menu")
+}
+
+#' EDA Workshop Session 4 Template (Brazilian Edition).
+#'
+#' Template for creating a computational notebook for Session 4 of the Brazilian
+#' edition of the workshop.
+#'
+#' @format An R Markdown file
+#'
+#' @keywords datasets
+#' @name eda_session_4_br
+#' @export
+eda_session_4_br <- function(){
+  writeLines("This template is available for use when creating a new R Markdown document;\n please select eda_session_4_br from the menu")
 }
 
 #' EDA Workshop Session 5 Template (All Editions).

@@ -14,6 +14,15 @@ reference:
   - eda_session_3_it
   - eda_session_4_it
 
+- subtitle: Brazilian Edition of Workshop
+  desc: >
+    Templates for the Brazilian edition of the workshop.
+  contents:
+  - eda_session_1_br
+  - eda_session_2_br
+  - eda_session_3_br
+  - eda_session_4_br
+
 - subtitle: Session 5 of Workshop (All Editions)
   desc: >
     Template for the last session of the workshop.
@@ -67,6 +76,13 @@ reference:
   contents:
   - italy_nuts2
   - nuts2
+
+- subtitle: Sao Paulo census tracts
+  desc: >
+    Data related to the Sao Paulo census tracts to be used in the Brazilian edition.
+  contents:
   - cntr_sp_ipvs
   - cntr_sp_head
   - cntr_sp_basico
+  - cntr_sp_geo
+
