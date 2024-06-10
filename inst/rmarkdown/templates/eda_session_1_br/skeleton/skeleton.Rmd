@@ -2,6 +2,8 @@
 title: "Session 1. Basics of working with `R`"
 author:
 - name: Antonio Paez
+- name: Bruno Dias dos Santos 
+  # Enter your name here:
 - name: My Name
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:

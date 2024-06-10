@@ -2,6 +2,7 @@
 title: "Session 4. Exploratory data analysis II: Visualization techniques"
 author:
 - name: Antonio Paez
+- name: Bruno Dias dos Santos 
   # Enter your name here:
 - name: My Name
 subject: "Workshop: Exploratory Data Analysis in `R`"
