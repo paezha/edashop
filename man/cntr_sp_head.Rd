@@ -3,7 +3,7 @@
 \docType{data}
 \name{cntr_sp_head}
 \alias{cntr_sp_head}
-\title{Basico - Census tracts}
+\title{Head of household - Census tracts}
 \format{
 A simple features data frame with 66,096 rows and 11 variables:
 \describe{

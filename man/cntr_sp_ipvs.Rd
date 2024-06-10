@@ -5,11 +5,12 @@
 \alias{cntr_sp_ipvs}
 \title{IVSP - Census tracts}
 \format{
-A simple features data frame with 66,096 rows and 30 variables:
+A simple features data frame with 66,096 rows and 29 variables:
 \describe{
 \item{COD_SETOR}{Census tract code}
 \item{AGSN}{Is the sector a subnormal agglomeration?}
 \item{IPVS}{IPVS group}
+\item{v11}{Private and collective domiciles}
 \item{v12}{Permanent private domiciles}
 \item{v13}{Total improvised private domiciles}
 \item{v16}{Proportion of children aged 0-5 in the population}
@@ -35,7 +36,6 @@ A simple features data frame with 66,096 rows and 30 variables:
 \item{code_district}{District code}
 \item{name_district}{District name}
 \item{code_state}{State code}
-\item{geometry}{Census tracts geometry}
 }
 }
 \source{

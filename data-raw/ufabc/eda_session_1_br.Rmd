@@ -189,7 +189,7 @@ df <- data.frame(municipality_name,
 
 After running the chunk above, you will see a new object in your environment, a data frame called `df`. It is important to emphasize that data frames are _rectangular_ tables: all vectors used to create a data frame must be the same length. We cannot have a vector with 6 rows and a vector with 7 rows in the same table. This is because each row represents an object of interest. In the case of our example, each row represents a _municipality_. Suppose that we had seven municipalities but only information for six of them. We could exclude the municipality that lacks information, or we could include it and indicate that other information about it is missing. The effect is the same, the vectors must be all the same size.
  
-If you double-click on `df` in the Environment tab, you will see that this data frame has three columns (labeled `municipality_name`, `population`, `average_salary`, `workers`, `area_km2`), and 7 rows. The row numbers and column names can be used to identify particular cells in the data frame. 
+If you double-click on `df` in the Environment tab, you will see that this data frame has four columns (labeled `municipality_name`, `population`, `average_salary`, `workers`, `area_km2`), and 7 rows. The row numbers and column names can be used to identify particular cells in the data frame. 
 
 You can enter data into a data frame and then use the many built-in functions of `R` to perform various types of analysis. You can also display the data frame by typing it in as an `R` command, like this:
 ```{r}
@@ -201,7 +201,7 @@ The variable `municipality_name` at the moment is a character vector. If we chec
 str(df)
 ```
 
-The summary of the names of municipalitys is:
+The summary of the names of the municipalities is:
 ```{r}
 summary(df$municipality_name)
 ```
@@ -248,16 +248,16 @@ Each municipality is referenced by the number inside the brackets. So, the secon
 df$municipality_name[2]
 ```
 
-Asking for `df[1,1]` is identical to asking for `df$municipality_name[1]`. Create a new chunk of code to recall the full column with the municipality names (i.e., by typing `CO$Country`).
+Asking for `df[1,1]` is identical to asking for `df$municipality_name[1]`. Create a new chunk of code to recall the full column with the municipality names (i.e., by typing `df$municipality_name`).
 
 Indexing is useful to conduct operations. Suppose for instance, that you wished to calculate the total number of workers of two municipalities, say Santo André and São Bernardo Do Campo. You can execute the following instructions:
 ```{r}
 df$workers[1] + df$workers[2]
 ```
 
-An issue with with indexing cells this way is that, if other municipalitys were added to the table, the row numbers of each municipality might change, and as a consequence you might not be referencing the same municipalitys with those numbers. Another possibility is if the table is very long, you might not even know which municipality is in which row to begin with.
+An issue with with indexing cells this way is that, if other municipality were added to the table, the row numbers of each municipality might change, and as a consequence you might not be referencing the same municipality with those numbers. Another possibility is if the table is very long, you might not even know which municipality is in which row to begin with.
 
-So a better way to index the cells in a data frame is by using logical operators, like in the following chunk of code. Here, we are essentially asking for "population of (country which is France)" + "population of (country which is Germany)":
+So a better way to index the cells in a data frame is by using logical operators, like in the following chunk of code. Here, we are essentially asking for "workers of (municipality which is Santo André)" + "workers of (municipality which is São Bernardo Do Campo)":
 ```{r}
 df$workers[df$municipality_name == "Santo André"] + df$workers[df$municipality_name == "São Bernardo Do Campo"]
 ```
@@ -291,7 +291,7 @@ As you see, São Bernardo Do Campo is the municipality with the largest territor
 min(df$area_km2)
 ```
 
-So which of the municipalitys in the data frame had the smallest territorial area?
+So which of the municipality in the data frame had the smallest territorial area?
 ```{r}
 df$municipality_name[df$area_km2 == min(df$area_km2)]
 ```
@@ -343,7 +343,7 @@ tinytex:::is_tinytex()
 
 1. Describe in your own words the concept of literate programming. What is a computational notebook?
 
-2. Load the São Paulo Social Vulnerability Index (IVSP) dataset at census tract level (distributed with package [{edashop}](https://paezha.github.io/edashop/)).
+2. Load the São Paulo Social Vulnerability Index (IVSP) dataset at census tract level (included in the package [{edashop}](https://paezha.github.io/edashop/)).
 ```{r}
 data("cntr_sp_ipvs", 
      package = "edashop")
@@ -351,12 +351,12 @@ data("cntr_sp_ipvs",
 
 3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)? (Hint: check `?str`)
 
-4. Which municipality had the most populated census tract? Which had the least?
+4. What is the maximum average income of the head of the household? In which municipality is this value found? (Hint: check `??cntr_sp_ipvs`)
 
-5. Calculate the mean of proportion of domiciles with no per capita income for every census tract.
+5. Which municipality has the census tract with the highest number of permanent private domiciles? 
 
-6. What is the maximum average income? In which municipality is this value found?
+6. Calculate the mean of proportion of domiciles with no per capita income. (Hint: search for how to calculate the mean across rows with missing values)
 
-7. Calculate the fraction of the population of the census tract relative to the population of the municipality.
+7. Calculate the fraction of the improvised private domiciles relative to the total number of private and collective domiciles. 
 
 8. What is the sum of permanent private domiciles in the municipalities of Diadema, Ribeirão Preto and São Paulo?
