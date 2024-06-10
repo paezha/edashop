@@ -10,9 +10,6 @@
 
 Templates and data for teaching a workshop on Exploratory Data Analysis using `R`.
 }
-\references{
-\url{https://github.com/paezha/edashop}
-}
 \seealso{
 Useful links:
 \itemize{
@@ -25,7 +22,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Antonio Paez \email{paezha@mcmaster.ca} (\href{https://orcid.org/0000-0001-6912-9919}{ORCID})
 
+Authors:
+\itemize{
+  \item Bruno Dias dos Santos \email{dossanb@mcmaster.ca} (\href{https://orcid.org/0000-0002-6748-2038}{ORCID})
+}
 
-Antonio Paez, School of Earth, Environment and Society, McMaster University \email{paezha@mcmaster.ca}
 }
 \keyword{internal}

@@ -1,14 +1,16 @@
 Package: edashop
 Title: Resources for Teaching a Workshop on Exploratory Data Analysis
-Version: 0.0.1
+Version: 0.0.1-1
 Authors@R: 
-    person("Antonio", "Paez", , "paezha@mcmaster.ca", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-6912-9919"))
+    c(person("Antonio", "Paez", , "paezha@mcmaster.ca", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-6912-9919")),
+      person("Bruno", "Dias dos Santos", , "dossanb@mcmaster.ca", role = c("aut"),
+           comment = c(ORCID = "0000-0002-6748-2038")))
 Description: Templates and data for teaching a workshop on Exploratory Data Analysis using `R`.
 License: CC BY 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
 URL: https://github.com/paezha/edashop,
     https://paezha.github.io/edashop/
 BugReports: https://github.com/paezha/edashop/issues

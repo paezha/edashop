@@ -5,14 +5,6 @@
 ## usethis namespace: end
 NULL
 
-#' edashop: A package with templates and data useful to teach a workshop on Exploratory Data Analysis using `R`
-#'
-#' @docType package
-#' @name edashop-package
-#' @author Antonio Paez, School of Earth, Environment and Society, McMaster University \email{paezha@@mcmaster.ca}
-#' @references \url{https://github.com/paezha/edashop}
-NULL
-
 ##############################################
 ##                DATA SETS                 ##
 ##############################################
@@ -523,6 +515,107 @@ NULL
 #'  data(nuts2)
 #'  NAME_LATN <- nuts2$NAME_LATN
 "nuts2"
+
+#' IVSP - Census tracts
+#'
+#' Simple features object with the dataset of the São Paulo Social Vulnerability Index (IVSP) at the census tract level.
+#'
+#' @format A simple features data frame with 66,096 rows and 30 variables:
+#' \describe{
+#'   \item{COD_SETOR}{Census tract code}
+#'   \item{AGSN}{Is the sector a subnormal agglomeration?}
+#'   \item{IPVS}{IPVS group}
+#'   \item{v12}{Permanent private domiciles}
+#'   \item{v13}{Total improvised private domiciles}
+#'   \item{v16}{Proportion of children aged 0-5 in the population}
+#'   \item{v19}{Per capita income of permanent private domiciles }
+#'   \item{v20}{Proportion of domiciles with no per capita income}
+#'   \item{v21}{Proportion of domiciles with per capita income of up to 1/8 MW - Proxy of up to 70}
+#'   \item{v22}{Proportion of domiciles with per capita income from 1/8 to 1/2 MW - Proxy from 70 to 261}
+#'   \item{v23}{Proportion of domiciles with per capita income from 1/2 to 2 MW - Proxy from 261 to 914}
+#'   \item{v24}{Proportion of domiciles with per capita income of more than 2 MW - Proxy of more than 914}
+#'   \item{v25}{Proportion of private domiciles with nominal monthly income of up to 1/2 MW}
+#'   \item{v26}{Proportion of private domiciles with nominal monthly income of up to 1/4 MW}
+#'   \item{v27}{Average age of head of household}
+#'   \item{v28}{Average income of the person responsible for the household}
+#'   \item{v29}{Proportion of literate heads of household}
+#'   \item{v30}{Proportion of heads of household aged between 10 and 29}
+#'   \item{v40}{Proportion of permanent private domiciles with mains water supply}
+#'   \item{v41}{Proportion of permanent private domiciles with a bathroom for the exclusive use of residents or with sanitary sewage and sewage through a general or rainwater network or septic tank}
+#'   \item{v42}{Proportion of permanent private domiciles with garbage collected by a cleaning service or cleaning service garbage can}
+#'   \item{v43}{Proportion of permanent private domiciles with electricity}
+#'   \item{zone}{Rural or urban}
+#'   \item{code_muni}{Municipality code}
+#'   \item{name_muni}{Municipality name}
+#'   \item{code_district}{District code}
+#'   \item{name_district}{District name}
+#'   \item{code_state}{State code}
+#'   \item{geometry}{Census tracts geometry}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cntr_sp_ipvs
+#' @usage data(cntr_sp_ipvs)
+#' @source SEADE, retrieved from http://ipvs.seade.gov.br/view/index.php
+#' @examples
+#'  data(cntr_sp_ipvs)
+#'  indices <- cntr_sp_ipvs$IPVS
+"cntr_sp_ipvs"
+
+#' Basico - Census tracts
+#'
+#' Variables from the Head of household Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
+#'
+#' @format A simple features data frame with 66,096 rows and 30 variables:
+#' \describe{
+#'   \item{code_tract}{Census tract code}
+#'   \item{situacao}{Census tract status code}
+#'   \item{b_V001}{Permanent private households or heads of permanent private households}
+#'   \item{b_V002}{Residents in permanent private households or population living in permanent private households}
+#'   \item{b_V003}{Average number of residents in permanent private households}
+#'   \item{b_V004}{Variance in the number of residents in permanent private households}
+#'   \item{b_V005}{Average nominal monthly income of heads of household}
+#'  }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cntr_sp_basico
+#' @usage data(cntr_sp_basico)
+#' @source CENSOBR R, retrieved using https://ipeagit.github.io/censobr/index.html
+#' @examples
+#'  data(cntr_sp_ipvs)
+#'  situacao <- cntr_sp_ipvs$situacao
+"cntr_sp_basico"
+
+#' Basico - Census tracts
+#'
+#' Variables from the Head of household Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
+#'
+#' @format A simple features data frame with 66,096 rows and 11 variables:
+#' \describe{
+#'   \item{code_tract}{Census tract code}
+#'   \item{h_V001}{Heads of household with a nominal monthly income of up to 1/2 the minimum wage}
+#'   \item{h_V002}{Heads of household with nominal monthly income of more than 1/2 to 1 minimum wage}
+#'   \item{h_V003}{Heads of household with nominal monthly income of more than 1 to 2 minimum wages}
+#'   \item{h_V004}{Heads of household with nominal monthly income of more than 2 to 3 minimum wages}
+#'   \item{h_V005}{Heads of household with a nominal monthly income of more than 3 to 5 minimum wages}
+#'   \item{h_V006}{Heads of household with a nominal monthly income of more than 5 to 10 minimum wages}
+#'   \item{h_V007}{Heads of household with a nominal monthly income of more than 15 to 20 minimum wages}
+#'   \item{h_V008}{Heads of household with a nominal monthly income of more than 15 to 20 minimum wages}
+#'   \item{h_V009}{Heads of household with a nominal monthly income of more than 20 minimum wages}
+#'   \item{h_V010}{Heads of household with no nominal monthly income}
+#'  }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cntr_sp_head
+#' @usage data(cntr_sp_head)
+#' @source CENSOBR R, https://ipeagit.github.io/censobr/index.html
+#' @examples
+#'  data(cntr_sp_head)
+#'  v001 <- cntr_sp_head$h_V001
+"cntr_sp_head"
 
 ##############################################
 ##                TEMPLATES                 ##
