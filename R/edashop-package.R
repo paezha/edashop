@@ -546,8 +546,8 @@ NULL
 #' @format A simple features data frame with 66,096 rows and 29 variables:
 #' \describe{
 #'   \item{COD_SETOR}{Census tract code}
-#'   \item{AGSN}{Is the sector a subnormal agglomeration?}
-#'   \item{IPVS}{IPVS group}
+#'   \item{AGSN}{Is the sector a subnormal agglomeration? The census tract can be classified as: "Não especial" (Non-subnormal), "Subnormal" (Subnormal). This is a classification used to designate favelas (slums), invasões (invaded properties), grotas (slums in deep valleys), baixadas (slums in low-lands), comunidades (poor communities), vilas (slums in villages), ressacas (slums in backwaters), mocambos (type of shack) and palafitas (stilt houses), among other irregular settlements.}
+#'   \item{IPVS}{Indice Paulista de Vulnerabilidade Social (IPVS) group / São Paulo Social Vulnerability Index (IVPS) group. The census tract can be classified as: "Não classificado" (not classified), "Baixíssima vulnerabilidade" (Extremely low vulnerability), "Vulnerabilidade muito baixa" (Very low vulnerability), "Vulnerabilidade baixa" (Low vulnerability), "Vulnerabilidade média" (Medium vulnerability), "Vulnerabilidade alta" (High vulnerability), "Vulnerabilidade muito alta" (Very high vulnerability).}
 #'   \item{v11}{Private and collective domiciles}
 #'   \item{v12}{Permanent private domiciles}
 #'   \item{v13}{Total improvised private domiciles}
@@ -588,9 +588,9 @@ NULL
 
 #' Basico - Census tracts
 #'
-#' Variables from the Head of household Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
+#' Variables from the Basics Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
 #'
-#' @format A simple features data frame with 66,096 rows and 30 variables:
+#' @format A simple features data frame with 66,096 rows and 07 variables:
 #' \describe{
 #'   \item{code_tract}{Census tract code}
 #'   \item{situacao}{Census tract status code}

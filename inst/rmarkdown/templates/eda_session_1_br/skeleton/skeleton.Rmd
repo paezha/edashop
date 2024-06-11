@@ -366,7 +366,7 @@ data("cntr_sp_ipvs",
 
 3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)? (Hint: check `?str`)
 
-4. What is the maximum average income of the head of the household? In which municipality is this value found? (Hint: check `??cntr_sp_ipvs`)
+4. What is the maximum average income of the head of the household? In which municipality is this value found? (Hint: check `??cntr_sp_ipvs`; search for how to calculate the mean across rows with missing values)
 
 5. Which municipality has the census tract with the highest number of permanent private domiciles? 
 
