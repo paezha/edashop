@@ -2,8 +2,8 @@
 title: "Session 2. Data"
 author:
 - name: Antonio Paez
-- name: Bruno Dias dos Santos 
-  # Enter your name here:
+- name: Bruno Dias dos Santos
+# Enter your name here:
 - name: My Name
 subject: "Workshop: Exploratory Data Analysis in `R`"
 
@@ -24,11 +24,14 @@ threshold_concepts:
 # --------------------------------------------------------------
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
+  html_document:
+    df_print: paged
   pdf_document:
-    # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
+      # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
     # http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/
     # https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-latex-ms.tex
-    template: exercise-template-default.tex
+    template: "exercise-template-default.tex"
+font-family: Times New Roman    
 always_allow_html: true
 ---
 
