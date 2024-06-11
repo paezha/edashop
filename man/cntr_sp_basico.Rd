@@ -5,7 +5,7 @@
 \alias{cntr_sp_basico}
 \title{Basico - Census tracts}
 \format{
-A simple features data frame with 66,096 rows and 30 variables:
+A simple features data frame with 66,096 rows and 07 variables:
 \describe{
 \item{code_tract}{Census tract code}
 \item{situacao}{Census tract status code}
@@ -23,7 +23,7 @@ CENSOBR R, retrieved using https://ipeagit.github.io/censobr/index.html
 data(cntr_sp_basico)
 }
 \description{
-Variables from the Head of household Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
+Variables from the Basics Questionnaire of the 2010 Brazilian Demographic Census, applied to all household units.
 }
 \examples{
  data(cntr_sp_ipvs)
