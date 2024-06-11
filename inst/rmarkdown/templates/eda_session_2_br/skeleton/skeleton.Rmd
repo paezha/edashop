@@ -91,7 +91,7 @@ data("cntr_sp_ipvs")
 ```
 
 These data frames contain information about census tracts in the state of São Paulo. You can check the documentation in the usual way:
-```{r}
+```r
 ?cntr_sp_basico
 ```
 
