@@ -2,21 +2,36 @@
 title: "Session 1. Basics of working with `R`"
 author:
 - name: Antonio Paez
+- name: Bruno Dias dos Santos
+# Enter your name here:
 - name: My Name
+subject: "Workshop: Exploratory Data Analysis in `R`"
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+highlights: |
+    This is my mini-reflection. Paragraphs must be indented.
+    
+    It can contain multiple paragraphs.
+    
+# Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+threshold_concepts: 
+- threshold concept 1
+- threshold concept 2 
+- threshold concept 3
+- threshold concept 4
+
+# Do not edit below this line unless you know what you are doing
+# --------------------------------------------------------------
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
     df_print: paged
   pdf_document:
+      # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
+    # http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/
+    # https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-latex-ms.tex
     template: "exercise-template-default.tex"
-threshold_concepts:
-- threshold concept 1
-- threshold concept 2
-- threshold concept 3
-- threshold concept 4
-subject: 'Workshop: Exploratory Data Analysis in `R`'
-highlights: "This is my mini-reflection. Paragraphs must be indented.\n\nIt can contain
-  multiple paragraphs.\n"
+font-family: Times New Roman    
 always_allow_html: true
 ---
   
