@@ -3,7 +3,7 @@
 \docType{data}
 \name{cntr_sp_ipvs}
 \alias{cntr_sp_ipvs}
-\title{IVSP - Census tracts}
+\title{Indice Paulista de Vulnerabilidade Social (IPVS) / São Paulo Social Vulnerability Index - Census tracts}
 \format{
 A simple features data frame with 66,096 rows and 29 variables:
 \describe{
@@ -45,7 +45,7 @@ SEADE, retrieved from http://ipvs.seade.gov.br/view/index.php
 data(cntr_sp_ipvs)
 }
 \description{
-Simple features object with the dataset of the São Paulo Social Vulnerability Index (IVSP) at the census tract level.
+Simple features object with the dataset of the São Paulo Social Vulnerability Index at the census tract level.
 }
 \examples{
  data(cntr_sp_ipvs)

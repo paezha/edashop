@@ -1,6 +1,6 @@
 Package: edashop
 Title: Resources for Teaching a Workshop on Exploratory Data Analysis
-Version: 0.0.2-1
+Version: 0.0.2-2
 Authors@R: 
     c(person("Antonio", "Paez", , "paezha@mcmaster.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6912-9919")),

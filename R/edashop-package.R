@@ -539,9 +539,9 @@ NULL
 #'  codes <- cntr_sp_geo$COD_SETOR
 "cntr_sp_geo"
 
-#' IVSP - Census tracts
+#' Indice Paulista de Vulnerabilidade Social (IPVS) / São Paulo Social Vulnerability Index - Census tracts
 #'
-#' Simple features object with the dataset of the São Paulo Social Vulnerability Index (IVSP) at the census tract level.
+#' Simple features object with the dataset of the São Paulo Social Vulnerability Index at the census tract level.
 #'
 #' @format A simple features data frame with 66,096 rows and 29 variables:
 #' \describe{
