@@ -1,0 +1,47 @@
+# Auctions in a Distressed Real Estate Market in Italy: Profitability Features of Property.
+
+Data describing Real Estate (RE) distressed market, with a focus on
+property foreclosures in North-East Italy between 2000 and 2016. The
+data were collected by Canesi and Marella by means of a survey sent to
+financial institutions, courts of law and different associations of
+public notaries. The aim of the survey was to record real estate
+auctions, and their technical and socio-economic features. The data
+provide information about housing market trends and performance as well
+as demographic features.
+
+## Usage
+
+``` r
+data(auctions_pf)
+```
+
+## Format
+
+A data frame with 125 rows and 15 variables:
+
+- id:
+
+  Unique identifier of the property auctioned
+
+- occupancy:
+
+  The state of ccupancy of the auctioned property as an indicator of
+  whether the property generates income; factor with 3 levels
+  (Unoccupied, Tenant, Owner)
+
+## Source
+
+Canesi, Rubina, and Giuliano Marella. "Data from RE distressed market:
+Properties auctions in Italy." Data in Brief 18 (2018): 319-324.
+[doi:10.1016/j.dib.2018.03.009](https://doi.org/10.1016/j.dib.2018.03.009)
+
+## Details
+
+This table contains the profitability features of the data set.
+
+## Examples
+
+``` r
+ data(auctions_pf)
+ occupancy <- auctions_pf$occupancy
+```

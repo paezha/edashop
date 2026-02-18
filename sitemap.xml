@@ -1,96 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://paezha.github.io/edashop/404.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/index.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/auctions_amf.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/auctions_pf.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/auctions_phy.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/auctions_sef.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/cntr_sp_basico.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/cntr_sp_geo.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/cntr_sp_head.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/cntr_sp_ipvs.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_1_br.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_1_it.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_2_br.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_2_it.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_3_br.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_3_it.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_4_br.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_4_it.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/eda_session_5.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/edashop-package.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/i40_index_db.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/i40_index_rank.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/italy_nuts2.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/nuts2.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/phd_italy.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/phd_italy_regions.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/price_gradient.html</loc>
-  </url>
-  <url>
-    <loc>https://paezha.github.io/edashop/reference/vineyards.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://paezha.github.io/edashop/404.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/LICENSE.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/authors.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/index.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/auctions_amf.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/auctions_pf.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/auctions_phy.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/auctions_sef.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/cntr_sp_basico.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/cntr_sp_geo.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/cntr_sp_head.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/cntr_sp_ipvs.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_1_br.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_1_it.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_2_br.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_2_it.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_3_br.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_3_it.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_4_br.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_4_it.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/eda_session_5.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/edashop-package.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/i40_index_db.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/i40_index_rank.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/index.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/italy_nuts2.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/nuts2.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/phd_italy.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/phd_italy_regions.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/price_gradient.html</loc></url>
+<url><loc>https://paezha.github.io/edashop/reference/vineyards.html</loc></url>
 </urlset>
+

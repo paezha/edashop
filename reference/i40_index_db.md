@@ -1,0 +1,585 @@
+# Database for Industry Readiness Index 4.0.
+
+A database with 101 indicators aggregated to NUTS 2 statistical level.
+Data were collected from open sources by Honti, Czvetko, and Janos
+(2020). The sources include data from the fields of education (ETER,
+Erasmus), science (USPTO, MA-Graph, GRID), government (Eurostat) and
+media coverage (GDELT). Indicators consider the I4.0-specific domain of
+higher education and lifelong learning, innovation, technological
+investment, labour market and technological readiness as indicators. The
+variables on this table are the input for the Industrial Readiness Index
+4.0.
+
+## Usage
+
+``` r
+data(i40_index_db)
+```
+
+## Format
+
+A data frame with 4,454 rows and 103 variables:
+
+- NUTS_ID:
+
+  NUTS-2 identifier of region
+
+- YEAR:
+
+  The year of the row of the entries stands for
+
+- demo_r_d2jan_UNIT_NR_SEX_T_AGE_TOTAL:
+
+  Population on 1 January by age, sex and NUTS 2 region
+
+- edat_lfse_04_SEX_T_ISCED11_ED0-2_AGE_Y25-64_UNIT_PC:
+
+  Percentage of the population aged 25-64 with less than primary or
+  lower secondary education in the NUTS 2 regions
+
+- edat_lfse_04_SEX_T_ISCED11_ED3-8_AGE_Y25-64_UNIT_PC:
+
+  Percentage of the population aged 25-64 upper secondary,
+  post-secondary non-tertiary and tertiary education in the region
+
+- edat_lfse_04_SEX_T_ISCED11_ED3_4_AGE_Y25-64_UNIT_PC:
+
+  Percentage of the population aged 25-64 upper secondary and
+  post-secondary non-tertiary education in the region
+
+- edat_lfse_04_SEX_T_ISCED11_ED5-8_AGE_Y25-64_UNIT_PC:
+
+  Percentage of the population aged 25-64 with tertiary education in the
+  region
+
+- edat_lfse_12_SEX_T_ISCED11_ED3-8_AGE_Y30-34_UNIT_PC:
+
+  Percentage of the population aged 30-34 with upper secondary,
+  post-secondary non-tertiary and tertiary education
+
+- edat_lfse_12_SEX_T_ISCED11_ED3_4_AGE_Y30-34_UNIT_PC:
+
+  Percentage of the population aged 30-34 with upper secondary and
+  post-secondary non-tertiary education
+
+- edat_lfse_12_SEX_T_ISCED11_ED5-8_AGE_Y30-34_UNIT_PC:
+
+  Percentage of the population aged 30-34 with tertiary education
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_TOTAL_AGE_Y15-34:
+
+  Total employment rates of young people not in education and training,
+  from less than primary education till post-secondary non-tertiary
+  education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_Y1-3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  less than primary and lower secondary education, one to three years
+  since completion of the highest level of education, for young people
+  aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_Y_GT3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  less than primary and lower secondary education, three years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_Y_GT5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  less than primary and lower secondary education, with more than five
+  years since completion of the highest level of education, for young
+  people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  less than primary and lower secondary education, less than three years
+  since completion of the highest level of education, for young people
+  aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-2_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  less than primary and lower secondary education, less than five years
+  since completion of the highest level of education, for young people
+  aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_TOTAL_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_Y1-3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, from one to three years since completion of
+  the highest level of education, for young people aged between 15-34
+  years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_Y_GT3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, more than three years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_Y_GT5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, more than five years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, less than three years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED0-4_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, less than five years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_TOTAL_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  non-tertiary educations, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_Y1-3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  upper secondary, post-secondary, till tertiary education, one to three
+  years since completion of the highest level of education, for young
+  people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_Y_GT3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  upper secondary, post-secondary, till tertiary education, more three
+  years since completion of the highest level of education, for young
+  people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_Y_GT5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  upper secondary, post-secondary, till tertiary education, greater than
+  years since completion of the highest level of education, for young
+  people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  upper secondary, post-secondary, till tertiary education, less than
+  three years since completion of the highest level of education, for
+  young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3-8_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  upper secondary, post-secondary, till tertiary education, less than
+  five years since completion of the highest level of education, for
+  young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_TOTAL_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, for young people aged between
+  15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_Y1-3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, on to three years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_Y_GT3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, more than three years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_Y_GT5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, greater than five years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, less than three years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED3_4_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, upper
+  secondary till non-tertiary education, less than five years since
+  completion of the highest level of education, for young people aged
+  between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED5-8_DURATION_Y1-3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  tertiary education, one to three years since completion of the highest
+  level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED5-8_DURATION_Y_GT3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  tertiary education, more than three years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED5-8_DURATION_Y_GT5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  tertiary education, more than five years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED5-8_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  tertiary education, less than three years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_ED5-8_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training, with
+  tertiary education, less than five years since completion of the
+  highest level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_TOTAL_AGE_Y15-34:
+
+  General employment rates of young people not in education and
+  training, aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_Y1-3_AGE_Y15-34:
+
+  General employment rates of young people not in education and
+  training, since one to three years, aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_Y_GT3_AGE_Y15-34:
+
+  General employment rates of young people not in education and
+  training, since more than three years, aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_Y_GT5_AGE_Y15-34:
+
+  General employment rates of young people not in education and
+  training, since more than five years, aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_Y_LE3_AGE_Y15-34:
+
+  Employment rates of young people not in education and training,
+  educational less than three years since completion of the highest
+  level of education, for young people aged between 15-34 years
+
+- edat_lfse_33_UNIT_PC_SEX_T_ISCED11_TOTAL_DURATION_Y_LE5_AGE_Y15-34:
+
+  Employment rates of young people not in education and training,
+  educational, less than five years since completion of the highest
+  level of education, for young people aged between 15-34 years
+
+- ERASMUS_FROM_COUNT:
+
+  Count of the students in the Erasmus program in the year, where the
+  selected region is the source region
+
+- ERASMUS_TO_COUNT:
+
+  Count of the students in the Erasmus program, who selected the region
+  as destination
+
+- Graduates_at_ISCED_6-Natural_sciences_mathematics_and_statistics:
+
+  Number of graduates in natural sciences mathematics and statistics
+
+- Graduates_at_ISCED_6-Information_and_Communication_Technologies:
+
+  Number of graduates in information and communication technologies
+
+- Graduates_at_ISCED_6-Engineering_manufacturing_and_construction:
+
+  Number of graduates in engineering manufacturing and construction
+
+- hrst_st_rcat_CATEGORY_HRSTC_UNIT_PC_POP:
+
+  Persons with tertiary education and employed in science and technology
+  in percentage to total population
+
+- hrst_st_rcat_CATEGORY_HRSTC_UNIT_THS:
+
+  Persons with tertiary education and employed in science and technology
+  in thousands
+
+- hrst_st_rcat_CATEGORY_HRSTE_UNIT_PC_POP:
+
+  Persons with tertiary education in percentage to total population
+
+- hrst_st_rcat_CATEGORY_HRSTE_UNIT_THS:
+
+  Persons with tertiary education in thousands
+
+- hrst_st_rcat_CATEGORY_HRSTO_UNIT_PC_POP:
+
+  Persons employed in science and technology in percentage to total
+  population
+
+- hrst_st_rcat_CATEGORY_HRSTO_UNIT_THS:
+
+  Persons employed in science and technology in thousands
+
+- hrst_st_rcat_CATEGORY_HRST_UNIT_PC_POP:
+
+  Persons with tertiary education and/or employed in science and
+  technology in percentage to total population
+
+- hrst_st_rcat_CATEGORY_HRST_UNIT_THS:
+
+  Persons with tertiary education and/or employed in science and
+  technology in thousands
+
+- hrst_st_rcat_CATEGORY_SE_UNIT_PC_POP:
+
+  Scientists and engineers in percentage to total population
+
+- hrst_st_rcat_CATEGORY_SE_UNIT_THS:
+
+  Scientists and engineers in thousands
+
+- htec_emp_reg2_NACE_R2_C_HTC_MH_UNIT_PC_EMP_SEX_T:
+
+  Employment in high and medium high-technology manufacturing, in
+  percentage to the total employment
+
+- htec_emp_reg2_NACE_R2_C_HTC_UNIT_PC_EMP_SEX_T:
+
+  Employment in high-technology manufacturing, in percentage to the
+  total employment
+
+- htec_emp_reg2_NACE_R2_C_LTC_M_UNIT_PC_EMP_SEX_T:
+
+  Employment in medium low-technology manufacturing, in percentage to
+  the total employment
+
+- htec_emp_reg2_NACE_R2_HTC_UNIT_PC_EMP_SEX_T:
+
+  Employment in High-technology sectors (high-technology manufacturing
+  and knowledge-intensive high-technology services) , in percentage to
+  the total employment
+
+- htec_emp_reg2_NACE_R2_KIS_HTC_UNIT_PC_EMP_SEX_T:
+
+  Employment in knowledge-intensive high-technology services, ) , in
+  percentage to the total employment
+
+- htec_emp_reg2_NACE_R2_KIS_UNIT_PC_EMP_SEX_T:
+
+  Employment in knowledge-intensive sectors, in percentage to the total
+  employment
+
+- htec_emp_reg2_NACE_R2_M_UNIT_PC_EMP_SEX_T:
+
+  Employment in professional, scientific and technical activities, in
+  percentage to the total employment
+
+- htec_emp_reg2_NACE_R2_P_UNIT_PC_EMP_SEX_T:
+
+  Employment in education, in percentage to the total employment
+
+- I40Papers:
+
+  Number of Industry 4.0 related studies published in the year
+
+- I40_patent_count:
+
+  Number of Industry 4.0 related patents in the year.
+
+- rd_e_gerdreg_SECTPERF_BES_UNIT_PC_GDP:
+
+  Intramural R&D expenditure, in business enterprise sector, normalized
+  as percentage of gross domestic product (GDP)
+
+- rd_e_gerdreg_SECTPERF_GOV_UNIT_PC_GDP:
+
+  Intramural R&D expenditure, in governmental sector, normalized as
+  percentage of gross domestic product (GDP)
+
+- rd_e_gerdreg_SECTPERF_HES_UNIT_PC_GDP:
+
+  Intramural R&D expenditure, in higher education sector, normalized as
+  percentage of gross domestic product (GDP)
+
+- rd_e_gerdreg_SECTPERF_PNP_UNIT_PC_GDP:
+
+  Intramural R&D expenditure, in private non-profit sector, normalized
+  as percentage of gross domestic product (GDP)
+
+- rd_e_gerdreg_SECTPERF_TOTAL_UNIT_PC_GDP:
+
+  Total Intramural R&D expenditure, normalized as percentage of gross
+  domestic product (GDP)
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_BES_UNIT_FTE:
+
+  Total R&D personnel and researchers in business enterprise sector in
+  percentage to total employment numerator in full time equivalent of
+  the active population
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_BES_UNIT_HC:
+
+  Headcount of total R&D personnel and researchers in business
+  enterprise sector
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_BES_UNIT_PC_EMP_FTE:
+
+  Total R&D personnel and researchers in business enterprise sector in
+  percentage to total employment numerator in full time equivalent, of
+  total employment
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_GOV_UNIT_FTE:
+
+  Total R&D personnel and researchers in the government, in percentage
+  to total employment numerator in full time equivalent of the active
+  population
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_GOV_UNIT_HC:
+
+  Headcount of R&D personnel and researchers in the government
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_GOV_UNIT_PC_EMP_FTE:
+
+  Total R&D personnel and researchers in the government, in percentage
+  to total employment numerator in full time equivalent, of total
+  employment
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_HES_UNIT_FTE:
+
+  Total R&D personnel and researchers in the higher education, in
+  percentage to total employment numerator in full time equivalent of
+  the active population
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_HES_UNIT_HC:
+
+  Headcount of R&D personnel and researchers in the higher education
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_HES_UNIT_PC_EMP_FTE:
+
+  Total R&D personnel and researchers in the higher education, in
+  percentage to total employment numerator in full time equivalent, of
+  total employment
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_PNP_UNIT_FTE:
+
+  Total R&D personnel and researchers in the private non-profit sector,
+  given in percentage to total employment numerator in full time
+  equivalent of the active population
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_PNP_UNIT_HC:
+
+  Headcount of the R&D personnel and researchers in the private
+  non-profit sector
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_PNP_UNIT_PC_EMP_FTE:
+
+  Total R&D personnel in private non-profit sector, normalized with the
+  full time equivalents
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_TOTAL_UNIT_FTE:
+
+  Total R&D personnel and researchers in percentage to total employment
+  numerator in full time equivalent of the active population
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_TOTAL_UNIT_HC:
+
+  Total headcount of fulltime R&D personnel and researchers
+
+- rd_p_persreg_PROF_POS_TOTAL_SEX_T_SECTPERF_TOTAL_UNIT_PC_EMP_HC:
+
+  Total headcount of fulltime R&D personnel and researchers. Normalized
+  by total employment
+
+- GRID_COUNT:
+
+  Count of research institutes in the region
+
+- GDELT_TONE_COMPETITIVE_INDUSTRIES:
+
+  Average tone of the media articles, queried in the GDELT database
+  matching the “COMPETITIVE INDUSTRIES” keywords and NUTS2 region
+
+- GDELT_TONE_EDUCATION_SKILLS_DEVELOPMENT_AND_LABOR_MARKET:
+
+  Average tone of the media articles, queried in the GDELT database
+  matching the “EDUCATION SKILLS DEVELOPMENT” and “LABOR MARKET”
+  keywords and NUTS2 region
+
+- GDELT_TONE_EMPLOYABILITY_SKILLS_AND_JOBS:
+
+  Average tone of the media articles, queried in the GDELT database
+  matching the “EMPLOYABILITY SKILLS AND JOBS” keyword and NUTS2 region
+
+- GDELT_TONE_INDUSTRY_POLICY:
+
+  Average tone of the media articles queried in the GDELT database
+  matching the “INDUSTRY POLICY” keyword and NUTS2 region
+
+- GDELT_TONE_JOBS:
+
+  Average tone of the media articles queried in the GDELT database
+  matching the “JOBS” keyword and NUTS2 region
+
+- GDELT_TONE_MANUFACTURING:
+
+  Average tone of the media articles queried in the GDELT database
+  matching the “MANUFACTURING” keyword and NUTS2 region
+
+- GDELT_COUNT_COMPETITIVE_INDUSTRIES:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “COMPETITIVE INDUSTRIES” keyword and NUTS2 region
+
+- GDELT_COUNT_EDUCATION_SKILLS_DEVELOPMENT_AND_LABOR_MARKET:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “EDUCATION SKILLS DEVELOPMENT”, ”LABOR MARKET” keywords and NUTS2
+  region
+
+- GDELT_COUNT_EMPLOYABILITY_SKILLS_AND_JOBS:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “EMPLOYABILITY SKILLS AND JOBS” keywords and NUTS2 region
+
+- GDELT_COUNT_INDUSTRY_POLICY:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “INDUSTRY POLICY” keywords and NUTS2 region
+
+- GDELT_COUNT_JOBS:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “JOBS” keyword and NUTS2 region
+
+- GDELT_COUNT_MANUFACTURING:
+
+  Count of the media articles, queried in the GDELT database matching
+  the “MANUFACTURING” keyword and NUTS2 region
+
+## Source
+
+Honti, Gergely, Tímea Czvetko, and Janos Abonyi. "Data describing the
+regional Industry 4.0 readiness index." Data in Brief 33 (2020): 106464.
+[doi:10.1016/j.dib.2020.106464](https://doi.org/10.1016/j.dib.2020.106464)
+
+## Examples
+
+``` r
+ data(i40_index_db)
+ NUTS_2 <- i40_index_db$NUTS_ID
+```
