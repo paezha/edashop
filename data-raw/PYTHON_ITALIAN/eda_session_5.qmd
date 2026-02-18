@@ -1,0 +1,260 @@
+---
+title: "Session 5. A date with EDA: Bring your own data"
+author:
+  - Antonio Paez
+  - My Name
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format:
+  html:
+    df-print: paged
+  pdf:
+    template: exercise-template-default.tex
+    include-in-header:
+      - fix-real.tex
+    listings: false
+    table:
+      longtable: true
+    geometry: margin = 1in
+    pdf-engine: pdflatex
+    
+threshold-concepts:
+  - threshold concept 1
+  - threshold concept 2  
+  - threshold concept 3
+  - threshold concept 4
+subject: "Workshop: Exploratory Data Analysis in `Python`"
+highlights: |
+  This is my mini-reflection. Paragraphs must be indented.
+  
+  It can contain multiple paragraphs.
+always-allow-html: true
+---
+  
+> "Errors using inadequate data are much less than those using no data at all."  
+>
+> --― Charles Babbage
+
+> "Data that is loved tends to survive."  
+>
+> --― Kurt Bollacker
+
+# Session outline
+
+- Reading external data
+- Hands-on practice
+- Some additional notes on working with `Quarto`
+
+# Reminder
+
+The human brain is a highly evolved machine with a specialization in visual recognition of spatial patterns, including shapes, areas, lengths, directions, and colors. This is why well-designed statistical plots are so effective for conveying complex information.
+
+# Preliminaries
+
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `Python`. For this session, the following package/s is/are used:
+
+```{python}
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# Set display options to show all rows and columns
+pd.set_option('display.max_rows', None)    # Show all rows
+pd.set_option('display.max_columns', None) # Show all columns
+pd.set_option('display.width', None)       # Auto-detect width
+pd.set_option('display.max_colwidth', None) # Show full column content
+```
+
+We also will utilize some data from the `edashop` `R` package. To convert these R data files to `Python` files, we will use the `reticulate` package:
+
+```{r}
+library(edashop)  # A Package for a Workshop on Exploratory Data Analysis
+library(reticulate)
+```
+
+# Reading external data
+
+In this workshop we have used data that was meticulously prepared and documented to make it analysis-ready. But often we need to read data from so-called external sources, that is, files that are not in native `R` format, including Excel files, csv files, Stata files, shape files, and so on.
+
+The original files of the data sets provided in {[edashop](https://paezha.github.io/edashop/)} are shared with the package. For example, check the following help file:
+
+```r
+?i40_index_rank
+```
+
+This is one of two data frames created using original files from  Honti et al. ([2020](https://doi.org/10.1016/j.dib.2020.106464)).
+
+The path to the source CSV file can be obtained in `R` and then passed to `Python`:
+
+```{r}
+csv_path  <- system.file("extdata", 
+                             "rankings.csv", 
+                             package = "edashop")
+```
+
+You can check that this object is just a string with the path to the file:
+
+```{python}
+csv_path = r.csv_path
+print(csv_path)
+```
+
+One way to read files in CSV format is with `pandas.read_csv()`:
+
+```{python}
+imported_csv = pd.read_csv(csv_path)
+print(imported_csv.head())
+```
+
+Once the file is imported it can be saved as a file of type rda for ease of access in the future. For reproducibility purposes, it is highly recommended to keep the source files intact and document any data processing done in a script or Quarto document. For example, here we change the names of the columns in the table we just imported:
+
+```{python}
+imported_csv = imported_csv.rename(columns = {
+    'Regio': 'NUTS_ID',
+    'GDPrank': 'gdp_rank',
+    'PrometheeRank': 'promethee_rank',
+    'RII': 'regional_innovation_index'
+})
+print(imported_csv.head())
+```
+
+Then we save the file (optional):
+
+```{python}
+# Save to a pickle file for faster loading later
+imported_csv.to_pickle("external_csv.pkl")
+
+# Or save as CSV
+imported_csv.to_csv("external_csv.csv", index = False)
+```
+
+This makes it easy to retrieve our prepared data.
+
+An external file in Stata's dat format is also shared:
+```{r}
+dta_path <- system.file("extdata", "phd_italy.dta", package = "edashop")
+```
+
+As before `dta_path` is a string with the path to the file:
+
+```{python}
+dta_path = r.dta_path
+print(dta_path)
+```
+
+pandas can read Stata files directly with read_stata():
+
+```{python}
+imported_dta = pd.read_stata(dta_path)
+print(imported_dta.head())
+```
+
+Package `pandas` also has utilities to read Excel files (requires `openpyxl` or `xlrd`):
+```{r}
+xlsx_path <- system.file("extdata", "italy-nuts-codes.xlsx", package = "edashop")
+```
+
+```{python}
+xlsx_path = r.xlsx_path
+imported_xlsx = pd.read_excel(xlsx_path)
+print(imported_xlsx.head())
+```
+
+As a last example, we use `geopandas` to read a shapefile (which requires `geopandas` and its dependencies `fiona`, `shapely`, etc.):
+
+```{r}
+shp_path <- system.file("extdata", "nuts2.shp", package = "edashop")
+```
+
+```{python}
+shp_path = r.shp_path
+imported_shp = gpd.read_file(shp_path)
+print(imported_shp.head())
+```
+
+# Hands-on practice
+
+If you brought a data file of your own in an external format, try reading it here. Then, you can play with it.
+
+As an example, I am going to plot the shapefile that we just read. geopandas objects can be plotted directly with `.plot()`:
+
+```{python}
+fig, ax = plt.subplots(figsize = (8, 8))
+imported_shp.plot(ax = ax, color = 'lightgrey', edgecolor = 'black')
+ax.set_title("NUTS2 boundaries")
+plt.show()
+```
+
+Next we can join the geometry of the boundaries to the rankings of industrial readinness, and convert to `geopandas` GeoDataFrame:
+
+```{python}
+# Merge the CSV data with the shapefile on NUTS_ID
+i40_rankings = imported_shp.merge(imported_csv, on = 'NUTS_ID', how = 'left')
+
+# Convert to GeoDataFrame
+i40_rankings = gpd.GeoDataFrame(i40_rankings, geometry = 'geometry')
+```
+
+Now we can map something else, for instance, by encoding it to the color of the polygons (choropleth map):
+
+```{python}
+fig, ax = plt.subplots(figsize = (10, 8))
+i40_rankings.plot(column = 'gdp_rank', cmap = 'viridis', legend = True,
+                  edgecolor = 'black', linewidth = 0.3, ax = ax)
+ax.set_title("GDP rank by NUTS2 region")
+plt.show()
+```
+
+A great resource to learn about working with spatial data in Python is the [Geopandas documentation](https://geopandas.org/en/stable/) and the book [Geographic Data Science with Python](https://geographicdata.science/) by Rey, Arribas-Bel, and Wolf.
+
+# Some additional notes on working with Rmarkdown
+
+Quarto  is a great invention. It implements principles of literate programming and enforces good discipline when writing and documenting not only code but also analysis processes.
+
+Here is some additional information of value. The chunks of code that we use to communicate with the computer accept a number of options that stipulate the behavior of the chunk. [Chunk options](https://yihui.org/knitr/options/) are written inside the curly brackets. They can also be named:
+
+```{python example-eval, eval = FALSE}
+# Option eval controls whether the chunk is evaluated (i.e., run). 
+# This chunk of code can only be run manually, by clicking the play icon, 
+# but will be ignored when running the document or when knitting
+help(pd.read_csv)
+```
+
+Some chunks, like eval, control whether the code is run. Others, like echo, control whether the chunk itself is printed in the output document when knitting:
+
+```{python example-echo, echo = FALSE}
+print("This chunk of code will not be printed in the output. The result of running the code will")
+```
+
+Chunk `include` is used to include code and results of the code, or to suppress all. For example, when reading files or loading data, we may not wish to have those things printed in the output document:
+```{python example-include, include = FALSE}
+print("This chunk of code will be evaluated but not be printed in the output. The result of running the code will also be suppressed.")
+```
+
+For example, let us say that we wish to show a plot in a paper or report, but we do not need to show the code:
+```{python example-plot, echo = FALSE}
+# This chunk of code will not be printed, but the results of the code
+# will be printed.
+fig, ax = plt.subplots(figsize = (10, 8))
+i40_rankings.plot(column = 'gdp_rank', cmap = 'viridis', legend = True,
+                  edgecolor = 'black', linewidth = 0.3, ax = ax)
+ax.set_title("GDP rank by NUTS2 region")
+plt.show()
+```
+
+Quarto is a great format for creating reproducible research reports and papers. These are some examples (originally in `R`, but the same principles apply in `Python` with `Quarto`):
+
+- Paez, Antonio, et al. "A spatio‐temporal analysis of the environmental correlates of COVID‐19 incidence in Spain." Geographical analysis 53.3 (2021): 397-421. The repository with the reproducible document is here: https://github.com/paezha/covid19-environmental-correlates
+
+- Paez A, Higgins CD (2021) The Accessibility Implications of a Pilot COVID-19 Vaccination Program in Hamilton, Ontario. Findings (doi.org/10.32866/001c.24082). The repository with the reproducible document is here: https://github.com/paezha/Accessibility-Pharmacies-Hamilton-Vaccines
+
+- Higgins, C.D., Páez, A., Kim, G., Wang, J. (2021) Changes in accessibility to emergency and community food services during COVID-19 and implications for low income populations in Hamilton, Ontario. Social Science and Medicine, 291:114442 (doi.org/10.1016/j.socscimed.2021.114442). The repository with the reproducible document is here: https://github.com/paezha/Accessibility-Food-Banks-Hamilton
+
+For your practice, you can create a new `Quarto` document and write a small exploratory data analysis report using your own data set or one of the data sets provided.
+
+Happy analysis!
+
+# Practice
+
+1. Create a new Quarto document (`File` > `New File` > `Quarto Document` in `RStudio`, or use the command line with quarto create project). Choose a template of your liking.
+
+2. Transfer your data analysis exercise to the template and write a small report.

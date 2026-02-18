@@ -1,0 +1,492 @@
+---
+title: "Session 2. Data"
+author:
+  - Antonio Paez
+  - My Name
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format:
+  html:
+    df-print: paged
+  pdf:
+    template: exercise-template-default.tex
+    include-in-header:
+      - fix-real.tex
+    listings: false
+    table:
+      longtable: true
+    geometry: margin=1in
+    pdf-engine: pdflatex
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+
+threshold-concepts:
+  - threshold concept 1
+  - threshold concept 2  
+  - threshold concept 3
+  - threshold concept 4
+subject: "Workshop: Exploratory Data Analysis in `Python`"
+highlights: |
+
+  This is my mini-reflection. Paragraphs must be indented.
+  
+  It can contain multiple paragraphs.
+  
+  Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+
+always-allow-html: true
+---
+
+> “If you think education is expensive, try ignorance.”  
+>
+> --― Robert Orben
+
+# Session outline
+
+- Why measuring things?
+- Scales of measurement
+- Data objects revisited
+- Quick data summaries
+- Data manipulation
+- `Pandas`
+
+# Reminder
+
+NOTE: This is an [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. Quarto Markdown files are *computational notebooks* which implement a coding philosophy called [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible.
+
+# Preliminaries
+
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `Python`. For this session, the following package/s is/are used:
+```{python}
+import pandas as pd
+
+# Set display options to show all rows and columns
+pd.set_option('display.max_rows', None)    # Show all rows
+pd.set_option('display.max_columns', None) # Show all columns
+pd.set_option('display.width', None)       # Auto-detect width
+pd.set_option('display.max_colwidth', None) # Show full column content
+
+```
+
+We also will utilize some data from the `edashop` R package. To convert these R data files to python files, we will use the `reticulate` package:
+
+```{r}
+library(edashop)  # A Package for a Workshop on Exploratory Data Analysis
+library(reticulate)
+```
+
+From `edashop`, we will also load the following data frames for this session:
+```{r}
+data("cntr_sp_basico")
+data("cntr_sp_head")
+data("cntr_sp_ipvs")
+```
+
+These data frames contain information about census tracts in the state of São Paulo. You can check the documentation in the usual way:
+```{r}
+?cntr_sp_basico
+```
+
+To be able to convert these datasets in Python, we need to convert them into structures that python recognizes. Following chunk transform them into a Pandas DataFrame: 
+```{python}
+cntr_sp_basico = r.cntr_sp_basico
+cntr_sp_head = r.cntr_sp_head
+cntr_sp_ipvs = r.cntr_sp_ipvs
+```
+
+# Why measuring?
+
+Measuring stuff is a lot of effort. It can be expensive too. Sometimes need special equipment. And instruments. Why do we bother?
+
+## Why do we measure?
+
+<!-- Two hasthtags are a secondary heading -->
+
+<!-- Use an unnumbered list (i.e., bullet points) to list/explain the resons why measuring. Add bullet points as appropriate -->
+
+-
+-
+-
+
+## Examples of instruments used for measurement
+
+<!-- Use an unnumbered list to list/describe instruments used to measure. Add bullet points as appropriate -->
+
+-
+-
+-
+
+# Scales of measurement
+
+There are several typologies that describe appropriate [scales of measurement](https://en.wikipedia.org/wiki/Level_of_measurement). A useful and widely used on was developed by psychologist [Stanley Smith Stevens](https://en.wikipedia.org/wiki/Stanley_Smith_Stevens), and recognizes four scales of measurement: two categorical and two quantitative scales.
+
+## Categorical: Nominal scale
+
+This is the most basic, and in a way, the least informative scale for measuring things. It assigns unique labels/categories to things. Examples of this scale include modes of transportation (e.g., car, bus, walk, bicycle) and brands (e.g., Apple, Huawei, Nokia). The labels reduce/compress much information into a single recognizable category. The labels, on the other hand, do not have any natural order, in the sense that category "car" is not intrinsically higher than or closer to category "bicycle". Different categories can be compared with boolean operations "=="	(i.e., _exactly equal to_) and "!="	(i.e., _not equal to_).\
+
+```{python}
+"car" == "car"
+"car" == "bus"
+```
+
+What things are you aware of that are measured using the nominal scale?
+
+-
+-
+-
+
+## Categorical: Ordinal scale
+
+Measurements in an ordinal scale are still categorical, and include items measured in Likert-style scales, for example five-point scales from "Strongly Disagree" to "Strongly Agree" with a "Neutral" point. The difference with the nominal scale is that there is a natural way of ordering the categories: "Strongly Disagree" is closer to "Disagree" than it is to "Neutral", and "Strongly Agree" is even more distant from it than "Neutral". Sometimes quantitative variables (for instance, income) are collected and/or reported using ordinal scales: income less than 20,000, income between 20,000 and 40,000, and income more than 40,000. This of course involves a loss of information, but may reduce respondent burden or satisfy confidentiality constraints when income data are collected.
+
+Like nominal variables, different categories can be compared with boolean operations "=="	and "!="	(i.e., not equal to). In addition, the following operations are also valid: "<" and "<=" (i.e., _less than_) and ">" (i.e., greater than).
+
+What things are you aware of that are measured using the ordinal scale?
+
+-
+-
+-
+
+## Quantitative: Interval scale
+
+In the ordinal scale, the order of the categories is important, but the difference between categories is not a quantity. For example, the difference between category "income less than 20,000" and "income more than 40,000" is not a quantity. We can count the steps that separate these two categories but cannot impute a quantity in dollars to the difference. Attitudinal variables measured using a Likert scale relate to a subjective state of mind which is not necessarily identical for all individuals. For example, suppose that the answer to a statement such as "This mode of transportation is safe" is "Strongly Agree" by two individuals with different levels of tolerance for risk. Can we quantify the difference between this response and "Agree" in a consistent way?
+
+The interval scale is similar to the ordinal scale in the sense that the values have a natural ordering. In addition, the differences between levels _are_ meaningful. An example of an interval variable is scores from an examination; an examination is an instrument aims to measure knowledge/understanding of a subject. When a scale of 1-100 is used, the difference between a score of 80 and a score of 90 is 10 points. However, a zero does not indicate the absolute _absence_ of knowledge/understanding, just as a score of 100 does not indicate absolutely _complete_ knowledge/understanding of the subject.
+
+Valid operations for variables in interval scale include all those for ordinal variables, and in addition "+" and "-" (which is how 5 points in question 1 plus 10 points in question 2 add 15 points to the final score). 
+
+What things are you aware of that are measured using the interval scale?
+
+-
+-
+-
+
+## Quantitative: Ratio scale
+
+The interval scale is more informative than the ordinal scale in the sense that it is possible to quantify the differences between to values in a consistent way across measurements. On the other hand, the ratio between two values is not meaningful. Since variables measured in interval scale do not have a natural origin (i.e., the value of zero does not indicate complete absence), a score of 20 does not mean infinitely more knowledge/understanding than a score of zero, just as 100 does not mean twice as much knowledge/understanding as a score of 50.
+
+Ratio variables have a natural origin that indicates the _absence_ of the thing being measured. A length of zero means the absence of this dimension; an income of zero means the absence of income. This means that we can use all the operations available for interval variables, and in addition "*" and "/" (i.e., an income of 40,000 is twice as high as an income of 20,000).
+
+What things are you aware of that are measured using the ratio scale?
+
+-
+-
+-
+
+# Data objects revisited and quick data summaries
+
+`Python` provides data classes for categorical and quantitative variables. To illustrate them, suppose that we have information about modes of transportation used by a small sample of respondents, as well as how frequently they use this mode (times per week) and responses to the statement "this mode of transportation is safe" with 1: Strongly Disagree and 5: Strongly Agree. We will create the following lists to represent this information:
+
+```{python}
+modes = ["car", "bus", "walk", "walk", "car", "walk", "walk", "car"]
+frequency = [6, 3, 4, 5, 4, 3, 5, 4]
+safe = [5, 1, 2, 3, 4, 2, 3, 4]
+```
+
+Pandas contains a function, named `CategoricalDtype`, to work with categorical data. To properly code `modes` and `safe`, we first create a pandas DataFrame from these lists: 
+
+```{python}
+df = pd.DataFrame({'modes': modes, 'frequency': frequency, 'safe': safe})
+```
+
+To check the data types of these columns, we use the dtypes attribute:
+
+```{python}
+df.dtypes
+```
+
+Of these, only the frequency is a numerical variable. The modes are stored as object (string) type, and safe is stored as integer, but it should be treated as ordinal categorical data. Of these, only the frequency is a numerical variable. The modes are stored as object (string) type, and safe is stored as integer, but it should be treated as ordinal categorical data.
+
+```{python}
+from pandas.api.types import CategoricalDtype
+
+# convert `modes` to categorical 
+modes_type = CategoricalDtype(categories = ["bus", "car", "walk"], ordered = False)
+df['modes'] = df['modes'].astype(modes_type)
+
+# create ordered categorical dtype for `safe`
+ordered_labels = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+safe_type = CategoricalDtype(categories = ordered_labels, ordered = True)
+
+# map numeric safe values to labels and convert to categorical
+safe_labels = {1: "Strongly Disagree", 2: "Disagree", 3: "Neutral", 4: "Agree", 5: "Strongly Agree"}
+df['safe_label'] = df['safe'].replace(safe_labels).astype(safe_type)
+```
+
+
+```{python}
+df
+```
+
+
+Now check the data types again:
+
+```{python}
+df.dtypes
+```
+
+```{python}
+df["modes"]
+```
+
+```{python}
+df["safe_label"]
+```
+
+The label variables are recognized as categorical, and `safe_label` is marked as ordered when appropriate. Correctly defining the scale of measurement allows pandas to know which operations make sense for the kind of data at hand. For example, we can compare categorical values: 
+
+```{python}
+df['modes'].iloc[0] == df['modes'].iloc[2]
+```
+
+```{python}
+df['safe_label'].iloc[0]
+df['safe_label'].iloc[1]
+```
+Now, to compare the categories we use the function `.cat.codes` with `.iloc` to specify the index:
+
+```{python}
+df['safe_label'].cat.codes.iloc[0] > df['safe_label'].cat.codes.iloc[1]
+```
+With ordinal variables we can compare the relative values of levels, but arithmetic operations between categories are not meaningful (unlike with numerical variables). 
+
+Numerical operations work on numerical columns: 
+
+```{python}
+df['frequency'].iloc[0]/7
+```
+ 
+The above is the proportion of the week that Respondent 0 uses the mode indicated.
+
+Since pandas understands the data types of variables, it is possible to obtain quick summaries of the data:
+
+```{python}
+df.describe(include='all')
+```
+
+The describe() method uses appropriate summary statistics for each data type. 
+
+# Data Manipulation with pandas
+
+What are the things that you most commonly need to do when you are preparing/organizing data?
+
+-
+-
+-
+
+## Column Selection 
+
+As briefly explained in the previous session, in pandas, we select columns using different notation. 
+To select a single column:
+
+```{python}
+df['modes']
+```
+To select multiple columns
+
+```{python}
+df[['modes', 'safe']]
+```
+To select all columns except specific ones:
+
+```{python}
+df.drop(columns=['modes'])
+```
+
+To reorder columns: 
+
+```{python}
+df = df[['modes', 'frequency', 'safe', 'safe_label']]
+df
+```
+
+## Creating new variables
+
+Often we wish to create and add new variables to a data frame. For example, our sample data frame does not include an explicit identifier for the respondents. We can add one by doing: 
+
+```{python}
+df['id'] = pd.Categorical(range(1, len(df) + 1))
+```
+
+Function `len()` returns the number of rows in the input data frame. Check the table: it now has a new column with the respondent ids. By the way, notice that we assigned the results of our data manipulation phrase back to `df`, if we had not done so, the results would not have been kept in memory.
+
+```{python}
+df
+```
+
+Suppose that we wanted to convert the variable `frequency()` from days per week to proportion of the week that the mode is used. To create a new calculated column:
+
+```{python}
+df['frequency_prop'] = df['frequency'] / 7
+```
+
+To change the values of an existing column: 
+
+```{python}
+#df['frequency'] = df['frequency'] / 7
+```
+
+## Row Selection and Filtering
+
+In Pandas, we also select rows using different notation.
+
+Suppose that we want the first row from the table:
+
+```{python}
+df.iloc[[0]]
+```
+Or the first two rows:
+
+```{python}
+df.iloc[0:2]
+```
+Or rows 1, 3, and 5:
+
+```{python}
+df.iloc[[0, 2, 4]]  # rows 1, 3, and 5 (0 indexed)
+```
+As an alternative scenario, suppose that we want to extract only the rows corresponding to "walk":
+
+```{python}
+df[df['modes'] == 'walk']
+```
+
+# Summarizing based on specific conditions
+
+Now, let's say we are interested in obtaining statistics only for cases of passengers who mentioned walk as transportation mode. We can do this by filtering the table based on the `modes` value and then asking pandas to describe the resulting selection:  
+
+```{python}
+df[df['modes'] == 'walk'].describe(include = 'all')
+```
+
+## Working on groups of cases
+
+Sometimes we wish to work with parts of the table. For example, in the previous session, you were asked to add up the number of permanent private domiciles in some municipalities in São Paulo.  To achieve this you probably subset the table three times (one for each municipality), and then calculated the sum of private domiciles.
+
+A more elegant approach is to create groups and to summarize by group. Suppose that we would like to obtain general statistics about my data set but by mode:
+
+```{python}
+df.groupby('modes', observed = True).describe().reset_index()
+```
+The reset_index() method converts the groupby result back to a regular DataFrame. 
+
+Now, suppose that we would like to know what is the mean proportion of use of modes of travel but by mode:
+
+```{python}
+df.groupby('modes', observed = True)['frequency'].mean().reset_index()
+
+```
+
+It is possible to group by various variables, for example:
+ 
+```{python}
+df.groupby(['modes', 'safe_label'], observed = True)['frequency'].mean().reset_index() 
+```
+
+Grouping is a powerful way to work simultaneously on separate parts of a data frame.
+
+## Combining tables 
+
+Related data often come in separate tables, for convenience or because the data come from different sources. When two tables are of the same size they can be combined with method `concat()`  with `axis = 1`. This function puts two tables side by side as if they were a single table. Suppose that we had a second table (which we will unimaginatively call `df_2`) with information about the personal attributes of respondents to the survey (i.e., age in years and gender):
+
+```{python}
+df_2 = pd.DataFrame({
+    'age': [25, 32, 39, 28, 40, 33, 21, 32],
+    'gender': pd.Categorical(['male', 'female', 'female', 'non-binary', 'male', 'female', 'female', 'male'])
+})
+```
+
+The two columns are combined as follows:
+
+```{python}
+df_combined = pd.concat([df, df_2], axis=1)
+df_combined
+```
+
+This works on the assumption that the rows are arranged _in the same order_ and does not match by case. Suppose that the second table had been:
+
+```{python}
+df_2 = pd.DataFrame({
+    'id': pd.Categorical([5, 4, 8, 1, 7, 2, 3, 6]),
+    'age': [25, 32, 39, 28, 40, 33, 21, 32],
+    'gender': pd.Categorical(['male', 'female', 'female', 'non-binary', 'male', 'female', 'female', 'male'])
+})
+
+df_2
+```
+
+Notice that for whatever reason, the respondents in `df_2` are not sorted in the same order as in `df`. Using `concat()` would lead to the erroneous table:
+
+```{python}
+pd.concat([df, df_2], axis=1)
+```
+
+Merge functions combine tables based on one or more _keys_, that is, common variables. For example, `df` and `df_1` have a common id. The method `merge()` takes the rows in the table on the right and joins them to the table in the left so that the key variable(s) match(es):
+
+```{python}
+df_merged = df.merge(df_2, on='id', how='left')
+df_merged
+```
+Check how now the individual attributes match correctly the rows in the left table. Other types of joins are available: `how = 'right'`, `how = 'inner'`, and `how = 'outer'`.
+
+A different situation arises when we have more _cases_ (i.e., rows) of the same variables. For example, this table has two more cases that can be combined with the original table:
+
+```{python}
+df_3 = pd.DataFrame({'id': pd.Categorical([9, 10]), 'modes': pd.Categorical(['bus', 'walk'], categories=["bus", "car", "walk"]), 'frequency': [2, 5], 'safe': pd.Categorical([2, 4], categories=[1, 2, 3, 4, 5], ordered=True)})
+    
+
+# add safe labels and frequency proportion
+df_3['safe_label'] = df_3['safe'].map(safe_labels)
+df_3['safe_label'] = pd.Categorical(df_3['safe_label'], 
+                                   categories=["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+                                   ordered=True)
+df_3['frequency_prop'] = df_3['frequency'] / 7
+
+df_3
+```
+
+Now we want to combine the tables not by adding columns but by adding rows. The appropriate function is `concat()`,  with `axis = 0`, and it combines the table by joining the second data frame to the first. Notice that the bind matches by column name, so it does not matter if the columns are in the same order:
+
+```{python}
+df_all = pd.concat([df, df_3], axis = 0, ignore_index=True)
+df_all
+```
+
+Pandas is generally flexible about data type mismatches when combining tables, often converting to a common type. However, for categorical variables, it's best to ensure consistent category definitions:
+
+```{python}
+df_3_mismatch = df_3.copy()
+df_3_mismatch['id'] = [9, 10]   
+```
+
+In the previous chunk, we created a new DataFrame with the same data of da_3. However, we set the `id` variable as integer instead of categorical. 
+
+Now, performing the concat to merge the rows: 
+
+```{python}
+df_mismatched = pd.concat([df, df_3_mismatch], axis = 0, ignore_index=True)
+df_mismatched
+```
+
+Pandas was able to perform the concat. However, the variable id was transformed into a numerical variable. We can check this evaluating the types of each column: 
+
+```{python}
+df_mismatched.dtypes
+```
+
+# Practice
+
+1. Summarize (describe) table `cntr_sp_head`. What are the scales of measurement of the variables in this table?
+
+2. Summarize table `cntr_sp_basico`. What are the scales of measurement of the variables in this table?
+
+3. Join the following tables using an appropriate key variable: `cntr_sp_ipvs`, `cntr_sp_basico`, `cntr_sp_head`.
+
+4. Create a new table with only variables `code_tract`, `situacao`, `AGSN`, `IPVS`, and `b_V005`.
+
+5. Describe statistics of the new table.
+
+6. Obtain statistics of the new table but only for properties of `IPVS` "Baixíssima vulnerabilidade" ("Extremely low vulnerability").
+
+7. Obtain a summary of the new table but only for properties _not_ of `IPVS` "Baixíssima vulnerabilidade" ("Extremely low vulnerability").
+
+8. What is the mean `b_V005` by `IPVS` of census tract?

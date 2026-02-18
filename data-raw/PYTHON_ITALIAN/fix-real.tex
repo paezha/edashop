@@ -1,0 +1,11 @@
+\usepackage{calc}
+
+% fix pandoc table width macro
+\providecommand{\real}[1]{#1}
+
+% fix pandoc duplicate listoflistings definition
+\makeatletter
+\@ifundefined{listoflistings}{}{%
+  \let\listoflistings\relax
+}
+\makeatother

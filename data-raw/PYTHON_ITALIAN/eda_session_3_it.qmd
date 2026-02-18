@@ -1,0 +1,533 @@
+---
+title: "Session 3. Exploratory data analysis I: Descriptive statistics"
+author:
+  - Antonio Paez
+  - My Name
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format:
+  html:
+    df-print: paged
+  pdf:
+    template: exercise-template-default.tex
+    include-in-header:
+      - fix-real.tex
+    listings: false
+    table:
+      longtable: true
+    geometry: margin=1in
+    pdf-engine: pdflatex
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+
+threshold-concepts:
+  - threshold concept 1
+  - threshold concept 2  
+  - threshold concept 3
+  - threshold concept 4
+subject: "Workshop: Exploratory Data Analysis in `Python`"
+highlights: |
+
+  This is my mini-reflection. Paragraphs must be indented.
+  
+  It can contain multiple paragraphs.
+  
+  Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+
+always-allow-html: true
+---
+
+> "We never look beyond our assumptions and what's worse, we have given up trying to meet others; we just meet ourselves."   
+>
+> --― Muriel Barbery
+
+# Session outline
+
+- What is EDA?
+- Data summaries revisited
+- Appropriate summary statistics by scale of measurement
+- Properties of data: central tendency and spread
+- Univariate description
+- Bivariate description 
+- Multivariate description 
+- `Pandas`
+
+# Reminder
+
+NOTE: This is an [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. Quarto Markdown files are *computational notebooks* which implement a coding philosophy called [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible.
+
+# Preliminaries
+
+Load packages. Remember, packages are units of shareable code that augment the functionality of base `Python`. For this session, the following package/s is/are used:
+
+```{python}
+import pandas as pd
+import numpy as np
+from scipy.stats import chisquare, chi2_contingency
+
+# Set display options to show all rows and columns
+pd.set_option('display.max_rows', None)    # Show all rows
+pd.set_option('display.max_columns', None) # Show all columns
+pd.set_option('display.width', None)       # Auto-detect width
+pd.set_option('display.max_colwidth', None) # Show full column content
+```
+
+We also will utilize some data from the `edashop` R package. To convert these R data files to `Python` files, we will use the `reticulate` package:
+
+```{r}
+library(edashop)  # A Package for a Workshop on Exploratory Data Analysis
+library(reticulate)
+```
+
+From `edashop`, we will also load the following data frames for this session:
+```{r}
+data("auctions_amf")
+data("auctions_pf")
+data("auctions_phy")
+data("auctions_sef")
+```
+
+These data frames contain information about real estate transactions in distressed markets in Italy. You can check the documentation in the usual way:
+```r
+?auctions_amf
+```
+
+To be able to convert these datasets in Python, we need to convert them into structures that `Python` recognizes. Following chunk transform them into a Pandas DataFrame: 
+```{python}
+auctions_amf = r.auctions_amf
+auctions_pf = r.auctions_pf
+auctions_phy = r.auctions_phy
+auctions_sef = r.auctions_sef
+```
+
+
+# What is EDA?
+
+Exploratory Data Analysis is the process of learning from the data by concentrating on its intrinsic characteristics and attributes. [John W. Tukey](https://en.wikipedia.org/wiki/John_Tukey), the statistician most responsible for clarifying the distinction between exploratory and confirmatory data analysis, likened exploratory data analysis to detective work. Exploratory data analysis is useful to discover essential evidence regarding the phenomenon of interest, similar to checking fingerprints and alibis that can be used in a trial - the equivalent of confirmatory data analysis, where hypotheses are tested and the evidence is evaluated.
+
+To effectively deploy EDA, it is important to approach the data with as few assumptions as possible. By allowing the data to speak for themselves, EDA aims to: 
+
+1. _Simplify_ descriptions to make them easier to handle with available cognitive power; and
+2. Look _below_ previously described surfaces to make the description more effective.
+
+The main tools of EDA are descriptive statistics and visualization techniques. The focus in this session is on descriptive statistics, with an emphasis on _appropriate_ descriptors for different types of data.
+
+Before proceeding, it is worthwhile to briefly think about the things that we are first interested in when we begin working with a data set. What are the most important characteristics of the data that you care about?
+
+-
+-
+-
+
+
+# Data descriptions revisited
+
+In the previous session we used the method `describe()` from Pandas to obtain quick statistic descriptions of data. These descriptions already provided some key information about the data, including some summary statistics. For example, in our table with information about auctions in distressed markets:
+```{python}
+auctions_phy.describe()
+```
+
+We can see that the method `description()`, when set the `include` parameter equals to `all`, understands what type of data it is dealing with, and provides summaries that are different for categorical and quantitative variables. 
+
+If you set remove the `include` parameter, only the numerical variables will considered for the summary statistics: 
+
+```{python}
+auctions_phy.describe(include='all')
+```
+
+# Properties of data
+
+Description statistics are information reduction techniques. Recall that the objective of EDA is to see the data from different perspectives. Two important properties of data that we often wish to summarize are their central tendency and dispersion. These are discussed next.
+
+## Central tendency
+
+A measure of central tendency is a summary of a distribution of values that gives a "typical" value, or the one most frequently observed. Conceptually, this is similar to organizing all data values and finding the location of the _center of mass_ of the distribution. To illustrate the concept of center of mass consider the following sequence of quantitative values:
+```{python}
+x = [20, 30, 32, 34, 41, 41, 45, 46, 48, 51, 53, 54, 54, 56, 57, 58, 58, 59, 60, 61, 64, 65, 65, 69, 71, 74, 77, 79, 88, 94]
+```
+
+The same sequence of values is shown below in the style of a [stem-and-leaf](https://en.wikipedia.org/wiki/Stem-and-leaf_display) table:
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+Where is the distribution "heavier"? Thereabouts will be its center of mass. There are various measures of central tendency, three of which are discussed next.
+
+In the case of nominal variables, the categories do not have a meaningful order, and yet the center of mass is always the same. Consider for instance: 
+
+### Mode
+
+The mode of a distribution is the most frequent value found in a distribution. Since it only involves counting the instances of each values, it is appropriate for nominal and ordinal variables. We can find the mode by tabulating the values. Let us do so for the variable `type_class` (factor) in data frame `auctions_phy`.
+
+```{python}
+auctions_phy[["type_class"]].describe()
+```
+
+We see that the mode (top) of the distribution is "Residence", the most frequent value of the variable in this distribution. We can see that there are 113 values for the "type_class" variable, seven possible unique values, with 90 of the rows referring to the "Residence" category.
+
+However, how can we summarize *all* possible values in a categorical variable from a Pandas DataFrame? To do this, we can use the  `value_counts()` method that first check for all categories within a variable, and then count the amount of instances in each of them: 
+
+```{python}
+auctions_phy["type_class"].value_counts()
+```
+If you want to check this information as proportions, you can set the `normalize` parameter as `True` within the `value_counts()` method: 
+
+```{python}
+auctions_phy["type_class"].value_counts(normalize=True)
+```
+Now, we see that the "Residence" refers to around 73% of the cases, while the other classes comprise the remaining 27%.
+
+Next, let us try variable `quality` (ordered factor). First as count:
+
+```{python}
+auctions_phy["quality"].value_counts()
+``` 
+
+And as proportions: 
+
+```{python}
+auctions_phy["quality"].value_counts(normalize=True)
+```
+
+We see that the mode of this distribution is "Adequate" and "Fair". Since ordinal variables have by definition a natural order, the shape of their distribution can be conveniently presented in the style of a stem-and-leaf table, with each "I" representing one instance of the value:
+
+stem        | leaf
+------------|--------
+Poor        |IIIII IIIII IIIII III
+Adequate    |IIIII IIIII IIIII IIIII IIIII IIIII I
+Fair        |IIIII IIIII IIIII IIIII IIIII IIIII I
+Good        |IIIII IIIII IIIII IIIII IIII
+Excellent   |IIIII I
+
+### Median
+
+The median is the quantile that splits a quantitative variables in two parts of equal size, the bottom 50% and the top 50% of values.  
+
+Check again the stem-and-leaf table of our sample quantitative variable.
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+There are $n=30$ observations in this vector. Which value splits the distribution in half? 
+
+For a `list` data with quantative values, as the `x` dataset, the median can be reported by using the `median()` method from the `numpy` library:
+
+```{python}
+np.median(x)
+```
+
+### Mean
+
+The mean is probably the best known measure of central tendency, and it is defined as the sum of the values divided by the number of observations. Since it involves arithmetic operations it is not appropriate for categorical variables. The mean of quantitative variables can be reported by using the `mean()` method  from the `numpy` library:
+
+```{python}
+np.mean(x)
+```
+## Spread
+
+Another important property of a distribution of values is how wide or compact it is. Compare the two steam-and-leaf tables below.
+
+stem    | leaf
+--------|--------
+2       |0
+3       |024
+4       |11568
+5       |134467889
+6       |014559
+7       |1479
+8       |8
+9       |4
+
+stem    | leaf
+--------|--------
+1       |48
+2       |08
+3       |024
+4       |1156
+5       |13789
+6       |01459
+7       |149
+8       |468
+9       |45
+10      |7
+
+The first stem-and-leaf table is more "compact": the tails of the distribution are closer together and the center of mass is "heavier", compared to the second table, that has a wider spread.
+
+### Minimum and maximum
+
+The minimum and maximum values give an idea of how spread the distribution is. In the first of the preceding tables the minimum is $20$ and the maximum is $94$. In the second table, the minimum is $14$ and the maximum is $107$. The _range_ is the difference between the maximum and the minimum:
+```{r}
+94 - 20
+107 - 14
+```
+
+The second distribution is more spread.
+
+### Inter-quartile range
+
+The inter-quartile range is similar to the range, but instead of being calculated using the minimum and maximum values of the distribution, it uses the third and first quartiles. [Quartiles](https://en.wikipedia.org/wiki/Quartile) are a form of quantile that divides a sequence of values in four equal parts, so the second quantile represents the value that separates the lowest 25% of the sample from the remaining 75%, and the third quantile is the value that splits the highest 25% of the sample from the lowest 75%.
+
+If we describe the days_on_market variable, we see that the quartiles are reported (25% is the first quartile, 50% is the median, and 75% is the third quartiles). The inter-quartile range can be calculated using those values.
+
+```{python}
+auctions_amf["days_on_market"].describe()
+```
+
+The difference between the third and first quartile is:
+```{r}
+931 - 497
+```
+
+The inter-quartile range involves an arithmetic operation, which is why it is not an appropriate statistic for 
+categorical variables.
+
+### Variance and standard deviation
+
+The variance is another widely used measure of the spread of a distribution. It is defined as:
+
+$$
+\sigma^2 = \frac{1}{n}\sum_{i=1}^n(x_i - \bar{x})^2
+$$
+
+In this formula, $\bar{x}$ is the mean of $x$ and $n$ is the number of observations in the sample. Accordingly, $x_i-\bar{x}$ is the deviation of $x_i$ from the mean of $x$. If we rewrite this as follows:
+
+$$
+z_i = (x_i - \bar{x})^2
+$$
+
+It is easy to see that the variance is actually the mean of the square of the deviations from the mean:
+
+$$
+\sigma^2 = \frac{1}{n}\sum_{i=1}^nz_i
+$$
+
+The standard deviation is simply the square root of the variance and returns the variance to the same units as the original variable. The standard deviation is reported by using the `description()` method for pandas DataFrames: 
+
+```{python}
+auctions_amf["days_on_market"].describe() 
+```
+
+The standard deviation can also be calculated with the `std()` method of the `numpy`  library: 
+
+```{python}
+np.std(auctions_amf["days_on_market"])
+```
+
+We see that the typical deviation from the mean of days_on_market was about $561.28$ days. To check for its variance, we use the method var(), also from numpy:
+
+```{python}
+np.var(auctions_amf["days_on_market"])
+```
+
+# Univariate description
+
+Summary statistics of central tendency and spread refer to a single variable and are appropriately called univariate descriptors. These descriptors are very important, and we neglect exploring them at our own peril. They often tell us important aspects of the data, including how complete a data set is, how much variation is there, whether there are atypical or unusual values.
+
+As an example, let us calculate the mean, standard deviation, and maximum of days_on_market:
+
+```{python}
+mean_dom = np.mean(auctions_amf["days_on_market"])
+sd_dom = np.std(auctions_amf["days_on_market"])
+max_dom = np.nanmax(auctions_amf["days_on_market"])
+```
+
+The property that stayed the longest in auction in this data set did so for $4,104$ days. Just how common or unusual is this value? That depends on how close (or far away) from the mean of the distribution this is, as well as on the spread of the distribution. The deviation from the mean is:
+
+```{python}
+max_dom - mean_dom
+```
+
+That is, approximately $3,273$. But the typical deviation from the mean in the sample was only about $561$ days! Now, calculating:
+
+```{python}
+(max_dom - mean_dom)/sd_dom
+```
+
+This tells us that the census tract with the highest days on market receives over five times more than the average days on market of the census tracts. This observation is indeed quite unusual. How unusual was the property with the lowest days on market? Let us retrieve the minimum duration:
+
+```{python}
+min_dom = np.min(auctions_amf["days_on_market"])
+min_dom
+```
+
+```{python}
+(min_dom - mean_dom)/sd_dom
+```
+
+The property that stayed the least in auction is much closer to the mean, and barely above one standard deviation below the mean.
+
+Univariate description is a powerful way to get to know our data before doing any more sophisticated explorations or analysis.
+
+# Bivariate description
+
+Moving on from univariate description, understanding how two variables relate to one another is another key aspect of EDA. 
+
+## Categorical variables: cross-tabulations
+
+Univariate description of a categorical variable involves tabulating the number of instances of each response. This can be expanded to simultaneously tabulating two categorical variables. Again, we can use the  `value_counts()` method, but now passing two (or more) variables to perfom the counts: 
+
+```{python}
+auctions_phy[["quality", "type_class"]].value_counts() 
+```
+
+And the values can be displayed as proportions:
+
+```{python}
+auctions_phy[["type_class", "quality"]].value_counts(normalize = "True") 
+```
+
+What do we learn from this table? 
+
+Another way of displaying this information is by doing a cross tabulation by applying the method `.crosstab()`:
+
+```{python}
+pd.crosstab(auctions_phy["type_class"], auctions_phy["quality"])
+```
+To improve the readability of the previous output, we can add the total sum of the columns as a row at the bottom of the table:
+
+```{python}
+crosstab_agsn_ipvs = pd.crosstab(auctions_phy["type_class"], auctions_phy["quality"])
+crosstab_agsn_ipvs.loc["Total"] = crosstab_agsn_ipvs.sum()
+crosstab_agsn_ipvs
+```
+Or the total sums of the rows as a column at the right of the table:
+
+```{python}
+crosstab_agsn_ipvs["Total"] = crosstab_agsn_ipvs.sum(axis=1)
+crosstab_agsn_ipvs
+```
+
+There are in total $n = 110$ valid observations when we consider variables `type_class` and `quality` simultaneously. The proportions (by column) are as follows:
+
+What else do we learn from this table?
+
+_If_ the quality of the buildings did not vary by the type of building, we would expect the percentages in the bottom row to be roughly the same, since every type of building would have a uniform chance of being in any state. We can calculate the values in the table _If_  this was true.
+
+This is done by multiplying the row total by the column total for each `quality` and `type_class` combination, and dividing by the size of the sample:
+
+$$
+E_{ij} = \frac{1}{n} \sum_ix_i \sum_jx_j
+$$
+For example, the expected value for "Agricultural Building" and "Poor" is:
+
+```{r}
+(18 * 3) / 110
+```
+
+The observed value in contrast is $2$. So we see that agricultural buildings are of poor quality more often than if the quality of buildings was random. It is possible to summarize the differences between the observed and expected values in a cross-tabulation:
+
+$$
+\chi^2=\sum_i\sum_j\frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+If the observed and expected values are identical in every case, the value of $\chi^2$ would be zero. Contrariwise, $\chi^2$ will tend to grown as the differences between observed and expected counts grow. This would suggest that the observed counts are unlikely to follow a random pattern.
+
+We can use the `chi2_contingency()` function from the `scipy` library to computes $\chi^2$ and produces also a $p$-value to aid in the decision whether the distribution follows a random pattern or not. A small $p$-value would indicate a small probability of the distribution being random:
+
+```{python}
+chi2_table = pd.crosstab(auctions_phy["quality"], auctions_phy["type_class"])
+chi2_table
+```
+
+```{python}
+chi2_contingency(chi2_table)
+```
+
+To visualize the test results in a better way, we can create different variables and assign their values by:
+```{python}
+stat, p, dof, expected = chi2_contingency(chi2_table)
+```
+
+
+```{python}
+stat
+p
+dof
+expected
+```
+
+We also get a DataFrame with expected values:
+
+```{python}
+expected_df = pd.DataFrame(expected, index = chi2_table.index, columns = chi2_table.columns)
+expected_df
+```
+
+Which can be compared to the observed counts:
+```{python}
+chi2_table
+```
+
+We see that the distribution is dominated by buildings of class "Residence", which tend to be close to the expected values.
+
+## Quantitative variables: correlation
+
+The mean and standard deviation are key univariate descriptors of quantitative variables. When we are interested in the relationship between two quantitative variables we use a related concept, the _covariance_. The covariance is the mean of the product of the deviations from the mean of two variables:
+
+$$
+C(x,y) = \frac{1}{n}\sum_i(x_i - \bar{x})(y_i - \bar{y})
+$$
+
+In the formula above, $\bar{x}$ and $\bar{y}$ are the means of the two variables. The differences from the mean can be positive, negative, or zero. When both deviations are positive, the product is positive, thus increasing the covariance. Likewise when the two deviations are negative. But when one deviation is positive and the other negative, the product is negative, which subtracts from the covariance. When differences are like-like (positive-positive or negative-negative) the covariance will tend to be a large positive number. The contrary happens when the differences are opposed.
+
+The covariance can be normalized by the standard deviations of the variables to give the correlation coefficient:
+
+$$
+r(x, y) = \frac{C(x, y)}{\sigma_x\cdot\sigma_y}
+$$
+
+This quantity has the census tract of being bound between [-1, 1], and a value of zero indicates that the two variables do not _covary_. Correlations can be calculated from DataFrames using the `corr()` method:
+
+```{python}
+auctions_amf[["days_on_market", "number_auctions"]].corr()
+```
+
+What does the correlation between these two variables indicate?
+
+## Categorical variables: multiple cross-tabulations
+
+It is possible to cross-tabulate more than two variables, however in practice this is seldom done for more than three because the results quickly become difficult to read and interpret. The method `value_counts()` can be applied to three or more columns:
+
+```{python}
+auctions_phy[["quality", "state_maintenance", "type_class"]].value_counts() 
+```
+
+The $\chi^2$ summary of association for a cross-tabulation seen above no longer works for tables in higher dimensions (i.e., when the number of variables cross-tabulated is greater than two). For an example of alternative approaches to describe tables with more than two variables, see the application of Cochran-Mantel-Haenszel $\chi^2$ statistic in Mella-Lira and Paez ([2021](https://doi.org/10.1016/j.jth.2021.101015)).
+
+## Quantitative variables: correlation matrices
+
+Correlations can be explored among multiple variables. The example below shows how to select the quantitative variables from a data frame and obtain a correlation matrix: 
+
+```{python}
+auctions_amf.select_dtypes(include=['number']).corr()
+```
+
+Note that the default `method` is `pearson`. It is possible to select two other correlation methods (setting the paramether `method` as  `kendall` or `spearman`) that work on ranked data instead of the quantities. Ranking the values is a more robust way of calculating the association between two variables for reasons that will become clear next session when we discuss visualization approaches for EDA.
+
+# Practice
+
+1. Join tables `auctions_amf`, `auctions_pf`, `auctions_phy`, and `auctions_sef`.
+
+2. Imagine that you are interested in the discount in distressed property sales. The discount (check `?auction_amf`) is the percent variation between the initial listed price (market value as apprised) and selling price. Describe and discuss this variable.
+
+3. How does the discount relate to other variables in the data set? Discuss.
+
+4. Propose some hypotheses about discount based on your exploration of the data set. How would you propose to investigate these hypotheses?
+
+5. Imagine now that you are interested in the state of maintenance of properties that are sold in distressed conditions (check `?auction_phy`). Repeat questions 3 and 4 but for this variable.
+
+6. What can you say so far about the relationship between discount and the categorical variables in the data set? Or between state of maintenance and the quantitative variables in the data set? Propose an approach to explore a combination of categorical and quantitative variables.

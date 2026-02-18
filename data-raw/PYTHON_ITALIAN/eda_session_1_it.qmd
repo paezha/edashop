@@ -1,0 +1,793 @@
+---
+title: "Session 1. Basics of working with `Python`"
+author:
+  - Antonio Paez
+  - My Name
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format:
+  html:
+    df-print: paged
+  pdf:
+    template: exercise-template-default.tex
+    include-in-header:
+      - fix-real.tex
+    listings: false
+    table:
+      longtable: true
+    geometry: margin=1in
+    pdf-engine: pdflatex
+    
+threshold-concepts:
+  - threshold concept 1
+  - threshold concept 2  
+  - threshold concept 3
+  - threshold concept 4
+subject: "Workshop: Exploratory Data Analysis in `Python`"
+highlights: |
+  This is my mini-reflection. Paragraphs must be indented.
+  
+  It can contain multiple paragraphs.
+always-allow-html: true
+---
+  
+> "Be willing to be a beginner every single morning."  
+>
+> --― Meister Eckhart
+
+# Session outline
+
+- Why `Python`?
+- Installing the software: `Python` and `RStudio` (with `reticulate`)
+- Packages (libraries)
+- Installing packages: `PyPI`, `Conda`, and other sources
+- Getting help
+- Creating a project
+- Directory structure
+- Creating new files: types of files
+- Literate programming
+- Data objects/classes and basic operations
+
+# Introduction
+
+NOTE: This is an [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. Quarto Markdown files are *computational notebooks* which implement a coding philosophy called [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible.
+
+Let us first explain the anatomy of an Quarto Markdown document.
+
+At the top of the document is a *header* (called a YAML header) contained between two sets of three dashes `---`. The header includes metainformation about the document, including possibly the title of the document, the name(s) of the author(s), and how to process the document (e.g., what type of output to produce). After the header comes the *body* of the document, that is, the main contents of the document (text and code).
+
+The header is quite an important compontent of the document, but we will for the moment take is as given and concentrate on the body of the document. This file, for example, introduces some basic instructions to work with `Python` and Quarto Markdown.
+
+Chunks of code are key to writing computational notebooks. Whenever you see a chunk of code in an Quarto Markdown document as follows, you can run it (by clicking the green 'play' icon on the top right corner of the code window) to see the results. Try it below!
+
+```{python}
+print("Hello, Workshop")
+```
+
+You can see that the function `print()` displays the argument on the screen.
+
+Notice the way the document speaks to you in natural language, and to the computer in `Python`. The computer, instead of being the focus of the document, is an assistant to illustrate concepts (like, what is a chunk of code?).
+
+Each of the documents in this workshop (the *Sessions*) is like a set of lecture notes. You can *knit* the document to produce a PDF file to study. The documents, on the other hand, are potentially much more than simple lecture notes, and they can in fact become the foundation for your own experiments and annotations. As you read and study, you can 'customize' the notes based on your developing understanding of the subject matter and/or to complement the document with other examples and information. To make the readings uniquely yours, you can type directly into the document (the original template is still available from the package, and if you need a fresh start, you can always create a new file with it). 
+
+In addition, you can use the following style to create a *textbox*:
+
+::: {.textbox data-latex=""}
+**NOTICE:**
+
+This is an annotation. Here I can write my thoughts as I study, or I can add useful links or other information to help me learn.
+
+To create a new paragraph, I need to type two blanks after the last one.
+:::
+
+A textbox allows you to highlight important information. Try creating your own textbox next.
+
+By now you will already have noticed a few conventions for writing in R Markdown:
+
+-   A chunk of `Python` code begins with three backticks ('\`\`\`') and the letter 'python' between curly brackets; a chunk of code concludes with three backticks.
+-   Hashtags ("\#") indicate headers: one hashtag is a primary header, two hashtags is a secondary header, three a tertiary header, etc.
+-   Asterisks are used for changing the font to *Italics*, **Bold**, and ***Italics+Bold***.
+-   Superscrit can be added by using `^`, such as in superscript^2^
+-   Subscript can be added by using `~`, such as in superscript~2~
+-   Dashes are used to create unnumbered lists.
+-   [Hyperlinks](https://en.wikipedia.org/wiki/Hyperlink) can be introduced by using square brackets followed by the url in brackets.
+-   Greater-than ("\>") is used for block-quotes.
+
+There are some other typing conventions that you can find in this useful [cheatsheet](https://quarto.org/docs/authoring/markdown-basics.html).
+
+# RStudio Window
+
+If you are reading this, you must already have learned how to [create a new project and documents](https://paezha.github.io/edashop/#recommended-workflow) using the templates in the workshop package. We can now proceed to discuss some basic concepts regarding data types and operations.
+
+# Preliminaries
+
+We will load all *libraries* we plan to use in this session. A library (or package) is a collection of modules containing pre-written code, functions, and classes that developers can use to perform common tasks without writing code from scratch. These are shareable code units that extend base `Python`'s capabilities. When you install `Python`, it includes built-in standard libraries for mathematical operations, date/time handling, system interactions, and more.
+
+However, sometimes we need to perform analyses for which no built-in libraries exist. In these cases, we must install libraries from external sources hosting package repositories or "indexes." The two most common are `PyPI`[(Python Package Index)](https://pypi.org/) and [`Conda`](https://anaconda.org/) repositories, but packages can also come from `GitHub` repositories and other locations.
+
+`Conda`'s advantage is its dependency tracking-it manages how libraries depend on one another, reducing compatibility issues.
+
+For `PyPI` packages, use `pip install package_name` in the terminal. For `Conda`, use `conda install package_name`.
+
+Two libraries will be extensively used in this workshop: [`matplotlib`](https://matplotlib.org/) and [`pandas`](https://pandas.pydata.org/). `Matplotlib` is `Python`'s most popular data visualization library, enabling the creation of 2D plots. `Pandas` provides robust data structures and functions for working with tabular data, primarily Series and DataFrames.
+
+If you haven't already, install these packages with `pip install pandas matplotlib` or `conda install pandas matplotlib`. Once installed, you must load them into memory using `import package_name`:
+
+```{python}
+import pandas as pd
+```
+
+# Language Semantics
+
+Python uses indentation (spaces or tabs) to structure code, unlike languages like `R` and `Java`, which use curly braces (`{}`). 
+
+Text following the `#` symbol is treated as a comment and ignored by the `Python` interpreter:
+
+```
+data # Any comment 
+# Another comment 
+```
+As in other languages, `Python` functions are reusable code blocks that perform specific actions when called. We call them by name followed by parentheses (`()`). Parameters can be included within the parentheses. For example, a function `f` with parameters `a`, `b`, and `c` is called as:
+
+```
+f(a, b, c)
+```
+
+In `Python`, everything is an _object._ Every data type is a `Python` object with a specific type, internal data, and associated functions. Functions within objects are called _methods_, providing access to the object's content. For example, if we have an object data and want to access information via its method:
+
+```
+data.method()
+```
+Objects also have _attributes_: values representing properties or characteristics. Like methods, attributes are accessed using dot notation: 
+
+```
+data.attribute
+```
+
+`Python` uses `=` to assign values to variables. Variables are symbolic names that reference objects or values stored in memory:
+
+```{python}
+var = 10
+var
+```
+
+In the chunk above, we assigned the value 10 to the variable `var.` This assignment allows us to retrieve the value later.
+
+# Data types in `Python`
+
+After executing the previous chunk, you'll notice a variable named var appears in your `Environment` (upper-right pane tab). This variable holds a single value (10) and belongs to a group of data types known as scalars, which store single values. Standard built-in scalar types are:
+
+| Type | Description |
+|------------|------------------------------------------------------------|
+| int | Integer (whole numbers) |
+| float | Floating-point numbers, to represent real numbers with a decimal point. |
+| bool | A boolean value. True or False. |
+| bytes | Pure Bytes ASCII |
+| None | Null value |
+| str | String type, to represent text data. |
+
+: Standard scalars in Python. 
+
+You can check a variable's data type using the `type()` function:
+
+```{python}
+type(var)
+```
+
+Next, we'll explore these scalar data types in more detail.
+
+## Scalars
+
+### Numeric (`int` and `float`)
+
+The main numeric types in `Python` are `int` and `float`:
+
+```{python}
+1
+type(1)
+```
+
+```{python}
+3.141593
+type(3.141593)
+```
+
+### Boolean 
+
+Boolean values are `True` and `False`:
+
+```{python}
+False
+```
+
+```{python}
+type(False)
+```
+
+You can perform Boolean comparisons using `and`, `or`, and comparison operators (`==` for equal, `!=` for not equal, `>` for greater than, `>=` for greater than or equal, `<` for less than, `<=` for less than or equal):
+
+```{python}
+4 > 3
+```
+
+```{python}
+2 == 3
+```
+
+```{python}
+5 == 2
+```
+
+```{python}
+4 >= 3
+```
+
+### Strings
+
+Strings represent text and are created using quotation marks (either " or '):
+
+```{python}
+"This is a string"
+```
+
+Numbers within quotation marks are stored as strings:
+
+```{python}
+type("5")
+```
+
+Multi-line strings use triple quotes:
+```{python}
+"""
+This 
+is 
+an 
+example
+of 
+a 
+string
+with
+multiple 
+lines
+"""
+```
+
+The `\n` character indicates line breaks in text.
+
+### None 
+
+`None` represents null value in `Python`:
+
+```{python}
+None
+```
+
+
+## Built-in data structure 
+
+Now, consider storing multiple values in a variable. For this, you need data structures beyond scalars. We'll explore `Python`'s three built-in data structures: `tuples`, `lists`, and `dictionaries.`
+
+### Tuple 
+
+A tuple is a finite, ordered collection of items. Create a tuple by separating items with commas: 
+
+```{python}
+a_tuple = 100, 150, 45
+a_tuple
+```
+
+You can create nested tuples:
+```{python}
+nestedtuple = (18, 19, 20), (5, 4)
+nestedtuple
+```
+
+You can also create tuples using the `tuple()` function:
+```{python}
+tuple([2, 5, 10])
+```
+
+Tuples can store different scalar types:
+
+```{python}
+tuple([2, 5, 10, "b"])
+```
+
+You can create tuples from any iterable sequence:
+```{python}
+tuple("example")
+```
+
+Tuple elements have fixed positions and are immutable after creation. This structure is useful for storing related data of different types efficiently, such as coordinates (x, y) or user information (name, age, ID).
+
+### List
+
+Lists are similar to vectors in other languages but can store different data types within the same list. 
+
+Create a list using square brackets:
+
+```{python}
+b_list = [45, 50, 55, 60]
+b_list
+```
+
+Create a list using square brackets:
+
+```{python}
+a_list = list(a_tuple)
+a_list
+```
+
+Unlike tuples, lists are mutable. You can append items:
+
+```{python}
+a_list.append(200) 
+a_list
+```
+
+Insert items at specific positions:
+```{python}
+b_list.insert(0, 40) # Add 40 at position 0 (first position)
+b_list
+```
+
+Remove items by index using `pop()`:
+```{python}
+b_list.pop(0) # Removing the value 40 (index 0) from the list
+b_list
+```
+
+Remove specific items by value using `remove()`:
+```{python}
+b_list.remove(50)
+b_list
+```
+
+### Dictionaries
+
+A dictionary (`dict`) is a collection of key-value pairs with flexible size, where keys and values are `Python` objects. Create a dictionary using curly braces with key-value pairs separated by colons:
+
+```{python}
+fruits_dict = {'orange': 10, "banana":[5,10,20]}
+fruits_dict
+```
+
+Add new key-value pairs:
+
+```{python}
+fruits_dict["lemon"] = [40, 60, 80]
+fruits_dict
+```
+
+Access values by key:
+
+```{python}
+fruits_dict["banana"]
+```
+
+Remove a key-value pair using pop():
+```{python}
+fruits_dict.pop("banana")
+fruits_dict
+```
+
+List all keys in a dict:
+```{python}
+fruits_dict.keys()
+```
+
+List all values in a dict: 
+```{python}
+fruits_dict.values()
+```
+
+## Indexing 
+
+Indexing in `Python` accesses individual items in sequences (strings, lists, tuples) by their position. `Python` uses zero-based indexing: the first element is at index 0, the second at 1, and so on. Use square brackets (`[]`) after the sequence name.
+
+Two indexing approaches:
+
+- Positive indexing: Counts from the beginning (starting at 0).
+- Negative indexing: Counts from the end (starting at -1 for the last item).
+
+Retrieve the third character of a string:
+
+```{python}
+"This is a string"[2]
+```
+
+Indexing also works for tuples:
+
+```{python}
+a_list
+a_list[0] # the indexes starts on 0!
+a_list[1]
+a_list[2]
+```
+
+And for lists: 
+
+```{python}
+b_list[-1]
+```
+
+For dictionaries with multiple values per key, access specific values using indexing within the values:
+
+```{python}
+fruits_dict['lemon'][0] # for the values value 
+fruits_dict['lemon'][0:2]
+```
+
+# Series and DataFrames 
+
+Other useful data structures in `Python` are Series and DataFrames, included in the `pandas` package. A Series is an array-like object containing a sequence of values and an associated array of labels called an index:
+
+```{python}
+materials = pd.Series(["pens", "pencils", "paper", "notebook"])
+materials
+```
+
+We create a Series by calling `pd.Series()` with the elements inside parentheses. The materials Series contains school supplies with indexes on the left. Since we didn't specify index values, pandas created integer indexes starting from 0. 
+
+Access Series values by index:
+```{python}
+materials[0] # For one value
+materials[0:2] # For more than one value, on a sequence
+materials[[1, 0, 2]] # For specific values and order 
+```
+
+Create a Series from a dictionary-keys become indexes, values become Series values:
+```{python}
+new_series = pd.Series(fruits_dict)
+new_series
+```
+
+For numerical Series, use `NumPy` for mathematical operations. `NumPy` is a `Python` library for numerical computing: 
+
+```{python}
+import numpy as np 
+
+numerical_series = pd.Series([0.30, 0.33, 0.36, 0.39])
+np.exp(numerical_series) # For exponential 
+numerical_series * 2 # For multiplication 
+```
+
+Note that indexes are preserved. 
+
+Logical operations work on numerical Series:
+```{python}
+numerical_series > 0.35
+```
+
+And also for non-numerical Series:
+```{python}
+'calculator' in materials
+```
+
+A DataFrame is a rectangular, tabular data structure consisting of rows and columns (essentially a collection of Series). DataFrames store data in digital format, similar to spreadsheet tables. DataFrames can handle large amounts of information (billions of items, depending on computer memory). Data can be numeric, string, Boolean, etc. Each cell has an address identified by its row and column. DataFrames have indexes for rows and columns.
+
+To illustrate a DataFrame, we will create a dictionary with the vectors for regions in Northern Italy. These data come from a survey of Ph.D. students expected to finish their studies between 2008 and 2014 (see [Muscio and Ramaciotti, 2018](https://doi.org/10.1016/j.dib.2018.03.116)). The first vector includes the names of the regions; the second vector contains the number of respondents to the survey; third is the number of active spinoffs founded by the students surveyed; next is the number of employees in those spinoffs; and lastly, there is a vector with the total number of active spinoffs in the regions in the period 2005-2006:
+
+```{python}
+italy_data = {
+    'Region': ["Emilia-Romagna",
+               "Friuli-Venezia Giulia",
+               "Liguria",
+               "Lombardia",
+               "Piemonte",
+               "Trentino-Alto Adige",
+               "Veneto"],
+    'PhD_Students': [82, 26, 21, 115, 50, 9, 73],
+    'Active_Spinoff': [3, 4, 3, 5, 4, 0, 2],
+    'Employees': [13, 7, 8, 3, 16, 0, 1],
+    'Spinoff0506': [393, 68, 21, 313, 322, 18, 306]
+}
+
+df = pd.DataFrame(italy_data)
+df
+```
+
+Different from the previous scalars and data structures, in RStudio, you can click on a DataFrame in the Environment (upper right pane tab) to visualize the data as tabular data in a new tab. You can sort and filter values like in a spreadsheet. 
+
+DataFrames are rectangular: all columns must have the same length because each row represents an object of interest (here, a region). If information is missing for some rows, we must either exclude those rows or mark missing values appropriately.
+
+There's one exception: when creating a DataFrame from a dictionary with different value lengths, pandas creates rows equal to the maximum length and fills missing values appropriately. For example, using fruits_dict (with 2 keys: 'orange' has 1 value, 'lemon' has 3 values):
+ 
+```{python}
+fruits_dict
+```
+
+```{python}
+pd.DataFrame(fruits_dict)
+```
+
+For more than two columns, the table must be rectangular. *You cannot create a DataFrame from a dictionary with keys of different lengths*.
+
+Returning to our municipalities DataFrame, view the first five rows with the method `head()`:
+
+```{python}
+df.head()
+```
+
+Get general information with `.info()`, which shows index type, column names, data types, non-null counts, and memory usage: 
+
+```{python}
+df.info()
+```
+
+You can obtain a statistical summary by applying the method `.describe()`. For numeric columns, the describe output contains the count (number of non-null observations), mean, standard deviation, minimum value, percentile values and maximum value.
+
+```{python}
+df.describe()
+```
+
+By default, describe() analyzes only numeric columns. To include string/categorical columns, use `include = 'object'` or `include = 'all'`. For object data, the summary includes count, unique values, most frequent value (top), and its frequency: 
+
+```{python}
+df.describe(include='all')
+```
+
+Access DataFrame columns by name within square brackets:
+
+```{python}
+df['Region']
+```
+
+Or using dot notation (attribute access, not recommended if column names contain spaces or conflict with DataFrame methods):
+```{python}
+df.Region
+```
+
+And  for more than one column: 
+
+```{python}
+df[['Region', 'Spinoff0506']] 
+```
+
+To access a specific cell:
+```{python}
+df['Region'][5] # For the row of index 5
+```
+
+To access an entire row, use `.loc`:
+
+```{python}
+df.loc[5] # For the row of index 5
+```
+
+
+We can create a column or update values in a column that already exists by doing: 
+
+```{python}
+df["Test"] = 10
+df
+```
+
+In the case above, a new column "Test" is created with all values set to 10.
+
+Add new rows using `concat()`. In this example, the new dictionary only has values for the "Region" column, so other columns are filled with `NaN`:
+
+```{python}
+new_rows = [{"Region": "Test"}]
+
+df = pd.concat([df, pd.DataFrame(new_rows)], ignore_index=True)
+
+df
+```
+
+Remove a column with `drop()` and `axis = 1`:
+```{python}
+df = df.drop('Test', axis = 1)
+df
+```
+
+Remove a row with `axis = 0`:
+
+```{python}
+df = df.drop(7, axis = 0)
+df
+```
+
+# More Basic Operations
+
+`Python` supports various operations: arithmetic (sums, multiplications), logical (returning True/False), and more.
+
+To perform operations effectively, understand how DataFrames locate information. Each cell has an address (index) that can be referenced in several ways. Two primary methods are `loc` and `iloc`:
+
+- `loc` (label-based): Uses names/labels (inclusive of slice ends).
+- `iloc` (integer-based): Uses numerical positions (0-indexed, exclusive of slice ends).
+
+Select the first row of the "Region" column:
+
+```{python}
+df.loc[0, 'Region']
+```
+
+With loc, the first value is the row, the second is the column (same for iloc). Select multiple rows and columns by label:
+```{python}
+df.loc[0:2, 'Region':'Spinoff0506']
+```
+
+Select specific columns and rows by label:
+```{python}
+df.loc[[0,2],['Region','Spinoff0506']]
+```
+
+Now using iloc with integer positions. Select the cell at position (0,0):
+
+```{python}
+df.iloc[0,0]
+```
+
+Select multiple rows and columns by position:
+```{python}
+df.iloc[0:2,0:3]
+```
+
+Select specific columns and rows by position:
+```{python}
+df.iloc[[0,2],[0,3]]
+```
+
+Note: With iloc, slicing is exclusive of the end position. Think of loc as searching by Region (label) and iloc as searching by numbered position. Asking for `df["Region"][1]` is equivalent to `df.loc[1, "Region"]`.
+
+Indexing is useful to conduct operations. Suppose for instance, that you wished to calculate the total number of active spinoffs in the period 2005-2006 of two regions, say Lombardia and Veneto. You can execute the following instructions:
+
+```{python}
+df['Spinoff0506'][3] + df['Spinoff0506'][6]
+```
+
+An issue with with indexing cells this way is that, if other region were added to the table, the row numbers of each region might change, and as a consequence you might not be referencing the same region with those numbers. Another possibility is if the table is very long, you might not even know which region is in which row to begin with.
+
+So a better way to index the cells in a DataFrame is by using logical operators, like in the following chunk of code. Here, we are essentially asking for "total number of active spinoffs o f(region name which is Lombardia)" + "total number of active spinoffs of (region name which is Veneto)":
+
+First, let's select the row in which the name of the region is equal to "Lombardia":
+```{python}
+df.loc[df['Region'] == "Lombardia"]
+```
+The text inside the square bracket tells Pandas to look at the row with that region's names (we index by the name of the region, instead of the row number). 
+
+Now, let's select only the column that refers to the number of spinoffs :
+```{python}
+df.loc[df['Region'] == "Lombardia", 'Spinoff0506']
+```
+Text text after the comma asks to look the value in the `Spinoff0506` column for the colum label indexed. This output show all the spinoff values in which "Region" is equal to Lombardia. Note that the output also have a index (for cases in which the query result in more than one output). We can select the value by its index:
+
+```{python}
+df.loc[df['Region'] == "Lombardia", 'Spinoff0506'].values[0] 
+```
+
+Then, we can do the same for same for Veneto and create a sum operation to obtain total number of spinoffs in Veneto and in Lombardia: 
+
+```{python}
+df.loc[df['Region'] == "Lombardia", 'Spinoff0506'].values[0] + df.loc[df['Region'] == "Veneto", 'Spinoff0506'].values[0]
+```
+
+Suppose that you wanted to calculate the total number of spinoffs in 2005-2006 in this DataFrame. To do this, you would use `.sum()` in the column selection that you want to sum:
+
+```{python}
+df['Spinoff0506'].sum()
+```
+
+As you can see, `Python` can be used as a calculator, but it is much more powerful than that.
+
+You have already seen how `Python` allows you to store in memory the results of some instruction, by means of an assignment `=`. You can also perform many other useful operations. For instance, you can find the maximum for a set of values:
+
+```{python}
+df['Spinoff0506'].max()
+```
+
+This does not have to be just the maximum of a column. You can ask for the max of any set of values:
+
+```{python}
+df.loc[df['Region'].isin(["Lombardia", "Piemonte"]), 'Spinoff0506'].max()
+```
+
+And, if you wanted to find the name of the region with the largest area, you can do this:
+
+```{python}
+df.loc[df['Spinoff0506'] == df['Spinoff0506'].max(), 'Region']
+```
+
+As you see, Emilia-Romagna is the region with the largest spinoff. Likewise, the function for finding the minimum value for a set of values is `min`:
+
+```{python}
+df['Spinoff0506'].min()
+```
+
+So which of the region in the DataFrame had the smallest spinoff?
+
+```{python}
+df.loc[df['Spinoff0506'] == df['Spinoff0506'].min(), 'Region']
+```
+
+The data can be explored in fairly sophisticated ways by using indexing in imaginative ways.
+
+Try calculating the mean spinoff using the command `.mean()`. To do this, create a new chunk of code and type your code. The keyboard shortcut to insert code chunks into Quarto Markdown files is CTRL-ALT-I.
+
+A powerful feature of `Python` is the flexibility to use calculations to explore and analyze data. In addition to operations involving a single column in a DataFrame, we can ask `Python` to do calculations using several columns. The sample DataFrame contains information on Ph.D. students and spinoffs per region. Suppose that you would like to discover which region on average has the largest spinoff companies by number of employees.
+
+We will define the mean spinoff size by region as the number of employees per spinoff in each region. This is calculated as:
+
+$$
+MS_i = \frac{employees _i}{spinoff_i}
+$$
+
+Where $MS_i$ is the mean spinoff size in region $i$.
+
+Here we introduce another feature of Quarto Markdown documents: the text above between the `$$` signs is a piece of LaTex code. It allows you to type mathematical formulas in an R Markdown document. Mathematical expressions can be written inline by using the notation $x$. Do not worry too much about how to write mathematical expressions at the moment, this is something that you can learn when and if needed, and there are many [resources online](https://en.wikibooks.org/wiki/LaTeX/Mathematics) to help you get started.
+
+The fraction of employed population is calculated as follows (the operations are done on a row-by-row basis, that is, the spinoffs  in row $i$ are divided by the population in row $i$):
+```{python}
+MS = df['Employees'] / df['Active_Spinoff']
+MS
+```
+
+The chunk of code above created a new Series called `MS`. If you wanted to add this vector to the DataFrame as a new column, you could do this instead:
+
+```{python}
+df['MS'] = df['Employees'] / df['Active_Spinoff']
+```
+
+As you can see, it is possible to create new columns on the fly and assign stuff to them, as long as the size of what we are assigning is compatible with the DataFrame (i.e., same number of rows). You can check that the new column was added to your existing `df` DataFrame:
+
+```{python}
+df
+```
+The table above shows that one of the values in column MS is NaN (or inf if we had not handled division by zero): this is the result of dividing by zero (Trentino-Alto Adige has 0 active spinoffs). By default, pandas returns inf for division by zero. To get NaN and avoid infinite values, we can replace the denominator zero with NaN before division, or use np.where. For simplicity, we'll keep it as is, but later we may need to handle missing values.
+
+If you would like to round off numeric data values, you could use the `round()` function Here, we round to two decimals:
+
+```{python}
+df['MS'] = df['MS'].round(2)
+df
+```
+
+# Knitting
+
+**Knitting** is the process of converting the  Markdown document (source) into some other type of document (output). The output could be HTML, a Word file, or a PDF file. If you check the header of this document, you will see that it is configured to knit into a PDF file, with certain parameters, for example, using the file `exercise-template-default.tex` to convert to LaTeX and hence to PDF. In the background, knitting uses [Pandoc](https://pandoc.org/) to convert between document formats.
+
+Before rendering this document, make sure that you have installed {tinytex} (see the [Quick Start Guide](https://paezha.github.io/edashop/#quick-start-guide) of the {edashop} package). {tinytex} is a lightweight LaTeX distribution:
+
+```{r}
+tinytex:::is_tinytex() 
+``` 
+
+# Practice
+
+1. Describe in your own words the concept of literate programming. What is a computational notebook?
+
+2. Load the full version of the dataset used in the examples in this session (distributed with the R package [{edashop}](https://paezha.github.io/edashop/)). To make it accessible in Python, we first load it in R and then access it via reticulate. 
+
+Loading the R dataset:
+```{r}
+library(edashop)
+library(reticulate)
+data("phd_italy_regions", package = "edashop")
+```
+
+Transforming it into a Pandas DataFrame: 
+```{python}
+phd_italy = r.phd_italy_regions
+type(phd_italy)
+```
+
+Visualizing the first five rows: 
+```{python}
+phd_italy.head()
+```
+
+3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, object, etc.)? (Hint: check `.info()`)
+
+4. Which region in Italy had the largest number of respondents to the survey? Which had the least? Can we infer from the number of respondents the population of Ph.D. students in each region? Explain. (Hint: check `??cntr_sp_ipvs`)
+
+```{r}
+??cntr_sp_ipvs
+```
+
+5. Calculate the mean size of active spinoffs for every region.
+
+6. What is the maximum mean spinoff size by region?
+
+7. Calculate the regional spinoff intensity started by Ph.D. students: this is number of currently active spinoffs founded by Ph.D. students in the sample.
+
+8. What is the total number of spinoff companies in Northern, Central, and Southern Italy?

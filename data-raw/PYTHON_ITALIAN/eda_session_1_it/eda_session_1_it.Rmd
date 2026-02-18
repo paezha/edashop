@@ -1,0 +1,378 @@
+---
+title: "Session 1. Basics of working with `R`"
+author:
+- name: Antonio Paez
+  # Enter your name here:
+- name: My Name
+subject: "Workshop: Exploratory Data Analysis in `R`"
+
+# The next two sections are for your own benefit. In the highlights you can briefly reflect about your learning experience. After completing the session, use this space to write your thoughts: what did you learn working on this session? What was easy? What was challenging? How were you challenged? What did you do that worked? What would you do differently? You can use more than one paragraph but remember to indent the paragraphs. This summary does not need to be very long, try to write it in about 200 words.
+highlights: |
+    This is my mini-reflection. Paragraphs must be indented.
+    
+    It can contain multiple paragraphs.
+    
+# Write the concepts that in your opinion are threshold concepts in this exercise. A threshold concept is a key idea that once you grasp it, it changes your understanding of a topic, phenomenon, subject, method, etc. Write between three and five threshold concepts that apply to your learning experience working on this exercise.
+threshold_concepts: 
+- threshold concept 1
+- threshold concept 2 
+- threshold concept 3
+- threshold concept 4
+
+# Do not edit below this line unless you know what you are doing
+# --------------------------------------------------------------
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+      # The project-template-default.tex file was heavily  adapted from Steven V. Miller's template for academic manuscripts. See:
+    # http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/
+    # https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-latex-ms.tex
+    template: "exercise-template-default.tex"
+font-family: Times New Roman    
+always_allow_html: true
+---
+  
+> "Be willing to be a beginner every single morning."  
+>
+> --― Meister Eckhart
+
+# Session outline
+
+- Why `R`?
+- Installing the software: `R` and R Studio
+- Packages
+- Installing packages: CRAN and other sources
+- Getting help
+- Creating a project
+- Directory structure
+- Creating new files: types of files
+- Literate programming
+- Data objects/classes and basic operations
+
+# Introduction
+
+NOTE: This is an [R Markdown](http://rmarkdown.rstudio.com) document. This type of document is a plain text file that can recognize chunks of code. When you execute code within the document, the results are displayed beneath. R Markdown files are _computational notebooks_ which implement a coding philosophy called [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming). Literate computing emphasizes the use of natural language to communicate with humans and chunks of code to communicate with the computer. By making the main audience other humans, this style of coding flips around the usual way in which code is written (computer is main audience, humans come second). This helps to make learning how to code more intuitive and accessible. 
+
+Let us first explain the anatomy of an R Markdown document.
+
+At the top of the document is a _header_ (called a YAML header) contained between two sets of three dashes `---`. The header includes metainformation about the document, including possibly the title of the document, the name(s) of the author(s), and how to process the document (e.g., what type of output to produce). After the header comes the _body_ of the document, that is, the main contents of the document (text and code).
+
+The header is quite an important compontent of the document, but we will for the moment take is as given and concentrate on the body of the document. This file, for example, introduces some basic instructions to work with `R` and R Markdown.
+
+Chunks of code are key to writing computational notebooks. Whenever you see a chunk of code in an R Markdown document as follows, you can run it (by clicking the green 'play' icon on the top right corner of the code window) to see the results. Try it below!
+```{r}
+print("Hello, Workshop")
+```
+
+You can see that the function `print()` displays the argument on the screen.
+
+Notice the way the document speaks to you in natural language, and to the computer in `R`. The computer, instead of being the focus of the document, is an assistant to illustrate concepts (like, what is a chunk of code?).
+
+Each of the documents in this workshop (the _Sessions_) is like a set of lecture notes. You can _knit_ the document to produce a PDF file to study. The documents, on the other hand, are potentially much more than simple lecture notes, and they can in fact become the foundation for your own experiments and annotations. As you read and study, you can 'customize' the notes based on your developing understanding of the subject matter and/or to complement the document with other examples and information. To make the readings uniquely yours, you can type directly into the document (the original template is still available from the package, and if you need a fresh start, you can always create a new file with it). In addition, you can use the following style to create a _textbox_:
+
+:::{.textbox data-latex=""}
+**NOTICE:** 
+
+This is an annotation. Here I can write my thoughts as I study, or I can add useful links or other information to help me learn.  
+
+To create a new paragraph, I need to type two blanks after the last one.
+:::
+
+A textbox allows you to highlight important information. Try creating your own textbox next.
+
+By now you will already have noticed a few conventions for writing in R Markdown: 
+
+- A chunk of R code begins with three backticks ('```') and the letter 'r' between curly brackets; a chunk of code concludes with three backticks. 
+- Hashtags ("#") indicate headers: one hashtag is a primary header, two hashtags is a secondary header, three a tertiary header, etc.
+- Asterisks are used for changing the font to *Italics*, **Bold**, and ***Italics+Bold***.
+- Underscores do the same thing: _Italics_, __Bold__, ___Italics+Bold___.
+- Dashes are used to create unnumbered lists.
+- [Hyperlinks](https://en.wikipedia.org/wiki/Hyperlink) can be introduced by using square brackets followed by the url in brackets.
+- Greater-than (">") is used for block-quotes.
+
+There are some other typing conventions that you can find in this useful [cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
+
+# RStudio Window
+
+If you are reading this, you must already have learned how to [create a new project and documents](https://paezha.github.io/edashop/#recommended-workflow) using the templates in the workshop package. We can now proceed to discuss some basic concepts regarding data types and operations.
+
+# Preliminaries
+
+It is good practice to clear the working memory in RStudio when you begin working on something new. This is to make sure that there is no extraneous info in memory that might confuse your work. The command in `R` to clear the workspace is `rm` (for 'remove'), followed by a list of items to be removed. To clear the workspace from _all_ objects, run the following chunk (by clicking on the 'play' icon):
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+An alternative way of doing this is to just click on the little broom icon in the 'Environment' tab (top right of your screen in the standard configuration of the RStudio app).
+
+Next, we probably want to load all _packages_ that we wish to use in our work session. A package is a unit of shareable code that augments the capabilities of base `R`. Packages can be installed from different sources; the most common one is CRAN (Comprehensive R Archive Network), but sometimes from GitHub repositories, among other places where developers put their packages. A big advantage of CRAN is that it keeps track of dependencies, that is, the ways in which packages depend on one another. This reduces the probability of packages not working.
+
+When packages are in CRAN, they can be installed using `install.packages()`. A very useful set of packages is `tidyverse`, which includes code for data manipuation and visualization. If you have not done so before, you can install the package with `install.packages("tidyverse")`. As an alternative, you can install it from RStudio using the 'Install Packages' command in the 'Tools' menu, on the menu bar above. Simply click on 'Tools - Install Packages...' on the menu bar, and enter `tidyverse` in the window. Or you can use the 'Packages' pane in the app (in the bottom right).
+
+Once the package is part of your _library_, it becomes available for use in your computer; to use the package afterwards, you must load it into memory. For this, we use the command `library()`, which is used to load a package, that is, to activate it for use, for example:
+```{r}
+library(tidyverse)
+```
+
+# Data Frames in `R`
+
+`R` can work with different data types, including scalars (essentially matrices with only one element), vectors (matrices of one dimension), and matrices where each dimension is greater than two. The following chunks of code illustrate the difference between these types of data.
+
+This is a scalar:
+```{r}
+1
+```
+
+Notice that a scalar is an object with only one row and one column. In contrast, this is a vector:
+```{r}
+c(1, 2, 3, 4)
+```
+
+The vector above is a data object with one row and four columns. And this is a matrix:
+```{r}
+matrix(c(1, 2, 3, 4, 0, 0, 0, 0, 1),
+       nrow = 3, 
+       ncol=3)
+```
+
+This particular matrix has three rows and three columns, but matrices generally can be of size $n\times m$, meaning they can have $n$ rows and $m$ columns. The command `c()` is used to concatenate (i.e., to string together) the arguments (i.e., the inputs). The command `matrix()` creates a matrix using the data provided, and with the indicated number of rows `nrow` and columns `ncol`.
+
+An important data _class_ in `R` is a data frame. A data frame is a _rectangular_ table that consists of rows and columns - commonly a set of vectors that have been put together for convenience. Data frames are used to store data in digital format. If you have used a spreadsheet software before, data frames will be familiar to you: they look a lot like a table in a spreadsheet.
+
+A data frame can accommodate large amounts of information (several billion individual items, depending on the memory of a computer). The data can be numeric, alphanumeric (i.e., characters), logical (i.e., TRUE/FALSE), and so on. Each grid cell in a data frame has an address that can be identified based on the row and column it belongs to. `R` can use these addresses to perform mathematical operations. `R` labels columns alphabetically and rows numerically (or less commonly alphabetically).
+
+To illustrate a data frame, we will create the following vectors for regions in Northern Italy. These data come from a survey of Ph.D. students expected to finish their studies between 2008 and 2014 (see [Muscio and Ramaciotti, 2018](https://doi.org/10.1016/j.dib.2018.03.116)). The first vector includes the names of the regions; the second vector contains the number of respondents to the survey; third is the number of active spinoffs founded by the students surveyed; next is the number of employees in those spinoffs; and lastly, there is a vector with the total number of active spinoffs in the regions in the period 2005-2006:
+```{r}
+nome_regione <- c("Emilia-Romagna",
+                  "Friuli-Venezia Giulia",
+                  "Liguria",
+                  "Lombardia",
+                  "Piemonte",
+                  "Trentino-Alto Adige",
+                  "Veneto")
+phd_students <- c(82,
+                  26,
+                  21,
+                  115,
+                  50,
+                  9,
+                  73)
+active_spinoff <- c(3,
+                    4,
+                    3,
+                    5,
+                    4,
+                    0,
+                    2)
+employees <- c(13,
+               7,
+               8,
+               3,
+               16,
+               0,
+               1)
+spinoff0506 <- c(393,
+                 68,
+                 21,
+                 313,
+                 322,
+                 18,
+                 306)
+```
+
+Note that `<-` is an assignment. In other words, it assigns the values on the right to the name on the left. By assigning some value to a name, we can easily retrieve the value later if needed.
+
+After executing the chunk of code above, you will notice that five values appear in your Environment (upper right pane tab). These are five vectors of size 1:7 - one that is composed of alphanumeric information (or 'chr', for 'character'), and four that are numeric ('num').
+
+These vectors can be assembled into a data frame. We do this for convenience, so we know that all these data belong together in some way. Please note: to create a data frame, the vectors must have the same length. In other words, you cannot create a table with vectors that have different numbers of rows. (Some other data types allow you to do this, but not data frames).
+
+We will now create a data frame, which we will call `df` (not very imaginative!). You can, if you wish, choose a different name. There are some rules of thumb for [naming objects](https://en.wikipedia.org/wiki/Naming_convention_(programming)#R) (variable names must start with a letter and can be a combination of letters, digits, periods, and underscores). In most cases it helps if the names are intuitive, easy to remember, and not too long.
+
+The function used to create a data frame is `data.frame()`, and its arguments are the vectors that we wish to collect in it. The next chunk of code assembles into a data frame the vectors that we created before:
+```{r}
+df <- data.frame(nome_regione,
+                 phd_students,
+                 active_spinoff,
+                 employees,
+                 spinoff0506)
+```
+
+After running the chunk above, you will see a new object in your environment, a data frame called `df`. It is important to emphasize that data frames are _rectangular_ tables: all vectors used to create a data frame must be the same length. We cannot have a vector with 6 rows and a vector with 7 rows in the same table. This is because each row represents an object of interest. In the case of our example, each row represents a _region_. Suppose that we had seven regions but only information for six of them. We could exclude the region that lacks information, or we could include it and indicate that other information about it is missing. The effect is the same, the vectors must be all the same size.
+ 
+If you double-click on `df` in the Environment tab, you will see that this data frame has three columns (labeled `nome_regione`, `phd_students`, `active_spinoff`, `employees`, `spinoff0506`), and 7 rows. The row numbers and column names can be used to identify particular cells in the data frame. 
+
+You can enter data into a data frame and then use the many built-in functions of `R` to perform various types of analysis. You can also display the data frame by typing it in as an `R` command, like this:
+```{r}
+df
+```
+
+The variable `nome_regione` at the moment is a character vector. If we check the structure of the data frame we can see this:
+```{r}
+str(df)
+```
+
+The summary of the names of regions is:
+```{r}
+summary(df$nome_regione)
+```
+
+This says that the class of the column is 'character'. 
+
+We can turn the character variable into a _factor_. What is a factor? Factors are a class of data used to store variables that are _categories_ (e.g., labels, names, classes). Typically, this means that the variable has two or more _levels_. In the present case, the factor variable has seven levels, corresponding to one of seven unique regions in Northern Italy. If we had information for multiple periods of time, each region might appear more than once, for each year that information was available. 
+```{r}
+df$nome_regione <- factor(df$nome_regione)
+```
+
+Notice how we can reference columns in a data frame by referring to its name with `$` after the name of the table. We use the `<-` assignment again, to store the results of `factor(df$nome_regione)` into column `nome_regione` in data frame `df` (we could have stored it in a new data frame if we wished, but we do not really need to do that at the moment). The function `factor()` converts a variable into a factor:
+```{r}
+str(df)
+```
+
+Compare the summary of the factor to the summary of the character variable:
+```{r}
+summary(df$nome_regione)
+```
+
+How would you explain the difference between characters and a factor?
+
+# More Basic Operations
+
+`R` can perform many types of operations. Some operations are simply arithmetic (sums, multiplications, etc.) Others are logical, and return as a result values of TRUE/FALSE. And so on. 
+
+To perform operations effectively, it is useful to understand the way `R` locates information, for instance in a data frame. As noted above, each grid cell has an address, otherwise known as an _index_, that can be referenced in several convenient ways. For instance, assume that you wish to reference the first value of the data frame, say, row 1 of column `nome_regione`. To do this, you would call the data frame that you are interested in, and use square brackets with two values, the row and the column that you wish to refer to, separated by a comma:
+```{r}
+df[1, 1]
+```
+
+This will recall the element in the first row and first column of `df`.
+
+As an alternative, you could type:
+```{r}
+df$nome_regione[1]
+```
+
+As you see, this has the same effect. Again, the string sign `$` is used to reference columns in a data frame. Therefore, `R` will call the first element of `nome_regione` in data frame `df`.
+
+Each region is referenced by the number inside the brackets. So, the second region in the table is:
+```{r}
+df$nome_regione[2]
+```
+
+Asking for `df[1,1]` is identical to asking for `df$nome_regione[1]`. Create a new chunk of code to recall the full column with the region names (i.e., by typing `CO$Country`).
+
+Indexing is useful to conduct operations. Suppose for instance, that you wished to calculate the total number of active spinoffs in the period 2005-2006 of two regions, say Lombardia and Veneto. You can execute the following instructions:
+```{r}
+df$spinoff0506[4] + df$spinoff0506[7]
+```
+
+An issue with with indexing cells this way is that, if other regions were added to the table, the row numbers of each region might change, and as a consequence you might not be referencing the same regions with those numbers. Another possibility is if the table is very long, you might not even know which region is in which row to begin with.
+
+So a better way to index the cells in a data frame is by using logical operators, like in the following chunk of code. Here, we are essentially asking for "population of (country which is France)" + "population of (country which is Germany)":
+
+```{r}
+df$spinoff0506[df$nome_regione == "Lombardia"] + df$spinoff0506[df$nome_regione == "Veneto"]
+```
+
+The text inside the square bracket tells `R` to look at the row with that region's names (we index by the name of the region, instead of the row number), and the text before the square brackets asks to look the number in the `spinoff0506` column for the row indexed.
+
+Suppose that you wanted to calculate the total number of spinoffs in 2005-2006 in this data frame. To do this, you would use the instruction `sum`, and use the `$` to identify the column that you want to sum:
+```{r}
+sum(df$spinoff0506)
+```
+
+As you can see, `R` can be used as a calculator, but it is much more powerful than that.
+
+You have already seen how `R` allows you to store in memory the results of some instruction, by means of an assignment `<-`. You can also perform many other useful operations. For instance, you can find the maximum for a set of values:
+```{r}
+max(df$spinoff0506)
+```
+
+This does not have to be just the maximum of a column. You can ask for the max of any set of values:
+```{r}
+max(df$spinoff0506[df$nome_regione == "Lombardia"], df$spinoff0506[df$nome_regione == "Veneto"])
+```
+
+And, if you wanted to find the name of the region with the largest number of spinoff companies, you can do this:
+```{r}
+df$nome_regione[df$spinoff0506 == max(df$spinoff0506)]
+```
+
+As you see, Emilia-Romagna is the region with the most spinoff companies in Northern Italy in 2005-2006. Likewise, the function for finding the minimum value for a set of values is `min`:
+```{r}
+min(df$spinoff0506)
+```
+
+So which of the regions in the data frame had the smallest number of spinoffs in 2005-2006?
+```{r}
+df$nome_regione[df$spinoff0506 == min(df$spinoff0506)]
+```
+
+The data can be explored in fairly sophisticated ways by using indexing in imaginative ways.
+
+Try calculating the mean number of spinoffs using the command `mean()`. To do this, create a new chunk of code and type your code. The keyboard shortcut to insert code chunks into R Markdown files is CTRL-ALT-I.
+
+A powerful feature of `R` is the flexibility to use calculations to explore and analyze data. In addition to operations involving a single column in a data frame, we can ask `R` to do calculations using several columns. The sample data frame contains information on Ph.D. students and spinoffs per region. Suppose that you would like to discover which region on average has the largest spinoff companies by number of employees.
+
+We will define the mean spinoff size by region as the number of employees per spinoff in each region. This is calculated as:
+$$
+MS_i = \frac{employees_i}{spinoffs_i}
+$$
+Where $MS_i$ is the mean spinoff size in region $i$.
+
+Here we introduce another feature of R Markdown documents: the text above between the `$$` signs is a piece of LaTex code. It allows you to type mathematical formulas in an R Markdown document. Mathematical expressions can be written inline by using the notation $x$. Do not worry too much about how to write mathematical expressions at the moment, this is something that you can learn when and if needed, and there are many [resources online](https://en.wikibooks.org/wiki/LaTeX/Mathematics) to help you get started.
+
+The mean spinoff size is calculated as follows (the operations are done on a row-by-row basis, that is, the employees in row $i$ are divided by the number of active spinoffs in row $i$):
+```{r}
+MS <- df$employees/df$active_spinoff
+```
+
+The chunk of code above created a new vector called `MS`. If you wanted to add this vector to the data frame as a new column, you could do this instead:
+```{r}
+df$MS <- df$employees/df$active_spinoff
+```
+
+As you can see, it is possible to create new columns on the fly and assign stuff to them, as long as the size of what we are assigning is compatible with the data frame (i.e., same number of rows). You can check that the new column was added to your existing `df` data frame:
+```{r}
+df
+```
+
+The table above shows that one of the values in column `MS` is `NaN`: this is the result of dividing by zero. By the way, if you would like to round off numeric data values, you could use the `round()` function Here, we round to two decimals:
+```{r}
+df$MS <- round(df$employees/df$active_spinoff, 2)
+```
+
+# Knitting
+
+Knitting is the process of converting the R Markdown document (source) into some other type of document (output). The output could be HTML, a Word file, or a PDF file. If you check the header of this document, you will see that it is configured to knit into a PDF file, with certain parameters, for example, using the file `exercise-template-default.tex` to convert to LaTeX and hence to PDF. In the background, knitting uses [Pandoc](https://pandoc.org/) to convert between document formats.
+
+Before knitting this document, make sure that you have installed {tinytex} (see the [Quick Start Guide](https://paezha.github.io/edashop/#quick-start-guide) of the {edashop} package). {tinytex} is a lightweight LaTeX distribution:
+```{r}
+tinytex:::is_tinytex() 
+```
+
+# Practice
+
+1. Describe in your own words the concept of literate programming. What is a computational notebook?
+
+2. Load the full version of the dataset used in the examples in this session (distributed with package [{edashop}](https://paezha.github.io/edashop/)).
+
+```{r}
+data("phd_italy_regions", 
+     package = "edashop")
+```
+
+3. How many variables are there in the data frame, and what data types are they (i.e., numerical, logical, factor, etc.)? (Hint: check `?str`)
+
+4. Which region in Italy had the largest number of respondents to the survey? Which had the least? Can we infer from the number of respondents the population of Ph.D. students in each region? Explain.
+
+5. Calculate the mean size of active spinoffs for every region.
+
+6. What is the maximum mean spinoff size by region? (Hint: use `?max` to see how to deal with `NaN`s)
+
+7. Calculate the regional spinoff intensity started by Ph.D. students: this is number of currently active spinoffs founded by Ph.D. students in the sample.
+
+8. What is the total number of spinoff companies in Northern, Central, and Southern Italy? (Hint: check the variable `geo` in the data frame)

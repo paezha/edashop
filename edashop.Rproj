@@ -20,3 +20,7 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace
+
+PythonType: conda
+PythonVersion: 3.9.25
+PythonPath: C:/Users/brdia/anaconda3/envs/edashop/python.exe
